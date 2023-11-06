@@ -1,0 +1,47 @@
+.task-info-item {
+    .header-info {
+        margin-bottom: 16px;
+        padding-right: 8px;
+        font-size: 21px;
+        line-height: 1.9rem;
+        font-weight: 500;
+    }
+    .content-info {
+        .item {
+            padding-right: 8px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 400;
+            line-height: 20px;
+            .item-title {
+                width: 120px;
+                display: inline-block;
+                color: rgba(0,0,0,0.54);
+            }
+        }
+        .item-double {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            .item {
+                width: 50%;
+            }
+        }
+        .item-status {
+            .button-status {
+                display: inline-block;
+                height: 22px;
+                width: 100px;
+                padding: 2px 5px;
+                cursor: pointer;
+                text-align: center;
+                font-size: 12px;
+                font-weight: 400;
+            }
+            .statusNew {
+                background-color: #ff8000;
+                color: #fff;
+            }
+        }
+    }
+}

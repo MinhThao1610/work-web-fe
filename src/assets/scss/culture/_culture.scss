@@ -1,0 +1,120 @@
+.list-post {
+    .post-item {
+        margin-bottom: 16px;
+        padding: 16px 0 0 0;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 3px 1px -2px rgba(0,0,0,0.2), 0 1px 5px 0 rgba(0,0,0,0.12);
+        background-color: #fff;
+        .post-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 16px;
+            i {
+                font-size: 18px;
+            }
+            .post-title {
+                font-size: 15px;
+                font-weight: 600;
+            }
+        }
+        .post-container {
+            .post-content {
+                padding: 0 16px 10px;
+                line-height: 160%;
+            }
+            .post-image {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+        .post-interact {
+            padding: 10px 16px 0;
+            .count-interact {
+                padding-bottom: 5px;
+                border-bottom: 2px solid #cfcfd5;
+                span {
+                    padding-right: 16px;
+                    cursor: pointer;
+                }
+            }
+            .interact {
+                display: flex;
+                align-items: flex-end;
+                padding: 10px 0;
+                .like-interact, .cmt-interact {
+                    padding-right: 20px;
+                    color: #454343;
+                }
+            }
+        }
+    }
+}
+
+.culture-company {
+    background-color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+    .logo-culture {
+        padding: 0 16px 10px;
+        border-bottom: 1px solid #cfcfd5;
+        .logo-slogan {
+            img {
+                width: 100%;
+            }
+        }
+        .logo-company {
+            display: flex;
+            align-items: flex-end;
+            img {
+                width: 150px;
+            }
+            span {
+                padding-left: 16px;
+                font-size: 20px;
+                font-weight: 500;
+            }
+        }
+    }
+    .slogan {
+        padding: 10px 16px;
+        border-bottom: 1px solid #cfcfd5;
+        .slogan-item {
+            margin-bottom: 20px;
+            .slogan-title {
+                font-size: 16px;
+                font-weight: 500;
+                text-align: center;
+            }
+            .slogan-content {
+                line-height: 160%;
+            }
+        }
+    }
+    .info-contact {
+        padding: 10px 16px;
+        border-bottom: 1px solid #cfcfd5;
+        .info-contact-item {
+            width: 50%;
+            float: left;
+            display: flex;
+            .info-title {
+                color: rgba(0,0,0,0.54);
+                width: 80px;
+                display: block;
+            }
+        }
+        .info-contact-item-full {
+            // display: flex;
+            // width: 100%;
+            // float: left;
+            .info-title-full {
+                color: rgba(0,0,0,0.54);
+                width: 80px;
+                display: block;
+            }
+        }
+    }
+    .intro-comapny {
+        padding: 10px 16px;
+    }
+}

@@ -1,0 +1,73 @@
+.list-organization {
+    // display: flex;
+    // flex-wrap: wrap;
+    .organization-item {
+        margin-right: 8px;
+        max-width: 410px;
+        min-height: unset;
+        margin-bottom: 8px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 8px;
+        background-color: #ffff;
+        border-radius: 5px;
+        .organization-item-header {
+            margin-bottom: 10px;
+            span {
+                color: #000;
+                font-size: 24px;
+                font-weight: 100;
+            }
+        }
+        .organization-item-content {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            .item-left {
+                img {
+                    width: 90px;
+                    height: 90px;
+                    border-radius: 50%;
+                }
+            }
+            .item-right {
+                margin-left: 10px;
+                .item-intro {
+                    font-size: 14px;
+                    font-weight: 600;
+                }
+                .item-contact {
+                    background-color: #f8f8f8;
+                    padding: 5px 0;
+                    .contact-info {
+                        display: block;
+                        font-size: 13px;
+                        padding: 0 16px;
+                        .info-title {
+                            font-style: italic;
+                        }
+                    }
+                }
+            }
+        }
+        .organization-item-footer {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            .count-member {
+                font-size: 18px;
+                font-weight: 400;
+            }
+            .avatar-merber {
+                img {
+                    width: 40px;
+                    height: 40px;
+                    margin: 0 5px;
+                }
+            }
+        }
+    }
+}

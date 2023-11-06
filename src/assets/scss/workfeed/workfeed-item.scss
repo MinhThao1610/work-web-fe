@@ -1,0 +1,29 @@
+.workfeed-item {
+    margin-bottom: 8px;
+    width: 100%;
+    max-width: 500px;
+    margin-right: 8px;
+    background-color: #fff;
+    box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 3px 1px -2px rgba(0,0,0,.2), 0 1px 5px 0 rgba(0,0,0,.12);
+    .workfeed-item-header {
+        padding: 8px;
+        border-bottom: 1px solid rgba(0,0,0,0.12);
+        span {
+            font-size: 18px;
+            margin-bottom: 2px;
+            line-height: 1.7;
+            font-weight: 300;
+        }
+    }
+    .workfeed-item-footer {
+        border-top: 1px solid rgba(0, 0, 0, 0.12);
+        padding: 8px;
+        display: flex;
+        justify-content: flex-end;
+        img {
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+        }
+    }
+}
