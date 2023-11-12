@@ -1,0 +1,43 @@
+#tim-statistic {
+    display: flex;
+    gap: 1rem;
+    .panel-left {
+        .pointer-link {
+            padding: 1rem;
+            cursor: pointer;
+            &:hover {
+                color: #405189;
+            }
+        }
+    }
+    .panel-right {
+        flex: 0 1 50%;
+        .workfeed-item.statistic {
+            max-width: unset;
+            margin-right: 0;
+            .workfeed-item-content {
+                padding: 2rem;
+                table {
+                    position: relative;
+                    border: 1px solid rgba(0,0,0,.12);
+                    border-collapse: collapse;
+                    white-space: nowrap;
+                    font-size: 13px;
+                    background-color: #fff;
+                    width: 100%;
+                    tr {
+                        height: 36px;
+                        th,
+                        td {
+                            padding: 5px;
+                            text-align: center;
+                        }
+                        th {
+                            font-weight: 400;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

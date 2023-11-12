@@ -104,6 +104,30 @@ export default [
     component: () => import("../views/tims/workToday/workToday"),
   },
   {
+    path: "/tim/tasks",
+    name: "timTask",
+    meta: { title: "Công việc", authRequired: true },
+    component: () => import("../views/tims/task/task"),
+  },
+  {
+    path: "/tim/project",
+    name: "timProject",
+    meta: { title: "Dự án", authRequired: true },
+    component: () => import("../views/tims/project/project"),
+  },
+  {
+    path: "/tim/test",
+    name: "timTest",
+    meta: { title: "Quản lý test", authRequired: true },
+    component: () => import("../views/tims/test/test"),
+  },
+  {
+    path: "/tim/statistic",
+    name: "timStatistic",
+    meta: { title: "Báo cáo", authRequired: true },
+    component: () => import("../views/tims/statistic/statistic"),
+  },
+  {
     path: "/",
     name: "default",
     meta: {
