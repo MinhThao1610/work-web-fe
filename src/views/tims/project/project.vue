@@ -21,19 +21,19 @@ const route = useRoute();
 
 const showProjectDetail = ref(false);
 const projects = ref([
-    { title: "CP", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
+    { title: "CP", startDate: new Date(), endDate: new Date(), status: 'new', progress: 25 },
     { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
+    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 35 },
+    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 100 },
+    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 11 },
     { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
+    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 85 },
+    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 76 },
     { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
+    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 90 },
     { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
-    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
-    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
-    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
-    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
-    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
-    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
-    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
-    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
+    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 92 },
+    { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 50 },
     { title: "Agent", startDate: new Date(), endDate: new Date(), status: 'new', progress: 48 },
 ]);
 const projectDetail = ref({
@@ -72,11 +72,11 @@ onMounted(() => {
         <div class="row">
             <div id="tim-project">
                 <div class="toolbar mb-4">
-                    <button class="btn btn-primary">Tạo sprint</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createSprintModal">Tạo sprint</button>
                 </div>
                 <div class="projects">
                     <h2 v-if="projects.length === 0">Hãy tạo sprint đầu tiên của bạn.</h2>
-                    <div v-for="(project, index) in projects" class="project bg-white border-primary p-3" :key="index">
+                    <router-link v-for="(project, index) in projects" class="project bg-white border-primary p-3" :key="index" to="/tim/project/sprint">
                         <div class="header mb-2 d-flex justify-content-between align-items-center">
                             <h4 class="title mb-0">{{ project.title }}</h4>
                             <button style="background: transparent; border: 0;" @click="showProjectDetail = true">
@@ -98,7 +98,7 @@ onMounted(() => {
                         </div>
 
                         <div class="progressbar" :style="`width: ${project.progress}%`"></div>
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -142,5 +142,32 @@ onMounted(() => {
                 <span class="w-25">@Date: 13/05/2022</span>
             </div>
         </el-drawer>
+
+        <div class="modal fade" id="createSprintModal" tabindex="-1" aria-labelledby="createSprintModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0">
+                    <div class="modal-header p-3 bg-soft-info">
+                        <h5 class="modal-title" id="createSprintModalLabel">Add Sprint</h5>
+                        <button type="button" class="btn-close" id="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="sprintName" class="form-label">Sprint Name</label>
+                                    <input type="text" class="form-control" id="sprintName" placeholder="Enter sprint name">
+                                </div>
+                                <div class="mt-4">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-success" id="addNewSprint">Add Sprint</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </Layout>
 </template>

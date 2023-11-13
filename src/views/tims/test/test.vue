@@ -52,11 +52,11 @@ onMounted(() => {
         <div class="row">
             <div id="tim-testplan">
                 <div class="toolbar mb-4">
-                    <button class="btn btn-primary">Tạo kế hoạch test</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createTestplanModal">Tạo kế hoạch test</button>
                 </div>
                 <div class="testplans">
                     <h2 v-if="testplans.length === 0">Hãy tạo kế hoạch test đầu tiên của bạn.</h2>
-                    <div v-for="(testplan, index) in testplans" class="testplan bg-white border-primary p-3" :key="index">
+                    <router-link v-for="(testplan, index) in testplans" class="testplan bg-white border-primary p-3" :key="index" to="/tim/test/testplan">
                         <div class="header mb-2 d-flex justify-content-between align-items-center">
                             <h4 class="title mb-0">{{ testplan.title }}</h4>
                             <button style="background: transparent; border: 0;" @click="showProjectDetail = true">
@@ -69,7 +69,7 @@ onMounted(() => {
                                 <button class="btn btn-outline-primary btn-sm">Testcases</button>
                             </div>
                         </div>
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -113,5 +113,32 @@ onMounted(() => {
                 <span class="w-25">@Date: 13/05/2022</span>
             </div>
         </el-drawer>
+
+        <div class="modal fade" id="createTestplanModal" tabindex="-1" aria-labelledby="createTestplanModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0">
+                    <div class="modal-header p-3 bg-soft-info">
+                        <h5 class="modal-title" id="createTestplanModal">Add Testplan</h5>
+                        <button type="button" class="btn-close" id="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="#">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="testplanName" class="form-label">Testplan Name</label>
+                                    <input type="text" class="form-control" id="testplanName" placeholder="Enter testplan name">
+                                </div>
+                                <div class="mt-4">
+                                    <div class="hstack gap-2 justify-content-end">
+                                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-success" id="addNewTestplan">Add Testplan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </Layout>
 </template>

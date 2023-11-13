@@ -116,10 +116,22 @@ export default [
     component: () => import("../views/tims/project/project"),
   },
   {
+    path: "/tim/project/sprint",
+    name: "timSprint",
+    meta: { title: "Dự án", authRequired: true },
+    component: () => import("../views/tims/sprint/sprint"),
+  },
+  {
     path: "/tim/test",
     name: "timTest",
     meta: { title: "Quản lý test", authRequired: true },
     component: () => import("../views/tims/test/test"),
+  },
+  {
+    path: "/tim/test/testplan",
+    name: "timTestplan",
+    meta: { title: "Quản lý test", authRequired: true },
+    component: () => import("../views/tims/testplan/testplan"),
   },
   {
     path: "/tim/statistic",
