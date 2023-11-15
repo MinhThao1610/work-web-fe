@@ -60,6 +60,11 @@ const changeFocusButton = (text) => {
     focusButton.value = text;
 };
 
+const openDetail = (e) => {
+    e.preventDefault();
+    showProjectDetail.value = true;
+}
+
 onMounted(() => {
     console.log("route", route.query);
 });
@@ -79,7 +84,7 @@ onMounted(() => {
                     <router-link v-for="(project, index) in projects" class="project bg-white border-primary p-3" :key="index" to="/tim/project/sprint">
                         <div class="header mb-2 d-flex justify-content-between align-items-center">
                             <h4 class="title mb-0">{{ project.title }}</h4>
-                            <button style="background: transparent; border: 0;" @click="showProjectDetail = true">
+                            <button style="background: transparent; border: 0;" @click="openDetail($event)">
                                 <i class="las la-info-circle" style="font-size: 24px;"></i>
                             </button>
                         </div>
@@ -92,8 +97,8 @@ onMounted(() => {
                                 <p class="mb-1">Trạng thái: <span class="tag">{{ project.status }}</span> </p>
                             </div>
                             <div class="quicklink d-flex flex-column gap-1">
-                                <button class="btn btn-outline-primary btn-sm">Công việc</button>
-                                <button class="btn btn-outline-primary btn-sm">Kế hoạch</button>
+                                <button class="btn btn-outline-primary btn-sm" @click="router.push('/tim/project/sprint')">Công việc</button>
+                                <button class="btn btn-outline-primary btn-sm" @click="router.push('/tim/project/sprint')">Kế hoạch</button>
                             </div>
                         </div>
 
