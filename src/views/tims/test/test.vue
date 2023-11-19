@@ -101,6 +101,9 @@ onMounted(() => {
                     {{ testplanDetail.title }}
                 </div>
             </template>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary" @click="showTestCreate = true; showTestDetail = false;">Cập nhật</button>
+            </div>
             <div class="d-flex mb-2">
                 <span class="label" style="width:120px;">Người phụ trách:</span>
                 <b class="value">{{ testplanDetail.creatorId.name }}</b>
@@ -162,7 +165,9 @@ onMounted(() => {
                     placeholder="Ngày kết thúc">
                 </el-date-picker>
             </div>
-            <button class="btn btn-primary w-25">Lưu</button>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary">Lưu</button>
+            </div>
         </el-drawer>
     </Layout>
 </template>
