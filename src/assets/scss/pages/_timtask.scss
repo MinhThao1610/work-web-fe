@@ -1,0 +1,15 @@
+#tim-task {
+    .tasks-list {
+        small.badge {
+            background-color: var(--color);
+        }
+        .tasks-box {
+            border-top: 5px solid var(--color);
+        }
+    }
+    .tasks {
+        &:before {
+            content: unset;
+        }
+    }
+}
