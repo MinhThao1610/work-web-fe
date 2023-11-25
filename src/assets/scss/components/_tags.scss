@@ -3,4 +3,12 @@
     border: 1px solid #f7b84b;
     padding: 1px 5px;
     border-radius: 5px;
+    &.doing {
+        color: #f7b84b;
+        border: 1px solid #f7b84b;
+    }
+    &.done {
+        color: #0ab39c;
+        border: 1px solid #0ab39c;
+    }
 }

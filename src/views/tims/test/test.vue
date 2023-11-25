@@ -4,62 +4,65 @@ import PageHeader from "@/components/page-header";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import moment from "moment";
+import { testplanData } from "./mockdata";
+import { copyObj } from "../../../helpers/utils";
 
-const title = ref("Widgets");
-const items = ref([
-    {
-        text: "Velzon",
-        href: "/",
-    },
-    {
-        text: "Widgets",
-        active: true,
-    },
-]);
-const focusButton = ref("today");
+const focusButton = ref("test");
 const route = useRoute();
-
-const showTestDetail = ref(false);
-const showTestCreate = ref(false);
-const testplans = ref([
-    { title: "CP" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-    { title: "Agent" },
-])
-const testplanDetail = ref({
-  id: 1,
-  title: 'Test plan CP',
-  description: 'Test plan CP',
-  creatorId: { name: 'Anna Adame' },
-  creator_id: 1,
-  sprintId: {},
-  sprint_id: 1,
-  files: [],
-  createAt: new Date(),
-  tasks: [],
-  testcases: []
-})
-const input = ref({})
 
 const changeFocusButton = (text) => {
     focusButton.value = text;
 };
 
-const openDetail = (e) => {
+const showDetail = ref(false);
+const showForm = ref(false);
+
+const mode = ref('create');
+const formRef = ref();
+const testplans = ref(testplanData);
+const detail = ref({});
+const input = ref({});
+const rules = ref({
+    title: [
+        { required: true, message: 'Bắt buộc nhập tên kế hoạch test', trigger: 'change' },
+    ],
+    startDate: [
+        { type: 'date', required: true, message: 'Bắt buộc chọn ngày bắt đầu', trigger: 'change' }
+    ],
+    endDate: [
+        { type: 'date', required: true, message: 'Bắt buộc chọn ngày kết thúc', trigger: 'change' }
+    ],
+    description: [
+        { required: true, message: 'Bắt buộc nhập mô tả', trigger: 'change' }
+    ]
+})
+
+const openDetail = (e, i) => {
     e.preventDefault();
-    showTestDetail.value = true;
+    showDetail.value = true;
+    detail.value = copyObj(testplans.value[i]);
 }
+const addTestplan = () => {
+    input.value = {};
+    if (formRef.value) formRef.value.resetFields();
+    showForm.value = true;
+    mode.value = 'create';
+}
+const editTestplan = () => {
+    if (formRef.value) formRef.value.resetFields();
+    showForm.value = true;
+    showDetail.value = false;
+    input.value = detail.value;
+    mode.value = 'edit';
+}
+
+const onSubmit = () => {
+    formRef.value.validate((formValidated, fields) => {
+        console.log('form validated', input.value);
+        console.log('form validated', formValidated);
+        console.log('form validated', fields);
+    })
+};
 
 onMounted(() => {
     console.log("route", route.query);
@@ -68,106 +71,98 @@ onMounted(() => {
 
 <template>
     <Layout>
-        <PageHeader :title="title" :items="items" type="tim" :focusButton="focusButton"
-            @changeFocusButton="changeFocusButton" />
+        <PageHeader type="tim" :focusButton="focusButton" @changeFocusButton="changeFocusButton" />
         <div class="row">
             <div id="tim-testplan">
                 <div class="toolbar mb-4">
-                    <button class="btn btn-primary" @click="showTestCreate = true">Tạo kế hoạch test</button>
+                    <button class="btn btn-primary" @click="addTestplan">Tạo kế hoạch test</button>
                 </div>
                 <div class="testplans">
                     <h2 v-if="testplans.length === 0">Hãy tạo kế hoạch test đầu tiên của bạn.</h2>
                     <router-link v-for="(testplan, index) in testplans" class="testplan bg-white border-primary p-3" :key="index" to="/tim/test/testplan">
                         <div class="header mb-2 d-flex justify-content-between align-items-center">
                             <h4 class="title mb-0">{{ testplan.title }}</h4>
-                            <button style="background: transparent; border: 0;" @click="openDetail($event)">
+                            <button style="background: transparent; border: 0;" @click="openDetail($event, index)">
                                 <i class="las la-info-circle" style="font-size: 24px;"></i>
                             </button>
                         </div>
-                        <div class="testplan-info">
+                        <!-- <div divclass="testplan-info">
                             <div class="quicklink d-flex justify-content-end gap-1">
                                 <button class="btn btn-outline-primary btn-sm" @click="router.push('/tim/test/testplan')">Bugs</button>
                                 <button class="btn btn-outline-primary btn-sm" @click="router.push('/tim/test/testplan')">Testcases</button>
                             </div>
-                        </div>
+                        </div> -->
                     </router-link>
                 </div>
             </div>
         </div>
 
-        <el-drawer v-model="showTestDetail" direction="rtl" size="40%">
+        <el-drawer v-model="showDetail" direction="rtl" size="40%">
             <template #header="{ titleId, titleClass }">
                 <div :id="titleId" :class="titleClass">
-                    {{ testplanDetail.title }}
+                    {{ detail.title }}
                 </div>
             </template>
             <div class="d-flex justify-content-end">
-                <button class="btn btn-primary" @click="showTestCreate = true; showTestDetail = false;">Cập nhật</button>
+                <button class="btn btn-primary" @click="editTestplan">Cập nhật</button>
             </div>
             <div class="d-flex mb-2">
                 <span class="label" style="width:120px;">Người phụ trách:</span>
-                <b class="value">{{ testplanDetail.creatorId.name }}</b>
+                <b class="value">{{ detail.leader.name }}</b>
             </div>
             <div class="d-flex">
                 <div class="d-flex mb-2 w-50">
                     <span class="label" style="width:120px;">Test cases:</span>
-                    <b class="value">7</b>
+                    <b class="value">{{ detail.testcases.length }}</b>
                 </div>
                 <div class="d-flex mb-2 w-50">
                     <span class="label" style="width:120px;">Passed:</span>
-                    <b class="value">0</b>
+                    <b class="value">{{ detail.tasks.filter(x => x.statusId.type === 'done').length }}</b>
                 </div>
             </div>
             <div class="d-flex">
                 <div class="d-flex mb-2 w-50">
                     <span class="label" style="width:120px;">Ngày bắt đầu:</span>
-                    <b class="value">{{ moment(new Date(testplanDetail.createAt)).format("DD/MMM/YYYY") }}</b>
+                    <b class="value">{{ moment(new Date(detail.startDate)).format("DD/MM/YYYY") }}</b>
                 </div>
                 <div class="d-flex mb-2 w-50">
                     <span class="label" style="width:120px;">Ngày kết thúc:</span>
-                    <b class="value">{{ moment(new Date(testplanDetail.createAt)).format("DD/MMM/YYYY") }}</b>
+                    <b class="value">{{ moment(new Date(detail.endDate)).format("DD/MM/YYYY") }}</b>
                 </div>
             </div>
-            <div class="d-flex mt-4">
-                <span class="w-25">@Post: {{ testplanDetail.creatorId.name }}</span>
-                <span class="w-25">@Date: {{ moment(new Date(testplanDetail.createAt)).format("DD/MMM/YYYY") }}</span>
+            <div class="d-flex mb-2">
+                <span class="label" style="width:120px;">Status:</span>
+                <span class="tag m-0" :class="[detail.status]">{{ detail.status }}</span>
+            </div>
+            <div class="d-flex">
+                <span class="w-25">@Post: {{ detail.leader.name }}</span>
+                <span class="w-25">@Date: {{ moment(new Date(detail.createAt)).format("DD/MM/YYYY") }}</span>
             </div>
         </el-drawer>
 
-        <el-drawer v-model="showTestCreate" direction="rtl" size="40%">
+        <el-drawer v-model="showForm" direction="rtl" size="40%">
             <template #header="{ titleId, titleClass }">
                 <div :id="titleId" :class="titleClass">
-                    Tạo kế hoạch test
+                    {{ mode === 'create' ? 'Tạo kế hoạch test' : `Cập nhật thông tin kế hoạch test ${detail.title}` }}
                 </div>
             </template>
-            <div class="mb-4">
-                <span class="label d-block mb-1">Người phụ trách:</span>
-                <el-input
-                    v-model="input.creator"
-                    placeholder="Người phụ trách"
-                />
-            </div>
-            <div class="mb-4">
-                <span class="label d-block mb-1">Ngày bắt đầu:</span>
-                <el-date-picker
-                    class="w-100"
-                    v-model="input.startDate"
-                    type="date"
-                    placeholder="Ngày bắt đầu">
-                </el-date-picker>
-            </div>
-            <div class="mb-4">
-                <span class="label d-block mb-1">Ngày kết thúc:</span>
-                <el-date-picker
-                    class="w-100"
-                    v-model="input.endDate"
-                    type="date"
-                    placeholder="Ngày kết thúc">
-                </el-date-picker>
-            </div>
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-primary">Lưu</button>
-            </div>
+            <el-form label-position="top" require-asterisk-position="right" :model="input" :rules="rules" ref="formRef">
+                <el-form-item class="mb-4" label="Sprint:" prop="title">
+                    <el-input v-model="input.title" placeholder="Sprint" />
+                </el-form-item>
+                <el-form-item class="mb-4" label="Ngày bắt đầu:" prop="startDate">
+                    <el-date-picker class="w-100" v-model="input.startDate" type="date" placeholder="Ngày bắt đầu" size="large" format="DD/MM/YYYY" />
+                </el-form-item>
+                <el-form-item class="mb-4" label="Ngày kết thúc:" prop="endDate">
+                    <el-date-picker class="w-100" v-model="input.endDate" type="date" placeholder="Ngày kết thúc" size="large" format="DD/MM/YYYY" />
+                </el-form-item>
+                <el-form-item class="mb-4" label="Mô tả:" prop="description">
+                    <el-input type="textarea" v-model="input.description" placeholder="Mô tả" />
+                </el-form-item>
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-success w-25" type="button" @click="onSubmit">Lưu</button>
+                </div>
+            </el-form>
         </el-drawer>
     </Layout>
 </template>
