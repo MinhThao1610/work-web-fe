@@ -5,7 +5,7 @@
     helpers
   } from "@vuelidate/validators";
   import appConfig from "../../../app.config";
-  import axios from 'axios';
+  import { postDataApi } from "../../api/fetchAPI";
 
   export default {
     page: {
@@ -38,18 +38,19 @@
 
     },
     methods: {
-      async signinapi() {
-        const result = await axios.post('https://api-node.themesbrand.website/auth/signin', {
+      async login() {
+        const result = await postDataApi('auth/login', {
           email: this.email,
           password: this.password
         })
         if (result.data.status == 'errors') {
           return this.authError = result.data.data;
         }
-        localStorage.setItem('jwt', result.data.token)
-        this.$router.push({
-          path: '/mywork'
-        });
+        localStorage.setItem('token', result.data.access_token);
+        console.log('result.data ', result.data)
+        // this.$router.push({
+        //   path: '/mywork'
+        // });
       }
     },
   };
@@ -76,13 +77,11 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="text-center mt-sm-5 mb-4 text-white-50">
-              <div>
-                <router-link to="/" class="d-inline-block auth-logo">
-                  <img src="@/assets/images/logo-light.png" alt="" height="20" />
-                </router-link>
-              </div>
+              <h3 style="color: #fff;">
+                Tên ứng dụng (nghĩ sau)
+              </h3>
               <p class="mt-3 fs-15 fw-medium">
-                Premium Admin & Dashboard Template
+                Truyền cảm hứng cho ngày làm việc của bạn
               </p>
             </div>
           </div>
@@ -94,8 +93,7 @@
             <div class="card mt-4">
               <div class="card-body p-4">
                 <div class="text-center mt-2">
-                  <h5 class="text-primary">Welcome Back !</h5>
-                  <p class="text-muted">Sign in to continue to Velzon.</p>
+                  <h5 class="text-primary">Đăng nhập</h5>
                 </div>
                 <div class="p-2 mt-4">
                   <b-alert v-model="authError" variant="danger" class="mt-3" dismissible>{{ authError }}</b-alert>
@@ -115,10 +113,9 @@
 
                     <div class="mb-3">
                       <div class="float-end">
-                        <router-link to="/forgot-password" class="text-muted">Forgot
-                          password?</router-link>
+                        <router-link to="/forgot-password" class="text-muted">Quên mật khẩu?</router-link>
                       </div>
-                      <label class="form-label" for="password-input">Password</label>
+                      <label class="form-label" for="password-input">Mật khẩu</label>
                       <div class="position-relative auth-pass-inputgroup mb-3">
                         <input type="password" v-model="password" class="form-control pe-5" placeholder="Enter password"
                           id="password-input" />
@@ -132,19 +129,13 @@
                       </div>
                     </div>
 
-                    <div class="form-check">
-                      <input class="form-check-input" type="checkbox" value="" id="auth-remember-check" />
-                      <label class="form-check-label" for="auth-remember-check">Remember
-                        me</label>
-                    </div>
-
                     <div class="mt-4">
-                      <button class="btn btn-success w-100" type="submit" @click="signinapi">
-                        Sign In
+                      <button class="btn btn-success w-100" type="submit" @click="login">
+                        Đăng nhập
                       </button>
                     </div>
 
-                    <div class="mt-4 text-center">
+                    <!-- <div class="mt-4 text-center">
                       <div class="signin-other-title">
                         <h5 class="fs-13 mb-4 title">Sign In with</h5>
                       </div>
@@ -169,7 +160,7 @@
                           <i class="ri-twitter-fill fs-16"></i>
                         </button>
                       </div>
-                    </div>
+                    </div> -->
                   </form>
                 </div>
               </div>
@@ -177,7 +168,7 @@
             </div>
             <!-- end card -->
 
-            <div class="mt-4 text-center">
+            <!-- <div class="mt-4 text-center">
               <p class="mb-0">
                 Don't have an account ?
                 <router-link to="/register" class="fw-semibold text-primary
@@ -185,7 +176,7 @@
                   Signup
                 </router-link>
               </p>
-            </div>
+            </div> -->
           </div>
         </div>
         <!-- end row -->
@@ -193,23 +184,6 @@
       <!-- end container -->
     </div>
     <!-- end auth page content -->
-
-    <!-- footer -->
-    <footer class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="text-center">
-              <p class="mb-0 text-muted">
-                &copy; {{ new Date().getFullYear() }} Velzon. Crafted with
-                <i class="mdi mdi-heart text-danger"></i> by Themesbrand
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <!-- end Footer -->
   </div>
   <!-- end auth-page-wrapper -->
 </template>
