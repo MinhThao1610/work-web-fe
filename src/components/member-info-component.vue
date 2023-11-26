@@ -12,7 +12,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="member-info-component">
+    <div class="member-info-component grid-item">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8dAnxssXwRztTJRaP7KAyiyB0COfDnnglzq96-zhVmZO079vcU-y-OqooATU-vwTcKXU&usqp=CAU" alt="avatar">
         <div class="member-info">
             <span class="name">Nguyễn Văn A</span>

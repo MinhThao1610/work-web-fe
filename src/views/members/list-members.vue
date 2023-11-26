@@ -2,6 +2,7 @@
 import { onMounted, defineProps } from 'vue';
 // import account from "@/assets/images/account.jpg";
 import MemberInfoComponent from '../../components/member-info-component.vue';
+import Masonry from 'masonry-layout';
 
 const props = defineProps({
     header: String,
@@ -13,12 +14,20 @@ const props = defineProps({
 
 onMounted(() => {
     console.log(props)
+
+    const msry = new Masonry( '.grid', {
+        columnWidth: 200,
+        itemSelector: '.grid-item',
+        horizontalOrder: true,
+        gutter: 10
+    });
+    console.log(msry)
 })
 </script>
 
 <template>
     <div class="list-members">
-        <div class="grid" data-masonry='{ "itemSelector": ".grid-item", "columnWidth": 160 }'>
+        <div class="grid">
             <MemberInfoComponent address="Trung Hòa, Cầu Giấy, Hà Nội" />
             <MemberInfoComponent address="Trung Hòa, Cầu Giấy, Hà Nội Trung Hòa, Cầu Giấy, Hà Nội" />
             <MemberInfoComponent address="Trung Hòa, Cầu Giấy, Hà Nội Trung Hòa, Cầu Giấy, Hà Nội" />
