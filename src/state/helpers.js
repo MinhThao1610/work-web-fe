@@ -37,8 +37,8 @@ export const todoComputed = {
 }
 export const todoMethods = mapActions('todo', ['fetchTodos'])
 
+// Authentication store => Danh sách các methods và các computed để sử dụng trong store. Import vào component vue và sử dụng tương tự như 1 computed và method bình thường
 export const authenticationMethods = mapActions('authentication', ['fetchAuthen'])
-
 export const authenticationComputed = {
   ...mapState('authentication', {
     auth: (state) => state.auth,

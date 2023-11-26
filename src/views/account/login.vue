@@ -40,14 +40,14 @@ import { authenticationMethods, authenticationComputed } from "@/state/helpers";
     },
     methods: {
       ...authenticationMethods,
-      async login() {
+      login() {
         this.fetchAuthen({
             email: this.email,
             password: this.password
         });
 
         setTimeout(() => {
-          console.log(this.$store.state)
+          console.log(this.$store.state.authentication.auth)
         }, 10000)
         // const result = await postDataApi('auth/login', {
         //   email: this.email,
