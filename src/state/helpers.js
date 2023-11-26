@@ -36,3 +36,11 @@ export const todoComputed = {
   })
 }
 export const todoMethods = mapActions('todo', ['fetchTodos'])
+
+export const authenticationMethods = mapActions('authentication', ['fetchAuthen'])
+
+export const authenticationComputed = {
+  ...mapState('authentication', {
+    auth: (state) => state.auth,
+  })
+}

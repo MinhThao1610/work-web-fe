@@ -5,7 +5,8 @@
     helpers
   } from "@vuelidate/validators";
   import appConfig from "../../../app.config";
-  import { postDataApi } from "../../api/fetchAPI";
+  // import { postDataApi } from "../../api/fetchAPI";
+import { authenticationMethods, authenticationComputed } from "@/state/helpers";
 
   export default {
     page: {
@@ -35,19 +36,28 @@
       },
     },
     computed: {
-
+      ...authenticationComputed,
     },
     methods: {
+      ...authenticationMethods,
       async login() {
-        const result = await postDataApi('auth/login', {
-          email: this.email,
-          password: this.password
-        })
-        if (result.data.status == 'errors') {
-          return this.authError = result.data.data;
-        }
-        localStorage.setItem('token', result.data.access_token);
-        console.log('result.data ', result.data)
+        this.fetchAuthen({
+            email: this.email,
+            password: this.password
+        });
+
+        setTimeout(() => {
+          console.log(this.$store.state)
+        }, 10000)
+        // const result = await postDataApi('auth/login', {
+        //   email: this.email,
+        //   password: this.password
+        // })
+        // if (result.data.status == 'errors') {
+        //   return this.authError = result.data.data;
+        // }
+        // localStorage.setItem('token', result.data.access_token);
+        // console.log('result.data ', result.data)
         // this.$router.push({
         //   path: '/mywork'
         // });
