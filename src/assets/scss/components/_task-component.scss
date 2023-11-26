@@ -79,3 +79,25 @@
         }
     }
 }
+
+.el-tabs__content {
+    overflow: visible;
+}
+
+.task-exchange {
+    .exchange-header {
+        display: flex;
+        .info {
+            margin-left: .5rem;
+            .datetime {
+                font-size: .85rem;
+            }
+        }
+        .dropdown {
+            margin-left: auto;
+            .dropdown-item {
+                cursor: pointer;
+            }
+        }
+    }
+}

@@ -6,6 +6,40 @@ export const newTasksData = [
         "ownerId": { "name": "Mai Long Vũ" },
         "code": 1812,
         "type": "task",
+        "exchanges": [
+            {
+                "id": "655b8e4571c39b1b689927e6",
+                "content": "- Nâng cấp: Chuyển ngày start date lên Phiếu thay thế => Chưa có API",
+                "creatorId": { name: "Lê Quang Minh", avatar: "" },
+                "createAt": "2023-11-20T23:50:13.708+07:00"
+            }
+        ],
+        "checklistes": [
+            {
+                id: 1,
+                content: "Review and make sure nothing slips through cracks",
+            },
+            {
+                id: 2,
+                content: "Send meeting invites for sales upcampaign",
+            },
+            {
+                id: 3,
+                content: "Weekly closed sales won checking with sales team",
+            },
+            {
+                id: 4,
+                content: "Add notes that can be viewed from the individual view",
+            },
+            {
+                id: 5,
+                content: "Move stuff to another page",
+            },
+            {
+                id: 6,
+                content: "Styling wireframe design and documentation for velzon admin",
+            }
+        ]
     },
     {
         "id": "6433883971c39b2008af0bd6",

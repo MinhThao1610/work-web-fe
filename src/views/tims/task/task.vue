@@ -13,11 +13,15 @@ import {
     verifyingTasksData,
     cancelTasksData
 } from "./mockdata";
+import TaskDetail from "../../../components/taskDetail.vue";
+import { useStore } from "vuex";
 
+const store = useStore();
 const focusButton = ref("tasks");
 const route = useRoute();
 
 const showForm = ref(false);
+const showDetail = ref(false);
 const formRef = ref();
 const input = ref({});
 const rules = ref({
@@ -116,7 +120,8 @@ const addTask = () => {
     showForm.value = true;
 }
 const openDetail = (data) => {
-    console.log(data)
+    store.dispatch('task/setTaskDetail', data);
+    showDetail.value = true;
 }
 
 const onSubmit = () => {
@@ -248,6 +253,11 @@ onMounted(() => {
                     </div>
                 </el-form>
             </el-drawer>
+
+            <TaskDetail
+                :open="showDetail"
+                @close="showDetail = false"
+            />
         </div>
     </Layout>
 </template>

@@ -1,43 +1,41 @@
 <script setup>
-import { onMounted, defineProps } from 'vue';
+import { computed } from "vue";
+import { useStore } from "vuex";
+import moment from "moment";
 
+const store = useStore();
+const task = computed(() => store.state.task.detail)
 
-const props = defineProps({
-    status: String,
-});
-
-onMounted(() => {
-    
-})
 </script>
 
 <template>
     <div class="task-info-item">
         <div class="header-info">
-            Vẫn active vào sort sau khi ấn F5
+            {{ task?.title }}
         </div>
         <div class="content-info">
-            <div class="item">
+            <div class="item" v-if="task?.sprint_id">
                 <span class="item-title">
                     Kế hoạch
                 </span>
                 <span class="item-content">
-                    Service-health
+                    {{ task?.sprintId?.title }}
                 </span>
             </div>
-            <div class="item">
+            <div class="item" v-if="task?.testObject_id">
                 <span class="item-title">
                     Đối tượng
                 </span>
                 <span class="item-content">
+                    {{ task?.testObjectId?.title }}
                 </span>
             </div>
-            <div class="item">
+            <div class="item" v-if="task?.testcase_id">
                 <span class="item-title">
                     Test case
                 </span>
                 <span class="item-content">
-                    Service-health
+                    {{ task?.testcaseId?.title }}
                 </span>
             </div>
             <div class="item">
@@ -45,7 +43,7 @@ onMounted(() => {
                     Người làm
                 </span>
                 <span class="item-content">
-                    Nguyễn Văn A
+                    {{ task?.ownerId?.name }}
                 </span>
             </div>
             <div class="item">
@@ -62,7 +60,7 @@ onMounted(() => {
                         Người giao
                     </span>
                     <span class="item-content">
-                        Nguyễn Văn B
+                        {{ task?.creatorId?.name }}
                     </span>
                 </div>
                 <div class="item">
@@ -70,7 +68,7 @@ onMounted(() => {
                         Người duyệt
                     </span>
                     <span class="item-content">
-                        Nguyễn Văn C
+                        {{ task?.verifierId?.name }}
                     </span>
                 </div>
             </div>
@@ -79,16 +77,16 @@ onMounted(() => {
                     <span class="item-title">
                         Ngày bắt đầu
                     </span>
-                    <span class="item-content">
-                        10/10/2023
+                    <span class="item-content" v-if="task?.startDate">
+                        {{ moment(new Date(task?.startDate)).format("DD/MM/YYYY") }}
                     </span>
                 </div>
                 <div class="item">
                     <span class="item-title">
                         Deadline
                     </span>
-                    <span class="item-content">
-                        15/10/2023
+                    <span class="item-content" v-if="task?.deadline">
+                        {{ moment(new Date(task?.deadline)).format("DD/MM/YYYY") }}
                     </span>
                 </div>
             </div>
@@ -97,16 +95,16 @@ onMounted(() => {
                     <span class="item-title">
                         Ngày tạo
                     </span>
-                    <span class="item-content">
-                        10/10/2023
+                    <span class="item-content" v-if="task?.createAt">
+                        {{ moment(new Date(task?.createAt)).format("DD/MM/YYYY") }}
                     </span>
                 </div>
                 <div class="item">
                     <span class="item-title">
                         Ngày sửa
                     </span>
-                    <span class="item-content">
-                        12/10/2023
+                    <span class="item-content" v-if="task?.updateAt">
+                        {{ moment(new Date(task?.updateAt)).format("DD/MM/YYYY") }}
                     </span>
                 </div>
             </div>
@@ -128,7 +126,7 @@ onMounted(() => {
                                 }"
                                 @click="onClickOutside"
                             >
-                                {{ props.status }}
+                                {{ task?.statusId?.name }}
                             </span>
                         </template>
                         <div class="list-status">
