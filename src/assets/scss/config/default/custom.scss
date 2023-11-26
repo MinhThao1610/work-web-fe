@@ -543,3 +543,54 @@ File: Custom Css File
 .m-r-10 {
     margin-right: 10px;
 }
+
+.table {
+    font-size: 13px;
+    td {
+        .column-numerical {
+            padding: 0.75rem 0.6rem;
+            font-weight: 500;
+        }
+
+    }
+}
+
+.el-table__inner-wrapper {
+    .el-table__header, .el-scrollbar {
+        padding: 0 !important;
+    }
+    th {
+        .cell {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--vz-body-color);
+        }
+    }
+    .btn-group-thao-tac {
+        button {
+            margin: 0 3px;
+        }
+    }
+}
+
+.card-header {
+    .btn-header {
+        display: flex;
+        button {
+            margin: 0 5px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+    }
+}
+
+.main-body {
+    .separation-form {
+        border-top: 1px solid #e9ebec;
+        padding: 16px 0px;
+        span {
+            font-size: 15px;
+        }
+    }
+}

@@ -1199,6 +1199,12 @@
             </ul>
           </div>
         </li>
+
+        <li class="nav-item">
+          <router-link class="nav-link menu-link" to="/company-manage/table">
+            <span data-key="t-widgets">Danh sách công ty</span>
+          </router-link>
+        </li>
       </ul>
     </template>
   </div>

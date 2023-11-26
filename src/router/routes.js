@@ -140,6 +140,24 @@ export default [
     component: () => import("../views/tims/statistic/statistic"),
   },
   {
+    path: "/company-manage/table",
+    name: "companyTable",
+    meta: { title: "Danh sách công ty", authRequired: true },
+    component: () => import("../views/company/company-table"),
+  },
+  {
+    path: "/company-manage/create",
+    name: "companyCreate",
+    meta: { title: "Tạo công ty", authRequired: true },
+    component: () => import("../views/company/company-form"),
+  },
+  {
+    path: "/company-manage/view/:id",
+    name: "companyView",
+    meta: { title: "Chi tiết công ty", authRequired: true },
+    component: () => import("../views/company/company-form"),
+  },
+  {
     path: "/",
     name: "default",
     meta: {
