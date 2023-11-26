@@ -4,7 +4,7 @@ import PageHeader from "@/components/page-header";
 import { onMounted, ref } from "vue";
 import { useRoute } from "vue-router";
 import { VueDraggableNext } from 'vue-draggable-next';
-import { 
+import {
     newTasksData,
     processTasksData,
     doingTasksData,
@@ -12,11 +12,44 @@ import {
     blockingTasksData,
     verifyingTasksData,
     cancelTasksData
- } from "./mockdata";
+} from "./mockdata";
 
 const focusButton = ref("tasks");
 const route = useRoute();
 
+const showForm = ref(false);
+const formRef = ref();
+const input = ref({});
+const rules = ref({
+    title: [
+        { required: true, message: 'Bắt buộc nhập tên việc', trigger: 'change' },
+    ],
+    priority: [
+        { required: true, message: 'Bắt buộc chọn mức độ ưu tiên', trigger: 'change' },
+    ],
+    startDate: [
+        { type: 'date', required: true, message: 'Bắt buộc chọn ngày bắt đầu', trigger: 'change' }
+    ],
+    deadline: [
+        { type: 'date', message: 'Bắt buộc chọn deadline', trigger: 'change' }
+    ],
+    owner_id: [
+        { required: true, message: 'Bắt buộc chọn người làm', trigger: 'change' },
+    ],
+    verifier_id: [
+        { required: true, message: 'Bắt buộc chọn người duyệt', trigger: 'change' },
+    ],
+});
+const options = ref([
+    { id: 1, name: 'Nghiêm trọng' },
+    { id: 2, name: 'Cao' },
+    { id: 3, name: 'Trung bình' },
+    { id: 4, name: 'Thấp' },
+]);
+const employees = ref([
+    { id: 1, name: 'thuntm' },
+    { id: 2, name: 'minhlq' },
+]);
 
 const newTasks = ref(newTasksData);
 const processTasks = ref(processTasksData);
@@ -77,6 +110,17 @@ const changeFocusButton = (text) => {
 const log = (event) => {
     console.log(event)
 }
+const addTask = () => {
+    showForm.value = true;
+}
+
+const onSubmit = () => {
+    formRef.value.validate((formValidated, fields) => {
+        console.log('form validated', input.value);
+        console.log('form validated', formValidated);
+        console.log('form validated', fields);
+    })
+};
 
 onMounted(() => {
     console.log("route", route.query);
@@ -92,14 +136,15 @@ onMounted(() => {
                     <div class="row g-2">
                         <div class="col-lg-auto">
                             <div class="hstack gap-2">
-                                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#creatertaskModal">
+                                <button class="btn btn-primary" @click="addTask">
                                     <i class="ri-add-line align-bottom me-1"></i> Giao việc
                                 </button>
                             </div>
                         </div>
                         <div class="col-lg-3 col-auto">
                             <div class="search-box">
-                                <input type="text" class="form-control search" placeholder="Gõ mã số hoặc tiêu đề công việc">
+                                <input type="text" class="form-control search"
+                                    placeholder="Gõ mã số hoặc tiêu đề công việc">
                                 <i class="ri-search-line search-icon"></i>
                             </div>
                         </div>
@@ -108,23 +153,24 @@ onMounted(() => {
             </div>
 
             <div class="tasks-board mb-3" id="kanbanboard">
-                <div class="tasks-list" v-for="(column, index) of kanbanColumn" :key="index" :style="`--color: ${column.color}`">
+                <div class="tasks-list" v-for="(column, index) of kanbanColumn" :key="index"
+                    :style="`--color: ${column.color};`">
                     <div class="d-flex mb-3">
                         <div class="flex-grow-1">
                             <h6 class="fs-14 text-uppercase fw-semibold mb-0">
-                                {{ column.title }} 
+                                {{ column.title }}
                                 <small class="badge align-bottom ms-1">{{ column.data.length }}</small>
                             </h6>
                         </div>
                     </div>
                     <div data-simplebar class="tasks-wrapper px-3 mx-n3">
                         <div :id="`${column.type}-task`" class="tasks">
-                            <VueDraggableNext :list="newTasks" class="dragArea" :group="{ name: 'timwook' }" @change="log">
+                            <VueDraggableNext :list="newTasks" class="dragArea" :group="{ name: 'tasks' }" @change="log">
                                 <div class="card tasks-box" v-for="(data, i) of column.data" :key="i">
                                     <div class="card-body">
                                         <div class="d-flex mb-2">
                                             <h6 class="fs-15 mb-0 flex-grow-1">
-                                                #{{ data.code }} {{ data.title }}
+                                                <b :style="`color: ${data.priorityId.color}`">#{{ data.code }}</b> {{ data.title }}
                                             </h6>
                                         </div>
                                         <div class="d-flex align-items-center">
@@ -141,172 +187,62 @@ onMounted(() => {
                 </div>
             </div>
 
-            <div class="modal fade" id="creatertaskModal" tabindex="-1" aria-labelledby="creatertaskModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content border-0">
-                        <div class="modal-header p-3 bg-soft-info">
-                            <h5 class="modal-title" id="creatertaskModalLabel">Create New Task</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="#">
-                                <div class="row g-3">
-                                    <div class="col-lg-12">
-                                        <label for="projectName" class="form-label">Project Name</label>
-                                        <input type="text" class="form-control" id="projectName" placeholder="Enter project name">
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label for="sub-tasks" class="form-label">Task Title</label>
-                                        <input type="text" class="form-control" id="sub-tasks" placeholder="Task title">
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label for="task-description" class="form-label">Task Description</label>
-                                        <textarea class="form-control" id="task-description" rows="3"></textarea>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label for="formFile" class="form-label">Tasks Images</label>
-                                        <input class="form-control" type="file" id="formFile">
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <label for="tasks-progress" class="form-label">Add Team Member</label>
-                                        <div data-simplebar style="height: 95px;">
-                                            <ul class="list-unstyled vstack gap-2 mb-0">
-                                                <li>
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-3" type="checkbox" value="" id="anna-adame">
-                                                        <label class="form-check-label d-flex align-items-center" for="anna-adame">
-                                                            <span class="flex-shrink-0">
-                                                                <img src="@/assets/images/users/avatar-1.jpg" alt="" class="avatar-xxs rounded-circle" />
-                                                            </span>
-                                                            <span class="flex-grow-1 ms-2">
-                                                                Anna Adame
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </li> 
-                                                <li>
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-3" type="checkbox" value="" id="frank-hook">
-                                                        <label class="form-check-label d-flex align-items-center" for="frank-hook">
-                                                            <span class="flex-shrink-0">
-                                                                <img src="@/assets/images/users/avatar-3.jpg" alt="" class="avatar-xxs rounded-circle" />
-                                                            </span>
-                                                            <span class="flex-grow-1 ms-2">
-                                                                Frank Hook
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </li> 
-                                                <li>
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-3" type="checkbox" value="" id="alexis-clarke">
-                                                        <label class="form-check-label d-flex align-items-center" for="alexis-clarke">
-                                                            <span class="flex-shrink-0">
-                                                                <img src="@/assets/images/users/avatar-6.jpg" alt="" class="avatar-xxs rounded-circle" />
-                                                            </span>
-                                                            <span class="flex-grow-1 ms-2">
-                                                                Alexis Clarke
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </li> 
-                                                <li>
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-3" type="checkbox" value="" id="herbert-stokes">
-                                                        <label class="form-check-label d-flex align-items-center" for="herbert-stokes">
-                                                            <span class="flex-shrink-0">
-                                                                <img src="@/assets/images/users/avatar-2.jpg" alt="" class="avatar-xxs rounded-circle" />
-                                                            </span>
-                                                            <span class="flex-grow-1 ms-2">
-                                                                Herbert Stokes
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </li> 
-                                                <li>
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-3" type="checkbox" value="" id="michael-morris">
-                                                        <label class="form-check-label d-flex align-items-center" for="michael-morris">
-                                                            <span class="flex-shrink-0">
-                                                                <img src="@/assets/images/users/avatar-7.jpg" alt="" class="avatar-xxs rounded-circle" />
-                                                            </span>
-                                                            <span class="flex-grow-1 ms-2">
-                                                                Michael Morris
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </li> 
-                                                <li>
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-3" type="checkbox" value="" id="nancy-martino">
-                                                        <label class="form-check-label d-flex align-items-center" for="nancy-martino">
-                                                            <span class="flex-shrink-0">
-                                                                <img src="@/assets/images/users/avatar-5.jpg" alt="" class="avatar-xxs rounded-circle" />
-                                                            </span>
-                                                            <span class="flex-grow-1 ms-2">
-                                                                Nancy Martino
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </li> 
-                                                <li>
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-3" type="checkbox" value="" id="thomas-taylor">
-                                                        <label class="form-check-label d-flex align-items-center" for="thomas-taylor">
-                                                            <span class="flex-shrink-0">
-                                                                <img src="@/assets/images/users/avatar-8.jpg" alt="" class="avatar-xxs rounded-circle" />
-                                                            </span>
-                                                            <span class="flex-grow-1 ms-2">
-                                                                Thomas Taylor
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </li> 
-                                                <li>
-                                                    <div class="form-check d-flex align-items-center">
-                                                        <input class="form-check-input me-3" type="checkbox" value="" id="tonya-noble">
-                                                        <label class="form-check-label d-flex align-items-center" for="tonya-noble">
-                                                            <span class="flex-shrink-0">
-                                                                <img src="@/assets/images/users/avatar-10.jpg" alt="" class="avatar-xxs rounded-circle" />
-                                                            </span>
-                                                            <span class="flex-grow-1 ms-2">
-                                                                Tonya Noble
-                                                            </span>
-                                                        </label>
-                                                    </div>
-                                                </li> 
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <label for="due-date" class="form-label">Due Date</label>
-                                    
-                                        <flat-pickr
-                            v-model="date1"
-                            placeholder="Select date"
-                            class="form-control"
-                            ></flat-pickr>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <label for="categories" class="form-label">Tags</label>
-                                        <input type="text" class="form-control" id="categories" placeholder="Enter tag">
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <label for="tasks-progress" class="form-label">Tasks Progress</label>
-                                        <input type="text" class="form-control" maxlength="3" id="tasks-progress" placeholder="Enter progress">
-                                    </div>
-                                    <div class="mt-4">
-                                        <div class="hstack gap-2 justify-content-end">
-                                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-success">Add Task</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+            <el-drawer v-model="showForm" direction="rtl" size="40%">
+                <template #header="{ titleId, titleClass }">
+                    <div :id="titleId" :class="titleClass">
+                        Tạo công việc mới
                     </div>
-                </div>
-            </div>
+                </template>
+                <el-form label-position="top" require-asterisk-position="right" :model="input" :rules="rules" ref="formRef">
+                    <el-form-item class="mb-4" label="Tên việc" prop="title">
+                        <el-input v-model="input.title" placeholder="Tên việc" />
+                    </el-form-item>
+                    <el-form-item class="mb-4" label="Mức độ ưu tiên" prop="priority">
+                        <el-select v-model="input.priority" placeholder="Mức độ ưu tiên" class="w-100">
+                            <el-option 
+                                v-for="item in options" 
+                                :key="item.id" 
+                                :label="item.name"
+                                :value="item.id"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item class="mb-4" label="Ngày bắt đầu" prop="startDate">
+                        <el-date-picker class="w-100" v-model="input.startDate" type="date" placeholder="Ngày bắt đầu"
+                            size="large" format="DD/MM/YYYY" />
+                    </el-form-item>
+                    <el-form-item class="mb-4" label="Deadline" prop="deadline">
+                        <el-date-picker class="w-100" v-model="input.deadline" type="date" placeholder="Deadline"
+                            size="large" format="DD/MM/YYYY" />
+                    </el-form-item>
+                    <el-form-item class="mb-4" label="Người làm" prop="owner_id">
+                        <el-select v-model="input.owner_id" placeholder="Người làm" class="w-100">
+                            <el-option 
+                                v-for="item in employees" 
+                                :key="item.id" 
+                                :label="item.name"
+                                :value="item.id"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <el-form-item class="mb-4" label="Người duyệt" prop="verifier_id">
+                        <el-select v-model="input.verifier_id" placeholder="Người duyệt" class="w-100">
+                            <el-option 
+                                v-for="item in employees" 
+                                :key="item.id" 
+                                :label="item.name"
+                                :value="item.id"
+                            >
+                            </el-option>
+                        </el-select>
+                    </el-form-item>
+                    <div class="d-flex justify-content-end">
+                        <button class="btn btn-success w-25" type="button" @click="onSubmit">Lưu</button>
+                    </div>
+                </el-form>
+            </el-drawer>
         </div>
     </Layout>
 </template>

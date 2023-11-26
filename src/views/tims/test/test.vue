@@ -147,16 +147,16 @@ onMounted(() => {
                 </div>
             </template>
             <el-form label-position="top" require-asterisk-position="right" :model="input" :rules="rules" ref="formRef">
-                <el-form-item class="mb-4" label="Sprint:" prop="title">
+                <el-form-item class="mb-4" label="Sprint" prop="title">
                     <el-input v-model="input.title" placeholder="Sprint" />
                 </el-form-item>
-                <el-form-item class="mb-4" label="Ngày bắt đầu:" prop="startDate">
+                <el-form-item class="mb-4" label="Ngày bắt đầu" prop="startDate">
                     <el-date-picker class="w-100" v-model="input.startDate" type="date" placeholder="Ngày bắt đầu" size="large" format="DD/MM/YYYY" />
                 </el-form-item>
-                <el-form-item class="mb-4" label="Ngày kết thúc:" prop="endDate">
+                <el-form-item class="mb-4" label="Ngày kết thúc" prop="endDate">
                     <el-date-picker class="w-100" v-model="input.endDate" type="date" placeholder="Ngày kết thúc" size="large" format="DD/MM/YYYY" />
                 </el-form-item>
-                <el-form-item class="mb-4" label="Mô tả:" prop="description">
+                <el-form-item class="mb-4" label="Mô tả" prop="description">
                     <el-input type="textarea" v-model="input.description" placeholder="Mô tả" />
                 </el-form-item>
                 <div class="d-flex justify-content-end">
