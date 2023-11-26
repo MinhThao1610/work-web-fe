@@ -1,12 +1,15 @@
 <script setup>
 import Layout from "../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
-import { onMounted, ref, reactive } from "vue";
+import { onMounted, ref, reactive, computed } from "vue";
 import "prismjs";
 import "prismjs/themes/prism.css";
 import MethodService from "../../service/MethodService";
 import DataForm from "./dataCompany";
 import { useRouter } from "vue-router";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const title = ref("Danh sách công ty");
 const items = [
@@ -137,7 +140,25 @@ onMounted(async () => {
     });
 
     await getListCompany();
+
+    login({
+        email: 'abc@gmail.com',
+        password: '123456'
+    });
+
+    setTimeout(() => {
+        console.log('authenState', authenState.value)
+    }, 5000)
 })
+
+// Implement vuex
+const authenState = computed(() => store.state.authentication.auth)
+ 
+const login = (data) => {
+    // dispatch: {{ Tên state }} / {{ Tên action }}
+    store.dispatch('authentication/fetchAuthen', data)
+}
+
 </script>
 
 <template>

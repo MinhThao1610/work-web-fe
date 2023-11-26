@@ -111,7 +111,12 @@ const log = (event) => {
     console.log(event)
 }
 const addTask = () => {
+    input.value = {};
+    if (formRef.value) formRef.value.resetFields();
     showForm.value = true;
+}
+const openDetail = (data) => {
+    console.log(data)
 }
 
 const onSubmit = () => {
@@ -166,7 +171,7 @@ onMounted(() => {
                     <div data-simplebar class="tasks-wrapper px-3 mx-n3">
                         <div :id="`${column.type}-task`" class="tasks">
                             <VueDraggableNext :list="newTasks" class="dragArea" :group="{ name: 'tasks' }" @change="log">
-                                <div class="card tasks-box" v-for="(data, i) of column.data" :key="i">
+                                <div class="card tasks-box" v-for="(data, i) of column.data" :key="i" @click="openDetail(data)">
                                     <div class="card-body">
                                         <div class="d-flex mb-2">
                                             <h6 class="fs-15 mb-0 flex-grow-1">
