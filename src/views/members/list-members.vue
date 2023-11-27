@@ -15,13 +15,15 @@ const props = defineProps({
 onMounted(() => {
     console.log(props)
 
-    const msry = new Masonry( '.grid', {
-        columnWidth: 200,
-        itemSelector: '.grid-item',
-        horizontalOrder: true,
-        gutter: 10
-    });
-    console.log(msry)
+    setTimeout(() => {
+        const msry = new Masonry( '.grid', {
+            columnWidth: 200,
+            itemSelector: '.grid-item',
+            horizontalOrder: true,
+            gutter: 10
+        });
+        console.log(msry)
+    }, 0)
 })
 </script>
 
