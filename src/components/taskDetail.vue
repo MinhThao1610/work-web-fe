@@ -8,6 +8,7 @@ import {
 import TaskInfo from './task-info.vue';
 import TaskExchange from './task-exchange.vue';
 import { useStore } from "vuex";
+import TaskForm from './taskForm.vue';
 
 const store = useStore();
 const task = computed(() => store.state.task.detail)
@@ -17,6 +18,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['close'])
 
+const showForm = ref(false);
 const activeName = ref('info');
 const openDrawer = computed(() => props.open);
 
@@ -35,7 +37,7 @@ onMounted(() => {
         <template #header="{ titleId, titleClass }">
             <div :id="titleId" :class="titleClass">
                 <el-tooltip class="box-item" effect="dark" content="Chỉnh sửa" placement="bottom" hide-after="100">
-                    <el-button type="primary" :icon="Edit" circle />
+                    <el-button type="primary" :icon="Edit" circle @click="showForm = true" />
                 </el-tooltip>
                 <el-tooltip class="box-item" effect="dark" content="Hoàn thành" placement="bottom" hide-after="100">
                     <el-button type="success" :icon="Check" circle />
@@ -86,4 +88,10 @@ onMounted(() => {
             </el-tabs>
         </div>
     </el-drawer>
+
+    <TaskForm
+        mode="edit"
+        :open="showForm"
+        @close="showForm = false"
+    />
 </template>
