@@ -56,6 +56,24 @@ export default [
     },
   },
   {
+    path: "/reset-password",
+    name: "resetpassword",
+    component: () => import("../views/account/reset-password.vue"),
+    meta: {
+      title: "Reset password",
+      beforeResolve(routeTo, routeFrom, next) {
+        // If the user is already logged in
+        if (store.getters["auth/loggedIn"]) {
+          // Redirect to the home page instead
+          next({ name: "default" });
+        } else {
+          // Continue to the login page
+          next();
+        }
+      },
+    },
+  },
+  {
     path: "/mywork",
     name: "mywork",
     meta: { title: "Việc của tôi", authRequired: true },

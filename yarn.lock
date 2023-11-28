@@ -10947,6 +10947,11 @@ vue3-google-map@^0.8.3:
   dependencies:
     "@googlemaps/js-api-loader" "^1.12.11"
 
+vue3-otp-input@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/vue3-otp-input/-/vue3-otp-input-0.4.1.tgz#4757cc771bb0c723e34b78857424322079d07fae"
+  integrity sha512-wVl9i3DcWlO0C7fBI9V+RIP3crm/1tY72fuhvb3YM2JfbLoYofB96aPl5AgFhA0Cse5bQEMYtIvOeiqW3rfbAw==
+
 vue3-quill@^0.2.6:
   version "0.2.6"
   resolved "https://registry.yarnpkg.com/vue3-quill/-/vue3-quill-0.2.6.tgz#7b31e810a7aa7fca6765fc082a3147ad0e854234"
