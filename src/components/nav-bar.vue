@@ -1,207 +1,207 @@
 <script>
-  import {
+import {
+  SimpleBar
+} from "simplebar-vue3";
+
+import i18n from "../i18n";
+
+/**
+ * Nav-bar Component
+ */
+export default {
+  data() {
+    return {
+      languages: [{
+        flag: require("@/assets/images/flags/us.svg"),
+        language: "en",
+        title: "English",
+      },
+      {
+        flag: require("@/assets/images/flags/french.svg"),
+        language: "fr",
+        title: "French",
+      },
+      {
+        flag: require("@/assets/images/flags/spain.svg"),
+        language: "sp",
+        title: "Spanish",
+      },
+      {
+        flag: require("@/assets/images/flags/china.svg"),
+        language: "ch",
+        title: "Chinese",
+      },
+      {
+        flag: require("@/assets/images/flags/germany.svg"),
+        language: "gr",
+        title: "Deutsche",
+      },
+      {
+        flag: require("@/assets/images/flags/russia.svg"),
+        language: "ru",
+        title: "русский",
+      },
+      ],
+      lan: i18n.locale,
+      text: null,
+      flag: null,
+      value: null,
+      myVar: 1,
+    };
+  },
+  components: {
     SimpleBar
-  } from "simplebar-vue3";
+  },
 
-  import i18n from "../i18n";
+  methods: {
 
-  /**
-   * Nav-bar Component
-   */
-  export default {
-    data() {
-      return {
-        languages: [{
-            flag: require("@/assets/images/flags/us.svg"),
-            language: "en",
-            title: "English",
-          },
-          {
-            flag: require("@/assets/images/flags/french.svg"),
-            language: "fr",
-            title: "French",
-          },
-          {
-            flag: require("@/assets/images/flags/spain.svg"),
-            language: "sp",
-            title: "Spanish",
-          },
-          {
-            flag: require("@/assets/images/flags/china.svg"),
-            language: "ch",
-            title: "Chinese",
-          },
-          {
-            flag: require("@/assets/images/flags/germany.svg"),
-            language: "gr",
-            title: "Deutsche",
-          },
-          {
-            flag: require("@/assets/images/flags/russia.svg"),
-            language: "ru",
-            title: "русский",
-          },
-        ],
-        lan: i18n.locale,
-        text: null,
-        flag: null,
-        value: null,
-        myVar: 1,
-      };
-    },
-    components: {
-      SimpleBar
-    },
+    isCustomDropdown() {
+      //Search bar
+      var searchOptions = document.getElementById("search-close-options");
+      var dropdown = document.getElementById("search-dropdown");
+      var searchInput = document.getElementById("search-options");
 
-    methods: {
-
-      isCustomDropdown() {
-        //Search bar
-        var searchOptions = document.getElementById("search-close-options");
-        var dropdown = document.getElementById("search-dropdown");
-        var searchInput = document.getElementById("search-options");
-
-        searchInput.addEventListener("focus", () => {
-          var inputLength = searchInput.value.length;
-          if (inputLength > 0) {
-            dropdown.classList.add("show");
-            searchOptions.classList.remove("d-none");
-          } else {
-            dropdown.classList.remove("show");
-            searchOptions.classList.add("d-none");
-          }
-        });
-
-        searchInput.addEventListener("keyup", () => {
-          var inputLength = searchInput.value.length;
-          if (inputLength > 0) {
-            dropdown.classList.add("show");
-            searchOptions.classList.remove("d-none");
-          } else {
-            dropdown.classList.remove("show");
-            searchOptions.classList.add("d-none");
-          }
-        });
-
-        searchOptions.addEventListener("click", () => {
-          searchInput.value = "";
+      searchInput.addEventListener("focus", () => {
+        var inputLength = searchInput.value.length;
+        if (inputLength > 0) {
+          dropdown.classList.add("show");
+          searchOptions.classList.remove("d-none");
+        } else {
           dropdown.classList.remove("show");
           searchOptions.classList.add("d-none");
-        });
-
-        document.body.addEventListener("click", (e) => {
-          if (e.target.getAttribute("id") !== "search-options") {
-            dropdown.classList.remove("show");
-            searchOptions.classList.add("d-none");
-          }
-        });
-      },
-      toggleHamburgerMenu() {
-        var windowSize = document.documentElement.clientWidth;
-
-        if (windowSize > 767)
-          document.querySelector(".hamburger-icon").classList.toggle("open");
-
-        //For collapse horizontal menu
-        if (
-          document.documentElement.getAttribute("data-layout") === "horizontal"
-        ) {
-          document.body.classList.contains("menu") ?
-            document.body.classList.remove("menu") :
-            document.body.classList.add("menu");
-        }
-
-        //For collapse vertical menu
-        if (document.documentElement.getAttribute("data-layout") === "vertical") {
-          if (windowSize < 1025 && windowSize > 767) {
-            document.body.classList.remove("vertical-sidebar-enable");
-            document.documentElement.getAttribute("data-sidebar-size") == "sm" ?
-              document.documentElement.setAttribute("data-sidebar-size", "") :
-              document.documentElement.setAttribute("data-sidebar-size", "sm");
-          } else if (windowSize > 1025) {
-            document.body.classList.remove("vertical-sidebar-enable");
-            document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
-              document.documentElement.setAttribute("data-sidebar-size", "sm") :
-              document.documentElement.setAttribute("data-sidebar-size", "lg");
-          } else if (windowSize <= 767) {
-            document.body.classList.add("vertical-sidebar-enable");
-            document.documentElement.setAttribute("data-sidebar-size", "lg");
-          }
-        }
-
-        //Two column menu
-        if (document.documentElement.getAttribute("data-layout") == "twocolumn") {
-          document.body.classList.contains("twocolumn-panel") ?
-            document.body.classList.remove("twocolumn-panel") :
-            document.body.classList.add("twocolumn-panel");
-        }
-      },
-      toggleMenu() {
-        this.$parent.toggleMenu();
-      },
-      toggleRightSidebar() {
-        this.$parent.toggleRightSidebar();
-      },
-      initFullScreen() {
-        document.body.classList.toggle("fullscreen-enable");
-        if (
-          !document.fullscreenElement &&
-          /* alternative standard method */
-          !document.mozFullScreenElement &&
-          !document.webkitFullscreenElement
-        ) {
-          // current working methods
-          if (document.documentElement.requestFullscreen) {
-            document.documentElement.requestFullscreen();
-          } else if (document.documentElement.mozRequestFullScreen) {
-            document.documentElement.mozRequestFullScreen();
-          } else if (document.documentElement.webkitRequestFullscreen) {
-            document.documentElement.webkitRequestFullscreen(
-              Element.ALLOW_KEYBOARD_INPUT
-            );
-          }
-        } else {
-          if (document.cancelFullScreen) {
-            document.cancelFullScreen();
-          } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-          } else if (document.webkitCancelFullScreen) {
-            document.webkitCancelFullScreen();
-          }
-        }
-      },
-      setLanguage(locale, country, flag) {
-        this.lan = locale;
-        this.text = country;
-        this.flag = flag;
-        document.getElementById("header-lang-img").setAttribute("src", flag);
-        i18n.global.locale = locale;
-      },
-      toggleDarkMode() {
-        if (document.documentElement.getAttribute("data-layout-mode") == "dark") {
-          document.documentElement.setAttribute("data-layout-mode", "light");
-        } else {
-          document.documentElement.setAttribute("data-layout-mode", "dark");
-        }
-      },
-    },
-    computed: {},
-    mounted() {
-      document.addEventListener("scroll", function () {
-        var pageTopbar = document.getElementById("page-topbar");
-        if (pageTopbar) {
-          document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50 ? pageTopbar.classList.add(
-            "topbar-shadow") : pageTopbar.classList.remove("topbar-shadow");
         }
       });
-      if (document.getElementById("topnav-hamburger-icon"))
-        document
+
+      searchInput.addEventListener("keyup", () => {
+        var inputLength = searchInput.value.length;
+        if (inputLength > 0) {
+          dropdown.classList.add("show");
+          searchOptions.classList.remove("d-none");
+        } else {
+          dropdown.classList.remove("show");
+          searchOptions.classList.add("d-none");
+        }
+      });
+
+      searchOptions.addEventListener("click", () => {
+        searchInput.value = "";
+        dropdown.classList.remove("show");
+        searchOptions.classList.add("d-none");
+      });
+
+      document.body.addEventListener("click", (e) => {
+        if (e.target.getAttribute("id") !== "search-options") {
+          dropdown.classList.remove("show");
+          searchOptions.classList.add("d-none");
+        }
+      });
+    },
+    toggleHamburgerMenu() {
+      var windowSize = document.documentElement.clientWidth;
+
+      if (windowSize > 767)
+        document.querySelector(".hamburger-icon").classList.toggle("open");
+
+      //For collapse horizontal menu
+      if (
+        document.documentElement.getAttribute("data-layout") === "horizontal"
+      ) {
+        document.body.classList.contains("menu") ?
+          document.body.classList.remove("menu") :
+          document.body.classList.add("menu");
+      }
+
+      //For collapse vertical menu
+      if (document.documentElement.getAttribute("data-layout") === "vertical") {
+        if (windowSize < 1025 && windowSize > 767) {
+          document.body.classList.remove("vertical-sidebar-enable");
+          document.documentElement.getAttribute("data-sidebar-size") == "sm" ?
+            document.documentElement.setAttribute("data-sidebar-size", "") :
+            document.documentElement.setAttribute("data-sidebar-size", "sm");
+        } else if (windowSize > 1025) {
+          document.body.classList.remove("vertical-sidebar-enable");
+          document.documentElement.getAttribute("data-sidebar-size") == "lg" ?
+            document.documentElement.setAttribute("data-sidebar-size", "sm") :
+            document.documentElement.setAttribute("data-sidebar-size", "lg");
+        } else if (windowSize <= 767) {
+          document.body.classList.add("vertical-sidebar-enable");
+          document.documentElement.setAttribute("data-sidebar-size", "lg");
+        }
+      }
+
+      //Two column menu
+      if (document.documentElement.getAttribute("data-layout") == "twocolumn") {
+        document.body.classList.contains("twocolumn-panel") ?
+          document.body.classList.remove("twocolumn-panel") :
+          document.body.classList.add("twocolumn-panel");
+      }
+    },
+    toggleMenu() {
+      this.$parent.toggleMenu();
+    },
+    toggleRightSidebar() {
+      this.$parent.toggleRightSidebar();
+    },
+    initFullScreen() {
+      document.body.classList.toggle("fullscreen-enable");
+      if (
+        !document.fullscreenElement &&
+        /* alternative standard method */
+        !document.mozFullScreenElement &&
+        !document.webkitFullscreenElement
+      ) {
+        // current working methods
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen(
+            Element.ALLOW_KEYBOARD_INPUT
+          );
+        }
+      } else {
+        if (document.cancelFullScreen) {
+          document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        }
+      }
+    },
+    setLanguage(locale, country, flag) {
+      this.lan = locale;
+      this.text = country;
+      this.flag = flag;
+      document.getElementById("header-lang-img").setAttribute("src", flag);
+      i18n.global.locale = locale;
+    },
+    toggleDarkMode() {
+      if (document.documentElement.getAttribute("data-layout-mode") == "dark") {
+        document.documentElement.setAttribute("data-layout-mode", "light");
+      } else {
+        document.documentElement.setAttribute("data-layout-mode", "dark");
+      }
+    },
+  },
+  computed: {},
+  mounted() {
+    document.addEventListener("scroll", function () {
+      var pageTopbar = document.getElementById("page-topbar");
+      if (pageTopbar) {
+        document.body.scrollTop >= 50 || document.documentElement.scrollTop >= 50 ? pageTopbar.classList.add(
+          "topbar-shadow") : pageTopbar.classList.remove("topbar-shadow");
+      }
+    });
+    if (document.getElementById("topnav-hamburger-icon"))
+      document
         .getElementById("topnav-hamburger-icon")
         .addEventListener("click", this.toggleHamburgerMenu);
 
-      this.isCustomDropdown();
-    },
-  };
+    this.isCustomDropdown();
+  },
+};
 </script>
 
 <template>
@@ -319,8 +319,7 @@
                 <div class="notification-list">
                   <!-- item -->
                   <a href="javascript:void(0);" class="d-flex dropdown-item notify-item py-2">
-                    <img src="@/assets/images/users/avatar-2.jpg" class="me-3 rounded-circle avatar-xs"
-                      alt="user-pic" />
+                    <img src="@/assets/images/users/avatar-2.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic" />
                     <div class="flex-1">
                       <h6 class="m-0">Angela Bernier</h6>
                       <span class="fs-11 mb-0 text-muted">Manager</span>
@@ -328,8 +327,7 @@
                   </a>
                   <!-- item -->
                   <a href="javascript:void(0);" class="d-flex dropdown-item notify-item py-2">
-                    <img src="@/assets/images/users/avatar-3.jpg" class="me-3 rounded-circle avatar-xs"
-                      alt="user-pic" />
+                    <img src="@/assets/images/users/avatar-3.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic" />
                     <div class="flex-1">
                       <h6 class="m-0">David Grasso</h6>
                       <span class="fs-11 mb-0 text-muted">Web Designer</span>
@@ -337,8 +335,7 @@
                   </a>
                   <!-- item -->
                   <a href="javascript:void(0);" class="d-flex dropdown-item notify-item py-2">
-                    <img src="@/assets/images/users/avatar-5.jpg" class="me-3 rounded-circle avatar-xs"
-                      alt="user-pic" />
+                    <img src="@/assets/images/users/avatar-5.jpg" class="me-3 rounded-circle avatar-xs" alt="user-pic" />
                     <div class="flex-1">
                       <h6 class="m-0">Mike Bunch</h6>
                       <span class="fs-11 mb-0 text-muted">React Developer</span>
@@ -366,8 +363,7 @@
               <form class="p-3">
                 <div class="form-group m-0">
                   <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search ..."
-                      aria-label="Recipient's username" />
+                    <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username" />
                     <button class="btn btn-primary" type="submit">
                       <i class="mdi mdi-magnify"></i>
                     </button>
@@ -386,9 +382,8 @@
             <div class="dropdown-menu dropdown-menu-end">
               <!-- item-->
               <a href="javascript:void(0);" v-for="(entry, i) in languages" :key="`Lang${i}`" :value="entry"
-                @click="setLanguage(entry.language, entry.title, entry.flag)"
-                :class="{ active: lan === entry.language }" class="dropdown-item notify-item language py-2"
-                data-lang="en" title="English">
+                @click="setLanguage(entry.language, entry.title, entry.flag)" :class="{ active: lan === entry.language }"
+                class="dropdown-item notify-item language py-2" data-lang="en" title="English">
                 <img :src="entry.flag" alt="user-image" class="me-2 rounded" height="18" />
                 <span class="align-middle">{{ entry.title }}</span>
               </a>
@@ -477,8 +472,7 @@
                   bg-info
                 ">7<span class="visually-hidden">unread messages</span></span>
             </button>
-            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0"
-              aria-labelledby="page-header-cart-dropdown">
+            <div class="dropdown-menu dropdown-menu-xl dropdown-menu-end p-0" aria-labelledby="page-header-cart-dropdown">
               <div class="
                   p-3
                   border-top-0 border-start-0 border-end-0 border-dashed border
@@ -950,26 +944,9 @@
               <router-link class="dropdown-item" to="/pages/profile"><i
                   class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                 <span class="align-middle">Profile</span></router-link>
-              <router-link class="dropdown-item" to="/chat">
-                <i class=" mdi mdi-message-text-outline text-muted fs-16 align-middle me-1"></i>
-                <span class="align-middle">Messages</span></router-link>
-              <router-link class="dropdown-item" to="/apps/tasks-kanban">
-                <i class="mdi mdi-calendar-check-outline text-muted fs-16 align-middle me-1"></i>
-                <span class="align-middle">Taskboard</span></router-link>
-              <router-link class="dropdown-item" to="/pages/faqs"><i
-                  class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i>
-                <span class="align-middle">Help</span></router-link>
-              <div class="dropdown-divider"></div>
-              <router-link class="dropdown-item" to="/pages/profile"><i
-                  class="mdi mdi-wallet text-muted fs-16 align-middle me-1"></i>
-                <span class="align-middle">Balance : <b>$5971.67</b></span></router-link>
-              <router-link class="dropdown-item" to="/pages/profile-setting"><span
-                  class="badge bg-soft-success text-success mt-1 float-end">New</span><i
+              <router-link class="dropdown-item" to="/pages/profile-setting"><i
                   class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i>
                 <span class="align-middle">Settings</span></router-link>
-              <router-link class="dropdown-item" to="/auth/lockscreen-basic"><i
-                  class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i>
-                <span class="align-middle">Lock screen</span></router-link>
               <a class="dropdown-item" href="/logout"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
                 <span class="align-middle" data-key="t-logout">Logout</span></a>
             </div>
