@@ -1,152 +1,101 @@
-export const newTasksData = [
+export const sprintData = [
     {
-        "id": "64a3db3471c39b1accf9e156",
-        "title": "[CP]/[Đơn hàng] Thêm chức năng gia hạn/nâng cấp cho các đơn hàng",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Mai Long Vũ" },
-        "code": 1812,
-        "type": "task",
-        "exchanges": [
-            {
-                "id": "655b8e4571c39b1b689927e6",
-                "content": "- Nâng cấp: Chuyển ngày start date lên Phiếu thay thế => Chưa có API",
-                "creatorId": { name: "Lê Quang Minh", avatar: "" },
-                "createAt": "2023-11-20T23:50:13.708+07:00"
-            }
-        ],
-        "checklistes": [
-            {
-                id: 1,
-                content: "Review and make sure nothing slips through cracks",
-            },
-            {
-                id: 2,
-                content: "Send meeting invites for sales upcampaign",
-            },
-            {
-                id: 3,
-                content: "Weekly closed sales won checking with sales team",
-            },
-            {
-                id: 4,
-                content: "Add notes that can be viewed from the individual view",
-            },
-            {
-                id: 5,
-                content: "Move stuff to another page",
-            },
-            {
-                id: 6,
-                content: "Styling wireframe design and documentation for velzon admin",
-            }
-        ]
+        "id": 5,
+        "status": "planned",
+        "tim_id": 1,
+        "tim": {},
+        "title": "2309-12",
+        "description": "",
+        "startDate": "2023-12-01T00:00:00+07:00",
+        "endDate": "2023-12-31T00:00:00+07:00",
+        "tasks": Array(12).fill({}),
+        "testObjects": [],
+        "testcases": [],
+        "leader_id": 1,
+        "leader": { "name": "Nguyễn Hòa" },
+        "createAt": "2023-12-01T23:41:51.33+07:00",
+        "updateAt": "2023-12-01T23:41:58.292+07:00",
+        "type": "SPRINT",
+        "progress": 0,
     },
     {
-        "id": "6433883971c39b2008af0bd6",
-        "title": "[CP] Thêm trường Note trên mục Bản in ",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Hòa" },
-        "code": 1665,
-        "type": "task",
-    }
-];
-export const processTasksData = [
-    {
-        "id": "652cba9b71c39b17a834e5bb",
-        "title": "Chuyển thông tin thành viên từ vietnamgiapha cho dòng họ Vũ Tộc",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Duy Thịnh" },
-        "code": 1874,
-        "type": "task",
+        "id": 4,
+        "status": "doing",
+        "tim_id": 1,
+        "tim": {},
+        "title": "2311",
+        "description": "",
+        "startDate": "2023-11-01T00:00:00+07:00",
+        "endDate": "2023-11-30T00:00:00+07:00",
+        "tasks": [...Array(14).fill({ statusId: { type: 'done' } }), ...Array(5).fill({})],
+        "testObjects": [],
+        "testcases": [],
+        "leader_id": 1,
+        "leader": { "name": "Nguyễn Hòa" },
+        "createAt": "2023-11-01T14:15:27.404+07:00",
+        "updateAt": "2023-11-01T14:15:35.264+07:00",
+        "lastModifiedUserId": 1,
+        "type": "SPRINT",
+        "progress": (100 * 14) / 19,
     },
     {
-        "id": "637f2e9771c39b2a20e49cfe",
-        "title": "[API] Thêm API cho phép sửa trường trong_ho",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Duy Thịnh" },
-        "code": 1355,
-        "type": "task",
-    }
-];
-export const doingTasksData = [
-    {
-        "id": "632960ee6e38501e0840684f",
-        "title": "Làm bài ngày 22/09",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Phan Thị Ngọc Minh" },
-        "code": 1146,
-        "type": "task",
+        "id": 3,
+        "status": "done",
+        "tim_id": 1,
+        "tim": {},
+        "title": "2310",
+        "description": "",
+        "startDate": "2023-10-01T00:00:00+07:00",
+        "endDate": "2023-10-31T00:00:00+07:00",
+        "tasks": Array(16).fill({ statusId: { type: 'done' } }),
+        "testObjects": [],
+        "testcases": [],
+        "leader_id": 1,
+        "leader": { "name": "Nguyễn Hòa" },
+        "createAt": "2023-10-01T09:33:59.26+07:00",
+        "updateAt": "2023-10-01T09:40:00.578+07:00",
+        "lastModifiedUserId": 1,
+        "type": "SPRINT",
+        "progress": 100,
     },
     {
-        "id": "6226c0e96e385014f8c7dcaa",
-        "title": "Viết bài \"Ra mắt ứng dụng Việt Tộc trên nền tảng Android\"",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Phan Thị Ngọc Minh" },
-        "code": 647,
-        "type": "task",
-    }
-];
-export const doneTasksData = [
-    {
-        "id": "65000dd971c39b0b4891048e",
-        "title": "Lấy thông tin dòng họ Phan - Phú Yên từ trang vietnamgiapha phục vụ import cây Việt Tộc",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Duy Thịnh" },
-        "code": 1863,
-        "type": "task",
+        "id": 2,
+        "status": "done",
+        "tim_id": 1,
+        "tim": {},
+        "title": "2309",
+        "description": "",
+        "startDate": "2023-09-1T00:00:00+07:00",
+        "endDate": "2023-09-30T00:00:00+07:00",
+        "tasks": Array(9).fill({ statusId: { type: 'done' } }),
+        "testObjects": [],
+        "testcases": [],
+        "leader_id": 1,
+        "leader": { "name": "Nguyễn Hòa" },
+        "createAt": "2023-09-01T15:39:48.861+07:00",
+        "updateAt": "2023-09-01T08:54:24.667+07:00",
+        "lastModifiedUserId": 1,
+        "type": "SPRINT",
+        "progress": 100,
     },
     {
-        "id": "654def5c71c39b1da0762a6b",
-        "title": "Chuyển thông tin dòng họ Trần Đắc từ giaphavietnam phục vụ import cây Việt Tộc",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Duy Thịnh" },
-        "code": 1881,
-        "type": "task",
-    },
-    {
-        "id": "654068f271c39b1f28ec76bd",
-        "title": "Chuyển thông tin thành viên từ giaphavietnam cho dòng họ Nguyễn Văn",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Duy Thịnh" },
-        "code": 1876,
-        "type": "task",
-    },
-    {
-        "id": "6502708b71c39b1e602fea54",
-        "title": "Lấy thông tin dòng họ Phạm - Ninh Bình từ trang vietnamgiapha phục vụ import cây Việt Tộc",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Duy Thịnh" },
-        "code": 1865,
-        "type": "task",
-    }
-];
-export const blockingTasksData = [
-    {
-        "id": "6502708b71c39b1e602fea54",
-        "title": "Lấy thông tin dòng họ Phạm - Ninh Bình từ trang vietnamgiapha phục vụ import cây Việt Tộc",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Duy Thịnh" },
-        "code": 1865,
-        "type": "task",
-    }
-];
-export const verifyingTasksData = [
-    {
-        "id": "6502708b71c39b1e602fea54",
-        "title": "Lấy thông tin dòng họ Phạm - Ninh Bình từ trang vietnamgiapha phục vụ import cây Việt Tộc",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Nguyễn Duy Thịnh" },
-        "code": 1865,
-        "type": "task",
-    }
-];
-export const cancelTasksData = [
-    {
-        "id": "64b1081271c39b3710e43d24",
-        "title": "đăng bài zalo 18/7",
-        "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
-        "ownerId": { "name": "Trần Hoàng Việt" },
-        "code": 1839,
-        "type": "task",
+        "id": 1,
+        "status": "done",
+        "tim_id": 1,
+        "tim": {},
+        "title": "2308",
+        "description": "",
+        "startDate": "2023-08-01T00:00:00+07:00",
+        "endDate": "2023-08-31T00:00:00+07:00",
+        "tasks": Array(13).fill({ statusId: { type: 'done' } }),
+        "testObjects": [],
+        "testcases": [],
+        "leader_id": 1,
+        "leader": { "name": "Nguyễn Hòa" },
+        "createAt": "2023-08-01T15:33:36.864+07:00",
+        "updateAt": "2023-08-01T16:00:42.722+07:00",
+        "lastModifiedUserId": 1,
+        "type": "SPRINT",
+        "progress": 100,
     }
 ];

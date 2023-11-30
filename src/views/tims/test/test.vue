@@ -31,9 +31,6 @@ const rules = ref({
     ],
     endDate: [
         { type: 'date', required: true, message: 'Bắt buộc chọn ngày kết thúc', trigger: 'change' }
-    ],
-    description: [
-        { required: true, message: 'Bắt buộc nhập mô tả', trigger: 'change' }
     ]
 })
 
@@ -86,12 +83,6 @@ onMounted(() => {
                                 <i class="las la-info-circle" style="font-size: 24px;"></i>
                             </button>
                         </div>
-                        <!-- <div divclass="testplan-info">
-                            <div class="quicklink d-flex justify-content-end gap-1">
-                                <button class="btn btn-outline-primary btn-sm" @click="router.push('/tim/test/testplan')">Bugs</button>
-                                <button class="btn btn-outline-primary btn-sm" @click="router.push('/tim/test/testplan')">Testcases</button>
-                            </div>
-                        </div> -->
                     </router-link>
                 </div>
             </div>

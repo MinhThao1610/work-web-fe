@@ -31,9 +31,6 @@ const rules = ref({
     ],
     endDate: [
         { type: 'date', required: true, message: 'Bắt buộc chọn ngày kết thúc', trigger: 'change' }
-    ],
-    description: [
-        { required: true, message: 'Bắt buộc nhập mô tả', trigger: 'change' }
     ]
 })
 
@@ -121,7 +118,7 @@ onMounted(() => {
                 </div>
                 <div class="d-flex mb-2 w-50">
                     <span class="label" style="width:120px;">Hoàn thành:</span>
-                    <b class="value">{{ detail.tasks.filter(x => x.statusId.type === 'done').length }}</b>
+                    <b class="value">{{ detail.tasks.filter(x => x?.statusId?.type === 'done').length }}</b>
                 </div>
             </div>
             <div class="d-flex">
