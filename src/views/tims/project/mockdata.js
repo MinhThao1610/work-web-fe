@@ -4,7 +4,7 @@ export const sprintData = [
         "status": "planned",
         "tim_id": 1,
         "tim": {},
-        "title": "2309-12",
+        "title": "2312",
         "description": "",
         "startDate": "2023-12-01T00:00:00+07:00",
         "endDate": "2023-12-31T00:00:00+07:00",

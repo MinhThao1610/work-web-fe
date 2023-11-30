@@ -1,14 +1,15 @@
 <script setup>
-import { onMounted, defineProps, ref } from 'vue';
-import account from "@/assets/images/account.jpg";
+import { onMounted, defineProps, ref, computed } from 'vue';
 import moment from 'moment';
+import { tasks, sprintData } from "./mockdata";
 
 const props = defineProps({
     check: Boolean,
+    user: {}
 });
 
-const listSprint = ref(['1', '2']);
-const listTasks = ref(['3', '4']);
+const listTasks = computed(() => tasks.filter(x => x.owner_id === props.user.id));
+const listSprint = computed(() => sprintData.filter(x => listTasks.value.map(y => y.sprint_id).includes(x.id)));
 const openReportDrawer = ref(false);
 
 const input = ref({});
@@ -40,7 +41,6 @@ const employees = ref([
 ]);
 
 onMounted(() => {
-    console.log(props)
 })
 
 const report = () => {
@@ -58,12 +58,12 @@ const onSubmit = () => {
 </script>
 
 <template>
-    <div class="tim-member-work">
+    <div class="tim-member-work grid-item">
         <div v-if="props.check === true">
             <div class="member-work-header">
                 <div class="header-left">
-                    <img :src="account" alt="avatar">
-                    <span>Nguyễn Văn A</span>
+                    <img :src="require(`@/assets/images/users/${props.user.avatar}`)" alt="avatar">
+                    <span>{{ props.user.name }}</span>
                 </div>
                 <div class="header-right">
                     <!-- thêm biểu đồ phần trăm -->
@@ -72,23 +72,23 @@ const onSubmit = () => {
             <div class="member-work-container">
                 <div 
                     v-for="sprint in listSprint" 
-                    :key="sprint" 
+                    :key="sprint.id" 
                     class="work-sprint"
                 >
                     <div class="name-sprint">
-                        <span>Sprint 01</span>
+                        <span>{{ sprint.title }}</span>
                     </div>
                     <div class="list-tasks">
                         <div 
-                            v-for="task in listTasks" 
-                            :key="task" 
+                            v-for="task in listTasks.filter(x => x.sprint_id === sprint.id)" 
+                            :key="task.id" 
                             class="task-item"
                         >
                             <div class="task-lable">
                                 <span class="task-priority"></span>
                                 <span class="task-title">
-                                    <strong>#102</strong>
-                                    [API] Gửi thông báo khi người dùng gửi yêu cầu duyệt node gia phả
+                                    <strong>#{{ task.code }}</strong>
+                                    {{ task.title }}
                                 </span>
                             </div>
                             <div class="task-status">
@@ -124,7 +124,7 @@ const onSubmit = () => {
                                 </el-popover>
                             </div>
                             <div class="task-deadline">
-                                <span>10/12/2023</span>
+                                <span>{{ moment(task.deadline).format("DD/MM/YYYY") }}</span>
                             </div>
                         </div>
                     </div>
@@ -144,8 +144,8 @@ const onSubmit = () => {
         <div v-else>
             <div class="member-not-work member-work-header">
                 <div class="header-left">
-                    <img :src="account" alt="avatar">
-                    <span>Nguyễn Văn A</span>
+                    <img :src="require(`@/assets/images/users/${props.user.avatar}`)" alt="avatar">
+                    <span>{{ props.user.name }}</span>
                 </div>
                 <div class="header-right button">
                     <span class="m-r-10">Hỏi</span>
