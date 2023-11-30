@@ -36,7 +36,7 @@ onMounted(() => {
                 </p>
                 <div class="item-contact">
                     <div class="contact-info">
-                        <span class="info-title">timLead: </span>
+                        <span class="info-title">teamLead: </span>
                         <span>{{ props.timLead }}</span>
                     </div>
                     <div class="contact-info">
@@ -65,7 +65,7 @@ onMounted(() => {
             direction="rtl"
             size="40%"
             class="task-info-drawer"
-            title="Giới thiệu tim"
+            title="Giới thiệu team"
         >
             <div>
                 aaaa

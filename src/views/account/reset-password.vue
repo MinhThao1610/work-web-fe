@@ -82,13 +82,11 @@ export default {
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
-                            <div>
-                                <router-link to="/" class="d-inline-block auth-logo">
-                                    <img src="@/assets/images/logo-light.png" alt="" height="20" />
-                                </router-link>
-                            </div>
+                            <h3 style="color: #fff;">
+                                Workflow Management
+                            </h3>
                             <p class="mt-3 fs-15 fw-medium">
-                                Premium Admin & Dashboard Template
+                                Truyền cảm hứng cho ngày làm việc của bạn
                             </p>
                         </div>
                     </div>
@@ -133,7 +131,7 @@ export default {
 
                                         <div class="text-center mt-4">
                                             <button class="btn btn-success w-100" type="submit">
-                                                Send Reset Link
+                                                Gửi yêu cầu
                                             </button>
                                         </div>
                                     </form>
@@ -143,15 +141,6 @@ export default {
                             <!-- end card body -->
                         </div>
                         <!-- end card -->
-
-                        <div class="mt-4 text-center">
-                            <p class="mb-0">
-                                Wait, I remember my password...
-                                <router-link to="/login" class="fw-semibold text-primary text-decoration-underline">
-                                    Click here
-                                </router-link>
-                            </p>
-                        </div>
                     </div>
                 </div>
                 <!-- end row -->

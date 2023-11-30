@@ -4,6 +4,7 @@ import {
 } from "simplebar-vue3";
 
 import i18n from "../i18n";
+import Swal from "sweetalert2";
 
 /**
  * Nav-bar Component
@@ -183,6 +184,30 @@ export default {
       } else {
         document.documentElement.setAttribute("data-layout-mode", "dark");
       }
+    },
+    loguot() {
+      Swal.fire({
+      title: 'Cảnh báo',
+      text: "Bạn sẽ đăng xuất khỏi hệ thống",
+      icon: "question",
+      confirmButtonColor: "#f46a6a",
+      cancelButtonText: "Quay lại",
+      confirmButtonText: "Đăng xuất",
+
+      showCancelButton: true,
+      allowOutsideClick: false,
+    }).then(async (result) => {
+    if (result.isConfirmed) {
+      window.localStorage.clear();
+      try {
+        // gọi api logout
+      } catch (e) {
+        console.error("Có lỗi: %o", e);
+      }
+      let urlLogin = location.origin + "/login";
+      window.location.replace(urlLogin);
+    }
+  });
     },
   },
   computed: {},
@@ -943,12 +968,12 @@ export default {
               <h6 class="dropdown-header">Welcome Anna!</h6>
               <router-link class="dropdown-item" to="/pages/profile"><i
                   class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
-                <span class="align-middle">Profile</span></router-link>
+                <span class="align-middle">Thông tin tài khoản</span></router-link>
               <router-link class="dropdown-item" to="/pages/profile-setting"><i
                   class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i>
-                <span class="align-middle">Settings</span></router-link>
-              <a class="dropdown-item" href="/logout"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
-                <span class="align-middle" data-key="t-logout">Logout</span></a>
+                <span class="align-middle">Cài đặt</span></router-link>
+              <button class="dropdown-item" @click="loguot()"><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+                <span class="align-middle" data-key="t-logout">Đăng xuất</span></button>
             </div>
           </div>
         </div>

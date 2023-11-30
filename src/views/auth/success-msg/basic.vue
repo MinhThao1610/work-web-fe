@@ -140,13 +140,11 @@
         <div class="row">
           <div class="col-lg-12">
             <div class="text-center mt-sm-5 mb-4 text-white-50">
-              <div>
-                <router-link to="/" class="d-inline-block auth-logo">
-                  <img src="@/assets/images/logo-light.png" alt="" height="20" />
-                </router-link>
-              </div>
+              <h3 style="color: #fff;">
+                Workflow Management
+              </h3>
               <p class="mt-3 fs-15 fw-medium">
-                Premium Admin & Dashboard Template
+                Truyền cảm hứng cho ngày làm việc của bạn
               </p>
             </div>
           </div>

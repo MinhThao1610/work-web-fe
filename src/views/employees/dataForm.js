@@ -7,23 +7,60 @@ model.dataForm = {
     name: null,
     phone: null,
     email: null,
-    status: null,
+    password: null,
     address: null,
-    website: null,
+    school: null,
     description: null,
-    nameUser: null,
-    phoneUser: null,
-    emailUser: null,
-    passwordUser: null,
-    addressUser: null,
-    descriptionUser: null,
-    expiredTime: null,
-    mission: null,
-    coreValue: null,
-    slogan: null,
-    banner: null,
-    logo: null,
+    network: null,
+    position: null,
+    birthday: null,
+    fromDate: null,
+    toDate: null,
+    avatar: null,
+    isWorking: true,
+    role: null,
 };
+
+model.listRole = [
+    {
+        value: 'ADMIN',
+        label: 'Admin',
+    },
+    {
+        value: 'USER',
+        label: 'User',
+    },
+];
+
+model.listTypeEmployees = [
+    {
+        value: 'chinh-thuc',
+        label: 'Nhân viên chính thức',
+    },
+    {
+        value: 'hop-dong',
+        label: 'Nhân viên hợp đồng',
+    },
+    {
+        value: 'thuc-tap',
+        label: 'Thực tập sinh',
+    },
+];
+
+model.listStatus = [
+    {
+        value: 'all',
+        label: 'Tất cả',
+    },
+    {
+        value: true,
+        label: 'Đang làm',
+    },
+    {
+        value: false,
+        label: 'Đã nghỉ',
+    },
+];
 
 
 model.tableRules = {

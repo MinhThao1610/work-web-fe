@@ -1,3 +1,4 @@
+<!-- eslint-disable no-undef -->
 <script>
   import {
     required,
@@ -6,6 +7,7 @@
   } from "@vuelidate/validators";
   import appConfig from "../../../app.config";
   // import { postDataApi } from "../../api/fetchAPI";
+
 import { authenticationMethods, authenticationComputed } from "@/state/helpers";
 
   export default {
@@ -28,8 +30,8 @@ import { authenticationMethods, authenticationComputed } from "@/state/helpers";
     },
     validations: {
       email: {
-        required: helpers.withMessage("Email is required", required),
-        email: helpers.withMessage("Please enter valid email", email),
+        required: helpers.withMessage("Vui lòng nhập email", required),
+        email: helpers.withMessage("Vui lòng nhập email hợp lệ", email),
       },
       password: {
         required: helpers.withMessage("Password is required", required),
@@ -40,28 +42,66 @@ import { authenticationMethods, authenticationComputed } from "@/state/helpers";
     },
     methods: {
       ...authenticationMethods,
-      login() {
-        this.fetchAuthen({
-            email: this.email,
-            password: this.password
-        });
+      
+      async tryToLogIn() {
+        this.submitted = true;
+        this.fakeData();
+        // stop here if form is invalid
+        // this.v$.$touch();
 
-        setTimeout(() => {
-          console.log(this.$store.state.authentication.auth)
-        }, 10000)
-        // const result = await postDataApi('auth/login', {
-        //   email: this.email,
-        //   password: this.password
-        // })
-        // if (result.data.status == 'errors') {
-        //   return this.authError = result.data.data;
+        // if (this.v$.$invalid) {
+        //   return;
+        // } else {
+        //   try {
+        //     await this.fetchAuthen({
+        //         email: this.email,
+        //         password: this.password
+        //     });
+
+        //     const res = this.$store.state.authentication.auth;
+        //     console.log('aaaaaaaaaaaaaaaaaa', res)
+        //     localStorage.setItem('token', res.access_token);
+        //     if(res.user_info.role === 'SYSTEMADMIN') {
+        //       this.$router.push({
+        //         path: '/company-manage/table'
+        //       });
+        //       return;
+        //     }
+            
+
+        //     this.$router.push({
+        //       path: '/mywork'
+        //     });
+        //   } catch (error) {
+        //     console.error(error)
+        //   }
         // }
-        // localStorage.setItem('token', result.data.access_token);
-        // console.log('result.data ', result.data)
-        // this.$router.push({
-        //   path: '/mywork'
-        // });
-      }
+      },
+
+      fakeData() {
+        console.log('aaaaaaaa', this.email)
+        // fake dữ liệu để hiển thị
+        if(this.email === 'abc@gmail.com') {
+          localStorage.setItem('role', 'SYSTEMADMIN');
+          this.$router.push({
+            path: '/company-manage/table'
+          });
+        }
+        if(this.email === 'admin@gmail.com') {
+          this.$router.push({
+            path: '/mywork'
+          });
+          localStorage.setItem('role', 'ADMIN');
+        }
+          
+        if(this.email === 'user@gmail.com') {
+          localStorage.setItem('role', 'USER');
+          this.$router.push({
+            path: '/mywork'
+          });
+        }
+          
+      },
     },
   };
 </script>
@@ -88,7 +128,7 @@ import { authenticationMethods, authenticationComputed } from "@/state/helpers";
           <div class="col-lg-12">
             <div class="text-center mt-sm-5 mb-4 text-white-50">
               <h3 style="color: #fff;">
-                Tên ứng dụng (nghĩ sau)
+                Workflow Management
               </h3>
               <p class="mt-3 fs-15 fw-medium">
                 Truyền cảm hứng cho ngày làm việc của bạn
@@ -115,7 +155,7 @@ import { authenticationMethods, authenticationComputed } from "@/state/helpers";
                   <form @submit.prevent="tryToLogIn">
                     <div class="mb-3">
                       <label for="email" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="email" placeholder="Enter email" v-model="email" />
+                      <input type="email" class="form-control" id="email" placeholder="Nhập email" v-model="email" />
                       <div class="invalid-feedback">
                         <span></span>
                       </div>
@@ -127,7 +167,7 @@ import { authenticationMethods, authenticationComputed } from "@/state/helpers";
                       </div>
                       <label class="form-label" for="password-input">Mật khẩu</label>
                       <div class="position-relative auth-pass-inputgroup mb-3">
-                        <input type="password" v-model="password" class="form-control pe-5" placeholder="Enter password"
+                        <input type="password" v-model="password" class="form-control pe-5" placeholder="Nhập password"
                           id="password-input" />
                         <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
                           type="button" id="password-addon">
@@ -140,7 +180,7 @@ import { authenticationMethods, authenticationComputed } from "@/state/helpers";
                     </div>
 
                     <div class="mt-4">
-                      <button class="btn btn-success w-100" type="submit" @click="login">
+                      <button class="btn btn-success w-100" type="submit">
                         Đăng nhập
                       </button>
                     </div>

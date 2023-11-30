@@ -43,8 +43,8 @@
           required: helpers.withMessage("Username is required", required),
         },
         email: {
-          required: helpers.withMessage("Email is required", required),
-          email: helpers.withMessage("Please enter valid email", email),
+          required: helpers.withMessage("Vui lòng nhập email", required),
+          email: helpers.withMessage("Vui lòng nhập email hợp lệ", email),
         },
         password: {
           required: helpers.withMessage("Password is required", required),
@@ -143,7 +143,7 @@
                       <label for="useremail" class="form-label">Email <span class="text-danger">*</span></label>
                       <input type="email" class="form-control" v-model="user.email" id="useremail" :class="{
                     'is-invalid': submitted && v$.user.email.$error,
-                  }" placeholder="Enter email address">
+                  }" placeholder="Nhập email">
                       <div v-for="(item, index) in v$.user.email.$errors" :key="index" class="invalid-feedback">
                         <span v-if="item.$message">{{ item.$message }}</span>
                       </div>

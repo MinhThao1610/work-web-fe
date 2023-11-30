@@ -8,42 +8,105 @@ import toastr from "toastr";
 import MethodService from "../../service/MethodService";
 import Validate from "../../service/ValidService";
 import Data from "./dataCompany";
+import { postAdminDataApi } from "../../api/fetchAPI";
 
 const ruleFormRef = ref(FormInstance);
 const dataForm = reactive({
-  value: MethodService.copyObject(Data.dataForm),
+    value: MethodService.copyObject(Data.dataForm),
 });
 const loadingBtn = ref(false);
 const route = useRoute();
 const router = useRouter();
 
 const rulesForm = reactive({
-  name: [Validate.checkSpecial, Validate.required],
-  split_type: [Validate.required],
-  db_layer_type: [Validate.required],
-  type: [Validate.required],
+    name: [Validate.required],
+    phone: [Validate.required, Validate.checkPhone],
+    email: [Validate.required, Validate.checkEmail],
+    nameUser: [Validate.required],
+    emailUser: [Validate.required, Validate.checkEmail],
+    phoneUser: [Validate.required, Validate.checkPhone],
+    passwordUser: [Validate.required],
+    status: [Validate.required],
 });
 
 const getCompanyById = async () => {
   
 };
 
-const addNewTable = async (formEl) => {
-  if (!formEl) return;
-  formEl.validate(async (valid) => {
-    loadingBtn.value = true;
-    if (valid) {
-    //   gọi api tạo công ty
-    toastr.success("Tạo thành công");
-    } else {
-      loadingBtn.value = false;
-      return false;
-    }
-  });
+const createCompany = async (formEl) => {
+    console.log('dataForm', dataForm)
+    if (!formEl) return;
+    formEl.validate(async (valid) => {
+        loadingBtn.value = true;
+        if (valid) {
+            const data = {
+                name: dataForm.value.name,
+                phone: dataForm.value.phone,
+                email: dataForm.value.email,
+                address: dataForm.value.address ?? '',
+                website: dataForm.value.website ?? '',
+                description: dataForm.value.description ?? '',
+                status: dataForm.value.status ? 'hoat-dong' : 'dung-hoat-dong',
+            };
+            console.log('data', data)
+            const token = localStorage.getItem('token');
+            console.log('token', token)
+            try {
+                const res = await postAdminDataApi('company/create', token, data);
+                console.log(res);
+
+                // try {
+                //     const dataUser = {
+                //         name: dataForm.value.nameUser,
+                //         phone: dataForm.value.phoneUser,
+                //         email: dataForm.value.emailUser,
+                //         password: dataForm.value.passwordUser,
+                //         address: dataForm.value.addressUser,
+                //         description: dataForm.value.descriptionUser,
+                //         status: dataForm.value.status ? 'hoat-dong' : 'dung-hoat-dong',
+                //         role: 'ADMIN',
+                //         isOwner: true
+                //     }
+                //     console.log('dataUser', dataUser)
+                //     const resUser = await postAdminDataApi('user/create', token, dataUser);
+                //     console.log(resUser);
+
+                //     try {
+                //         const dataEmployee = {
+                //             name: dataForm.value.nameUser,
+                //             phone: dataForm.value.phoneUser,
+                //             email: dataForm.value.emailUser,
+                //             password: dataForm.value.passwordUser,
+                //             address: dataForm.value.addressUser,
+                //             description: dataForm.value.descriptionUser,
+                //             status: dataForm.value.status ? 'hoat-dong' : 'dung-hoat-dong',
+                //             role: 'ADMIN',
+                //             company_id: 'id company thêm sau',
+                //             user_id: 'thêm sau'
+                //         }
+                //         const resEmployees = await postAdminDataApi('employees/create', token, dataEmployee);
+                //         console.log(resEmployees);
+                //     } catch (error) {
+                //         console.error(error)
+                //     }
+                // } catch (error) {
+                //     console.error(error)
+                // }
+                toastr.success("Tạo công ty thành công");
+            } catch (error) {
+                toastr.error("Tạo công ty thất bại");
+            } finally {
+                loadingBtn.value = false;
+            }
+        } else {
+            loadingBtn.value = false;
+            return false;
+        }
+    });
 };
 
 onMounted(async () => {
-    console.log('route.name', route.name);
+    console.log('route.name', route);
   if (route.name === "companyView") {
     await getCompanyById();
   }
@@ -134,6 +197,24 @@ onMounted(async () => {
                                         placeholder="Nhập mô tả"
                                     />
                                 </el-form-item>
+                                
+                                <b-row>
+                                    <b-col md="6">
+                                        <el-form-item label="Thời gian hết hạn" prop="expiredTime">
+                                            <el-date-picker
+                                                v-model="expiredTime"
+                                                type="date"
+                                                placeholder="Chọn ngày"
+                                            />
+                                        </el-form-item>
+                                    </b-col>
+                                    <b-col md="6">
+                                        <el-form-item label="Hoạt động" prop="status">
+                                            <el-checkbox v-model="dataForm.value.status" size="large" />
+                                        </el-form-item>
+                                    </b-col>
+                                </b-row>
+                                
                                 <div class="separation-form">
                                     <span class="mb-0 flex-grow-1">
                                         Thông tin người đăng ký công ty
@@ -145,6 +226,46 @@ onMounted(async () => {
                                         autocomplete="off"
                                         v-model="dataForm.value.nameUser"
                                         placeholder="Nhập tên người đăng ký"
+                                    />
+                                </el-form-item>
+                                <el-form-item label="Email" prop="emailUser">
+                                    <el-input
+                                        type="text"
+                                        autocomplete="off"
+                                        v-model="dataForm.value.emailUser"
+                                        placeholder="Nhập email người đăng ký"
+                                    />
+                                </el-form-item>
+                                <el-form-item label="Số điện thoại" prop="phoneUser">
+                                    <el-input
+                                        type="number"
+                                        autocomplete="off"
+                                        v-model="dataForm.value.phoneUser"
+                                        placeholder="Nhập số điện thoại người đăng ký"
+                                    />
+                                </el-form-item>
+                                <el-form-item label="Mật khẩu" prop="passwordUser">
+                                    <el-input
+                                        type="password"
+                                        autocomplete="off"
+                                        v-model="dataForm.value.passwordUser"
+                                        placeholder="Nhập mật khẩu người đăng ký"
+                                    />
+                                </el-form-item>
+                                <el-form-item label="Địa chỉ" prop="addressUser">
+                                    <el-input
+                                        type="text"
+                                        autocomplete="off"
+                                        v-model="dataForm.value.addressUser"
+                                        placeholder="Nhập địa chỉ của người đăng ký"
+                                    />
+                                </el-form-item>
+                                <el-form-item label="Mô tả" prop="descriptionUser">
+                                    <el-input
+                                        type="text"
+                                        autocomplete="off"
+                                        v-model="dataForm.value.descriptionUser"
+                                        placeholder="Nhập mô tả của người đăng ký"
                                     />
                                 </el-form-item>
                                 <div class="text-center">
@@ -159,7 +280,7 @@ onMounted(async () => {
                                         type="button"
                                         style="height: 38px"
                                         class="btn btn-secondary btn-border"
-                                        @click="addNewTable(ruleFormRef)"
+                                        @click="createCompany(ruleFormRef)"
                                         v-if="route.name === 'companyCreate'"
                                         :loading="loadingBtn"
                                     >
@@ -179,4 +300,11 @@ onMounted(async () => {
 .el-radio {
   margin-bottom: 0;
 }
+.el-select {
+    width: 100%;
+}
+:deep .el-date-editor.el-input {
+    width: 100%;
+}
+
 </style>

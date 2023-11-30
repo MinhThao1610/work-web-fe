@@ -5,20 +5,21 @@ import { onMounted, ref, reactive, computed } from "vue";
 import "prismjs";
 import "prismjs/themes/prism.css";
 import MethodService from "../../service/MethodService";
-import DataForm from "./dataCompany";
+import DataForm from "./dataForm";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
+import { ElNotification } from 'element-plus';
 
 const store = useStore();
 
-const title = ref("Danh sách công ty");
+const title = ref("Danh sách nhân viên");
 const items = [
     {
-        text: "Danh sách công ty",
-        href: "/company-manage/table",
+        text: "Danh sách nhân viên",
+        href: "/employees/table",
     },
     {
-        text: "Danh sách công ty",
+        text: "Danh sách nhân viên",
         active: true,
     },
 ];
@@ -27,42 +28,40 @@ let loading = ref(true);
 const router = useRouter();
 const tableRules = reactive(MethodService.copyObject(DataForm.tableRules));
 const validForm = reactive({ value: DataForm.tableRules.dataSearch.valid });
-const dataStatus = [
-    {
-        value: 'hoat-dong',
-        label: "Hoạt động",
-    },
-    {
-        value: 'khoa',
-        label: "Khóa",
-    },
-]
+const position = ref('chinh-thuc');
+const valueStatus = ref(true);
+
+const dialogVisible = ref(false);
+const employeeDeleteId = ref('');
 
 const getListCompany = async () => {
     tableData.value = [
         {
             id: '1111',
-            name: "cong ty 1",
+            name: "nhân viên 1",
             phone: "0928388472",
             email: "jahjksd@gmail.com",
             address: "số 1, khu A, thành phố A",
-            status: "hoat-dong"
+            tim: "phòng a",
+            isWorking: true,
         },
         {
             id: '2222',
-            name: "cong ty 2",
+            name: "nhân viên 2",
             phone: "0928388472",
             email: "jahjksd@gmail.com",
             address: "số 2, khu A, thành phố A",
-            status: "hoat-dong"
+            tim: "phòng b",
+            isWorking: true,
         },
         {
             id: '33333',
-            name: "cong ty 3",
+            name: "nhân viên 3",
             phone: "0928388472",
             email: "jahjksd@gmail.com",
             address: "số 1, khu A, thành phố A",
-            status: "hoat-dong"
+            tim: "phòng a",
+            isWorking: true,
         }
     ];
     loading.value = false;
@@ -74,13 +73,9 @@ const fn_showFormTimKiem = () => {
     tableRules.showFormSearch = !tableRules.showFormSearch;
 };
 
-const  changeStatus = () => {
-
-};
-
 const fn_CreateCompany = () => {
     router.push({
-      name: "companyCreate",
+      name: "employeeCreate",
     });
 };
 
@@ -113,11 +108,51 @@ const fn_TimKiem = (formEl) => {
   });
 };
 
-const handleClick = (id) => {
-    router.push({
-        name: "companyView",
-        params: { id: id },
-    });
+const handleClick = (id, type) => {
+    employeeDeleteId.value = '';
+    if(type === 'view')
+        router.push({
+            name: "employeeView",
+            params: { id: id },
+        });
+    if(type === 'edit')
+        router.push({
+            name: "employeeEdit",
+            params: { id: id },
+        });
+    if(type === 'delete') {
+        employeeDeleteId.value = id;
+        dialogVisible.value = true;
+    }
+};
+
+const openNotiSuccess = () => {
+    ElNotification({
+        title: 'Thông báo',
+        message: 'Xóa nhân viên thành công',
+        type: 'success',
+    })
+};
+
+const openNotiErr = () => {
+  ElNotification({
+    title: 'Lỗi',
+    message: 'Xóa nhân viên thất bại!',
+    type: 'error',
+  })
+}
+
+const deleteEmpolyee = () => {
+    if(employeeDeleteId.value) {
+        // gọi api
+        // sửa thành công
+        // gọi lại api lấy danh sách
+        openNotiSuccess();
+        dialogVisible.value = false;
+    } else {
+        dialogVisible.value = false;
+        openNotiErr();
+    }
 }
 
 onMounted(async () => {
@@ -169,7 +204,7 @@ const login = (data) => {
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Danh sách công ty</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Danh sách nhân viên</h4>
                         <div class="text-end">
                             <div class="btn-header">
                                 <button
@@ -184,7 +219,7 @@ const login = (data) => {
                                     @click="fn_CreateCompany()"
                                 >
                                     <i class="ri-add-circle-line"></i>
-                                    Tạo công ty
+                                    Thêm nhân viên
                                 </button>
                             </div>
                         </div>
@@ -208,13 +243,13 @@ const login = (data) => {
                                         <b-row>
                                             <b-col>
                                                 <el-form-item
-                                                    label="Tên công ty"
+                                                    label="Tên nhân viên"
                                                     prop="name"
                                                 >
                                                     <el-input
                                                         clearable
                                                         v-model="tableRules.dataSearch.value['name']"
-                                                        placeholder="Nhập tên công ty"
+                                                        placeholder="Nhập tên nhân viên"
                                                         type="text"
                                                     ></el-input>
                                                 </el-form-item>
@@ -244,26 +279,6 @@ const login = (data) => {
                                                 ></el-input>
                                                 </el-form-item>
                                             </b-col>
-                                            <b-col>
-                                                <el-form-item label="Trạng thái" prop="status">
-                                                <el-select
-                                                    v-model="
-                                                        tableRules.dataSearch.value['status']
-                                                    "
-                                                    filterable
-                                                    clearable
-                                                    placeholder="Chọn trạng thái"
-                                                    @change="changeStatus()"
-                                                >
-                                                    <el-option
-                                                        v-for="item in dataStatus"
-                                                        :key="item.value"
-                                                        :label="item.label"
-                                                        :value="item.value"
-                                                    />
-                                                </el-select>
-                                                </el-form-item>
-                                            </b-col>
                                         </b-row>
                                         <div class="text-center">
                                             <a
@@ -287,6 +302,29 @@ const login = (data) => {
                             </b-collapse>
                         </div>
 
+                        <div class="main-filter">
+                            <div class="row">
+                                <div class="col-xl-12">
+                                    <el-select v-model="position" class="m-2" placeholder="Loại nhân viên">
+                                        <el-option
+                                            v-for="item in DataForm.listTypeEmployees"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                        />
+                                    </el-select>
+                                    <el-select v-model="valueStatus" class="m-2" placeholder="Trạng thái hoạt động">
+                                        <el-option
+                                            v-for="item in DataForm.listStatus"
+                                            :key="item.value"
+                                            :label="item.label"
+                                            :value="item.value"
+                                        />
+                                    </el-select>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="live-preview">
                             <div class="row">
                                 <div class="col-xl-12">
@@ -305,11 +343,10 @@ const login = (data) => {
                                                 </div>
                                                 </template>
                                             </el-table-column>
-                                            <el-table-column prop="name" label="Tên công ty" min-width="140" />
+                                            <el-table-column prop="name" label="Tên" min-width="140" />
+                                            <el-table-column prop="tim" label="Phòng ban" min-width="140" />
                                             <el-table-column prop="phone" label="Số điện thoại" min-width="140" />
-                                            <el-table-column prop="email" label="Email" min-width="180" />
-                                            <el-table-column prop="address" label="Địa chỉ" min-width="300" />
-                                            <el-table-column prop="status" label="Trạng thái" min-width="120" />
+                                            <el-table-column prop="email" label="Email" min-width="200" />
                                             <el-table-column  label="Thao tác" min-width="180" >
                                                 <template #default="scope">
                                                     <div class="btn-group-thao-tac">
@@ -320,13 +357,12 @@ const login = (data) => {
                                                             <button
                                                                 type="button"
                                                                 class="btn btn-soft-info waves-effect waves-light btn-sm"
-                                                                @click="handleClick(scope.row.id)"
+                                                                @click="handleClick(scope.row.id, 'view')"
                                                             >
                                                                 <i class="ri-eye-line"></i>
                                                             </button>
                                                         </el-tooltip>
-
-                                                        <!-- <el-tooltip
+                                                        <el-tooltip
                                                             content="Sửa"
                                                             effect="light"
                                                         >
@@ -334,7 +370,7 @@ const login = (data) => {
                                                                 type="button"
                                                                 class="btn btn-soft-success waves-effect waves-light btn-sm"
                                                                 v-b-popover.hover.left="'Sửa'"
-                                                                @click="handleClick(scope.row.id)"
+                                                                @click="handleClick(scope.row.id, 'edit')"
                                                             >
                                                                 <i class="ri-edit-box-line"></i>
                                                             </button>
@@ -347,11 +383,11 @@ const login = (data) => {
                                                                 type="button"
                                                                 class="btn btn-soft-danger waves-effect waves-light btn-sm"
                                                                 v-b-popover.hover.left="'Xóa'"
-                                                                @click="deleteCustomer(scope.row.id)"
+                                                                @click="handleClick(scope.row.id, 'delete')"
                                                             >
                                                                 <i class="ri-delete-bin-6-line"></i>
                                                             </button>
-                                                        </el-tooltip> -->
+                                                        </el-tooltip>
                                                     </div>
                                                 </template>
                                             </el-table-column>
@@ -363,6 +399,22 @@ const login = (data) => {
                     </div>
                 </div>
             </div>
+            <el-dialog
+                v-model="dialogVisible"
+                title="Xác nhận"
+                width="30%"
+                center
+            >
+                <span>Bạn có chắc muốn xóa nhân viên này?</span>
+                <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">Quay lại</el-button>
+                    <el-button type="primary" @click="deleteEmpolyee()">
+                        Xóa
+                    </el-button>
+                </span>
+                </template>
+            </el-dialog>
         </div>
     </Layout>
 </template>

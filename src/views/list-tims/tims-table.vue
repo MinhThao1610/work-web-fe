@@ -1,15 +1,12 @@
 <script setup>
 import Layout from "../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
-import { onMounted, ref, reactive, computed } from "vue";
+import { onMounted, ref, reactive } from "vue";
 import "prismjs";
 import "prismjs/themes/prism.css";
 import MethodService from "../../service/MethodService";
-import DataForm from "./dataCompany";
+import DataForm from "./dataListTims";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
-
-const store = useStore();
 
 const title = ref("Danh sách công ty");
 const items = [
@@ -27,41 +24,28 @@ let loading = ref(true);
 const router = useRouter();
 const tableRules = reactive(MethodService.copyObject(DataForm.tableRules));
 const validForm = reactive({ value: DataForm.tableRules.dataSearch.valid });
-const dataStatus = [
-    {
-        value: 'hoat-dong',
-        label: "Hoạt động",
-    },
-    {
-        value: 'khoa',
-        label: "Khóa",
-    },
-]
 
-const getListCompany = async () => {
+const getListTims = async () => {
     tableData.value = [
         {
             id: '1111',
-            name: "cong ty 1",
-            phone: "0928388472",
-            email: "jahjksd@gmail.com",
-            address: "số 1, khu A, thành phố A",
+            name: "Kế toán",
+            type: "function",
+            isPublic: true,
             status: "hoat-dong"
         },
         {
             id: '2222',
-            name: "cong ty 2",
-            phone: "0928388472",
-            email: "jahjksd@gmail.com",
-            address: "số 2, khu A, thành phố A",
-            status: "hoat-dong"
+            name: "Dự án 1",
+            type: "project",
+            isPublic: true,
+            status: "dung-hoat-dong"
         },
         {
             id: '33333',
-            name: "cong ty 3",
-            phone: "0928388472",
-            email: "jahjksd@gmail.com",
-            address: "số 1, khu A, thành phố A",
+            name: "HR",
+            type: "function",
+            isPublic: false,
             status: "hoat-dong"
         }
     ];
@@ -78,9 +62,9 @@ const  changeStatus = () => {
 
 };
 
-const fn_CreateCompany = () => {
+const fn_CreateTim = () => {
     router.push({
-      name: "companyCreate",
+      name: "timCreate",
     });
 };
 
@@ -90,14 +74,14 @@ const fn_TimKiem = (formEl) => {
   formEl.validate(async (valid) => {
     if (valid) {
         loading.value = true;
-        tableRules.dataSearch.value["code"] = tableRules.dataSearch.value["code"]
-            ? tableRules.dataSearch.value["code"].trim()
+        tableRules.dataSearch.value["name"] = tableRules.dataSearch.value["name"]
+            ? tableRules.dataSearch.value["name"].trim()
             : "";
         tableRules.dataSearch.value["type"] = tableRules.dataSearch.value["type"]
             ? tableRules.dataSearch.value["type"].trim()
             : "";
-        tableRules.dataSearch.value["name"] = tableRules.dataSearch.value["name"]
-            ? tableRules.dataSearch.value["name"].trim()
+        tableRules.dataSearch.value["status"] = tableRules.dataSearch.value["status"]
+            ? tableRules.dataSearch.value["status"].trim()
             : "";
 
         // handleDepartment();
@@ -108,17 +92,38 @@ const fn_TimKiem = (formEl) => {
         tableRules.offset = 0;
         tableRules.page = 1;
         //   gọi lại api
-        await getListCompany();
+        await getListTims();
     } else return false;
   });
 };
 
-const handleClick = (id) => {
-    router.push({
-        name: "companyView",
-        params: { id: id },
-    });
-}
+const handleClick = (id, type) => {
+    if(type === 'view') 
+        router.push({
+            name: "timView",
+            params: { id: id },
+        });
+    if(type === 'edit')
+        router.push({
+            name: "timEdit",
+            params: { id: id },
+        });
+};
+
+const getType = (text) => {
+    if(text === 'function') return 'Phòng ban chức năng';
+    return 'Dự án';
+};
+
+const getPublic = (value) => {
+    if(value) return 'Công khai';
+    return 'Ẩn';
+};
+
+const getStatus = (text) => {
+    if(text === 'hoat-dong') return 'Hoạt động';
+    return 'Dừng hoạt động';
+};
 
 onMounted(async () => {
     const checkbox = document.getElementsByClassName("code-switcher");
@@ -139,26 +144,8 @@ onMounted(async () => {
       });
     });
 
-    await getListCompany();
-
-    login({
-        email: 'abc@gmail.com',
-        password: '123456'
-    });
-
-    setTimeout(() => {
-        console.log('authenState', authenState.value)
-    }, 5000)
+    await getListTims();
 })
-
-// Implement vuex
-const authenState = computed(() => store.state.authentication.auth)
- 
-const login = (data) => {
-    // dispatch: {{ Tên state }} / {{ Tên action }}
-    console.log('data', data)
-    // store.dispatch('authentication/fetchAuthen', data)
-}
 
 </script>
 
@@ -169,7 +156,7 @@ const login = (data) => {
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
-                        <h4 class="card-title mb-0 flex-grow-1">Danh sách công ty</h4>
+                        <h4 class="card-title mb-0 flex-grow-1">Danh sách team</h4>
                         <div class="text-end">
                             <div class="btn-header">
                                 <button
@@ -181,10 +168,10 @@ const login = (data) => {
                                 </button>
                                 <button
                                     class="btn btn-secondary btn-border"
-                                    @click="fn_CreateCompany()"
+                                    @click="fn_CreateTim()"
                                 >
                                     <i class="ri-add-circle-line"></i>
-                                    Tạo công ty
+                                    Tạo team
                                 </button>
                             </div>
                         </div>
@@ -206,45 +193,42 @@ const login = (data) => {
                                         @submit.prevent
                                     >
                                         <b-row>
-                                            <b-col>
+                                            <b-col md="4">
                                                 <el-form-item
-                                                    label="Tên công ty"
+                                                    label="Tên team"
                                                     prop="name"
                                                 >
                                                     <el-input
                                                         clearable
                                                         v-model="tableRules.dataSearch.value['name']"
-                                                        placeholder="Nhập tên công ty"
+                                                        placeholder="Nhập tên team"
                                                         type="text"
                                                     ></el-input>
                                                 </el-form-item>
                                             </b-col>
-                                            <b-col>
+                                            <b-col md="4">
                                                 <el-form-item
-                                                    label="Số điện thoại"
-                                                    prop="phone"
+                                                    label="Loại team"
+                                                    prop="type"
                                                 >
-                                                    <el-input
+                                                    <el-select
+                                                        v-model="
+                                                            tableRules.dataSearch.value['type']
+                                                        "
+                                                        filterable
                                                         clearable
-                                                        v-model="tableRules.dataSearch.value['phone']"
-                                                        placeholder="Nhập số điện thoại"
-                                                        type="number"
-                                                    ></el-input>
+                                                        placeholder="Chọn loại team"
+                                                    >
+                                                        <el-option
+                                                            v-for="item in DataForm.listType"
+                                                            :key="item.value"
+                                                            :label="item.label"
+                                                            :value="item.value"
+                                                        />
+                                                    </el-select>
                                                 </el-form-item>
                                             </b-col>
-                                            <b-col>
-                                                <el-form-item
-                                                    label="Email"
-                                                    prop="email"
-                                                >
-                                                <el-input
-                                                    clearable
-                                                    v-model="tableRules.dataSearch.value['email']"
-                                                    placeholder="Nhập email"
-                                                ></el-input>
-                                                </el-form-item>
-                                            </b-col>
-                                            <b-col>
+                                            <b-col md="4">
                                                 <el-form-item label="Trạng thái" prop="status">
                                                 <el-select
                                                     v-model="
@@ -256,7 +240,7 @@ const login = (data) => {
                                                     @change="changeStatus()"
                                                 >
                                                     <el-option
-                                                        v-for="item in dataStatus"
+                                                        v-for="item in DataForm.listStatus"
                                                         :key="item.value"
                                                         :label="item.label"
                                                         :value="item.value"
@@ -305,11 +289,28 @@ const login = (data) => {
                                                 </div>
                                                 </template>
                                             </el-table-column>
-                                            <el-table-column prop="name" label="Tên công ty" min-width="140" />
-                                            <el-table-column prop="phone" label="Số điện thoại" min-width="140" />
-                                            <el-table-column prop="email" label="Email" min-width="180" />
-                                            <el-table-column prop="address" label="Địa chỉ" min-width="300" />
-                                            <el-table-column prop="status" label="Trạng thái" min-width="120" />
+                                            <el-table-column prop="name" label="Tên team" min-width="180" />
+                                            <el-table-column prop="type" label="Loại team" min-width="160">
+                                                <template #default="scope">
+                                                    <div>
+                                                        {{ getType(scope.row.type) }}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="isPublic" label="Công khai" min-width="120" header-align="center" align="center">
+                                                <template #default="scope">
+                                                    <div>
+                                                        {{ getPublic(scope.row.isPublic) }}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
+                                            <el-table-column prop="status" label="Trạng thái" min-width="120">
+                                                <template #default="scope">
+                                                    <div>
+                                                        {{ getStatus(scope.row.status) }}
+                                                    </div>
+                                                </template>
+                                            </el-table-column>
                                             <el-table-column  label="Thao tác" min-width="180" >
                                                 <template #default="scope">
                                                     <div class="btn-group-thao-tac">
@@ -320,13 +321,13 @@ const login = (data) => {
                                                             <button
                                                                 type="button"
                                                                 class="btn btn-soft-info waves-effect waves-light btn-sm"
-                                                                @click="handleClick(scope.row.id)"
+                                                                @click="handleClick(scope.row.id, 'view')"
                                                             >
                                                                 <i class="ri-eye-line"></i>
                                                             </button>
                                                         </el-tooltip>
 
-                                                        <!-- <el-tooltip
+                                                        <el-tooltip
                                                             content="Sửa"
                                                             effect="light"
                                                         >
@@ -334,24 +335,11 @@ const login = (data) => {
                                                                 type="button"
                                                                 class="btn btn-soft-success waves-effect waves-light btn-sm"
                                                                 v-b-popover.hover.left="'Sửa'"
-                                                                @click="handleClick(scope.row.id)"
+                                                                @click="handleClick(scope.row.id, 'edit')"
                                                             >
                                                                 <i class="ri-edit-box-line"></i>
                                                             </button>
                                                         </el-tooltip>
-                                                        <el-tooltip
-                                                            content="Xóa"
-                                                            effect="light"
-                                                        >
-                                                            <button
-                                                                type="button"
-                                                                class="btn btn-soft-danger waves-effect waves-light btn-sm"
-                                                                v-b-popover.hover.left="'Xóa'"
-                                                                @click="deleteCustomer(scope.row.id)"
-                                                            >
-                                                                <i class="ri-delete-bin-6-line"></i>
-                                                            </button>
-                                                        </el-tooltip> -->
                                                     </div>
                                                 </template>
                                             </el-table-column>
@@ -366,3 +354,9 @@ const login = (data) => {
         </div>
     </Layout>
 </template>
+
+<style scoped>
+.el-select {
+    width: 100%;
+}
+</style>

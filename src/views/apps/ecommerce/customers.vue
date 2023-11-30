@@ -616,7 +616,7 @@
 
                       <div class="mb-3">
                         <label for="email-field" class="form-label">Email</label>
-                        <input type="email" id="email" class="form-control" placeholder="Enter Email" required />
+                        <input type="email" id="email" class="form-control" placeholder="Nhập Email" required />
                       </div>
 
                       <div class="mb-3">
@@ -676,7 +676,7 @@
 
                       <div class="mb-3">
                         <label for="email-field" class="form-label">Email</label>
-                        <input type="email" id="edtemail" class="form-control" placeholder="Enter Email" required />
+                        <input type="email" id="edtemail" class="form-control" placeholder="Nhập Email" required />
                       </div>
 
                       <div class="mb-3">

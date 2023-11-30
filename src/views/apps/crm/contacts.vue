@@ -747,7 +747,7 @@
                 <div class="col-lg-12">
                   <div>
                     <label for="email_id-field" class="form-label">Email ID</label>
-                    <input type="text" id="emailid" class="form-control" placeholder="Enter email" required />
+                    <input type="text" id="emailid" class="form-control" placeholder="Nhập email" required />
                   </div>
                 </div>
                 <div class="col-lg-6">

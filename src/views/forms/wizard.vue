@@ -153,7 +153,7 @@ document.querySelectorAll(".form-steps").forEach(function (form) {
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label class="form-label" for="gen-info-email-input">Email</label>
-                                                                    <input type="text" class="form-control" id="gen-info-email-input" placeholder="Enter Email">
+                                                                    <input type="text" class="form-control" id="gen-info-email-input" placeholder="Nhập Email">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -265,7 +265,7 @@ nexttab" data-nexttab="pills-success-tab"><i class="ri-arrow-right-line label-ic
                                                             <div class="col-lg-6">
                                                                 <div class="mb-3">
                                                                     <label class="form-label" for="steparrow-gen-info-email-input">Email</label>
-                                                                    <input type="text" class="form-control" id="steparrow-gen-info-email-input" placeholder="Enter Email">
+                                                                    <input type="text" class="form-control" id="steparrow-gen-info-email-input" placeholder="Nhập Email">
                                                                 </div>
                                                             </div>
                                                             <div class="col-lg-6">
@@ -407,7 +407,7 @@ nexttab" data-nexttab="pills-experience-tab"><i class="ri-arrow-right-line label
                                                                 
                                                                         <div class="col-12">
                                                                             <label for="email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
-                                                                            <input type="email" class="form-control" id="email" placeholder="Enter Email">
+                                                                            <input type="email" class="form-control" id="email" placeholder="Nhập Email">
                                                                         </div>
                                                                     </div>
                                                                 </div>

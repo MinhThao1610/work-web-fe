@@ -171,8 +171,8 @@
 
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
-                                    <h5 class="text-primary">Forgot Password?</h5>
-                                    <p class="text-muted">Reset password with velzon</p>
+                                    <h5 class="text-primary">Quên mật khẩu?</h5>
+                                    <p class="text-muted">Đặt lại mật khẩu bằng email</p>
 
                                     <lottie class="avatar-xl" colors="primary:#0ab39c,secondary:#405189"
                                         :options="defaultOptions" :height="120" :width="120" />
@@ -187,11 +187,11 @@
                                         <div class="mb-4">
                                             <label class="form-label">Email</label>
                                             <input type="email" class="form-control" id="email"
-                                                placeholder="Enter Email">
+                                                placeholder="Nhập Email">
                                         </div>
 
                                         <div class="text-center mt-4">
-                                            <button class="btn btn-success w-100" type="submit">Send Reset Link</button>
+                                            <button class="btn btn-success w-100" type="submit">Gửi yêu cầu</button>
                                         </div>
                                     </form><!-- end form -->
                                 </div>
@@ -199,13 +199,6 @@
                             <!-- end card body -->
                         </div>
                         <!-- end card -->
-
-                        <div class="mt-4 text-center">
-                            <p class="mb-0">Wait, I remember my password... <router-link to="/auth/signin-basic"
-                                    class="fw-semibold text-primary text-decoration-underline"> Click here
-                                </router-link>
-                            </p>
-                        </div>
 
                     </div>
                 </div>

@@ -67,8 +67,8 @@ export default {
 
                                     <div class="col-lg-6">
                                         <div class="p-lg-5 p-4">
-                                            <h5 class="text-primary">Forgot Password?</h5>
-                                            <p class="text-muted">Reset password with velzon</p>
+                                            <h5 class="text-primary">Quên mật khẩu?</h5>
+                                            <p class="text-muted">Đặt lại mật khẩu bằng email</p>
 
                                             <div class="mt-2 text-center">
                                                <lottie
@@ -87,17 +87,13 @@ export default {
                                                 <form>
                                                     <div class="mb-4">
                                                         <label class="form-label">Email</label>
-                                                        <input type="email" class="form-control" id="email" placeholder="Enter email address">
+                                                        <input type="email" class="form-control" id="email" placeholder="Nhập email address">
                                                     </div>
                                                     
                                                     <div class="text-center mt-4">
-                                                        <button class="btn btn-success w-100" type="submit">Send Reset Link</button>
+                                                        <button class="btn btn-success w-100" type="submit">Gửi yêu cầu</button>
                                                     </div>
                                                 </form><!-- end form -->
-                                            </div>
-    
-                                            <div class="mt-5 text-center">
-                                                <p class="mb-0">Wait, I remember my password... <router-link to="/auth/signin-cover" class="fw-semibold text-primary text-decoration-underline"> Click here </router-link> </p>
                                             </div>
                                         </div>
                                     </div>

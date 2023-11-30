@@ -5,26 +5,39 @@ let model = {};
 // dữ liệu form
 model.dataForm = {
     name: null,
-    phone: null,
-    email: null,
-    status: null,
-    address: null,
-    website: null,
+    avatar: null,
     description: null,
-    nameUser: null,
-    phoneUser: null,
-    emailUser: null,
-    passwordUser: null,
-    addressUser: null,
-    descriptionUser: null,
-    expiredTime: null,
-    mission: null,
-    coreValue: null,
+    status: null,
+    type: null,
+    startDate: null,
+    endDate: null,
+    isPublic: true,
     slogan: null,
-    banner: null,
-    logo: null,
+    leader_id: null,
+    isCancelTask: true,
 };
 
+model.listType = [
+    {
+        value: 'function',
+        label: 'Phòng ban chức năng',
+    },
+    {
+        value: 'project',
+        label: 'Dự án',
+    },
+];
+
+model.listStatus = [
+    {
+        value: 'hoat-dong',
+        label: "Hoạt động",
+    },
+    {
+        value: 'dung-hoat-dong',
+        label: "Dừng hoạt động",
+    },
+]
 
 model.tableRules = {
     lengthMenu: [10, 20, 50, 100],

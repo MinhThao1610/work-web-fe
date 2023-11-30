@@ -28,7 +28,7 @@ onMounted(() => {
                     <span class="value">Intern</span>
                 </div>
                 <div class="info-item">
-                    <span class="title">Tim</span>
+                    <span class="title">Team</span>
                     <span class="value">Production</span>
                 </div>
                 <div class="info-item">

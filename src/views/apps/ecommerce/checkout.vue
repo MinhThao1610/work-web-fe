@@ -271,7 +271,7 @@ export default {
                             type="email"
                             class="form-control"
                             id="billinginfo-email"
-                            placeholder="Enter email"
+                            placeholder="Nhập email"
                           />
                         </div>
                       </div>

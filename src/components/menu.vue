@@ -15,6 +15,7 @@
         settings: {
           minScrollbarLength: 60,
         },
+        role: localStorage.getItem('role'),
       };
     },
     computed: {
@@ -1162,31 +1163,25 @@
 
     <template v-else>
       <ul class="navbar-nav h-100" id="navbar-nav">
-        <li class="nav-item">
+        <li v-if="this.role !== 'SYSTEMADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/mywork">
             <span data-key="t-widgets">Việc của tôi</span>
           </router-link>
         </li>
-        <li class="nav-item">
-          <router-link class="nav-link menu-link" to="/widgets">
-            <i class="ri-pages-line"></i>
-            <span data-key="t-widgets">widgets</span>
-          </router-link>
-        </li>
-        <li class="menu-title">
+        <li v-if="this.role !== 'SYSTEMADMIN'" class="menu-title">
           <span data-key="t-menu"> Công ty</span>
         </li>
-        <li class="nav-item">
+        <li v-if="this.role !== 'SYSTEMADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/company/workfeed">
             <i class="ri-pages-line"></i>
             <span data-key="t-widgets">Công ty A</span>
           </router-link>
         </li>
-        <li class="nav-item">
+        <li v-if="this.role !== 'SYSTEMADMIN'" class="nav-item">
           <a class="nav-link menu-link" href="#tims" data-bs-toggle="collapse" role="button"
             aria-expanded="false" aria-controls="tims">
             <i class="ri-pages-line"></i>
-            <span data-key="t-tims"> Tims</span>
+            <span data-key="t-tims"> Teams</span>
           </a>
           <div class="collapse menu-dropdown" id="tims">
             <ul class="nav nav-sm flex-column">
@@ -1200,9 +1195,34 @@
           </div>
         </li>
 
-        <li class="nav-item">
+        <li v-if="this.role === 'SYSTEMADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/company-manage/table">
             <span data-key="t-widgets">Danh sách công ty</span>
+          </router-link>
+        </li>
+        <li v-if="this.role === 'ADMIN'" class="nav-item">
+          <router-link class="nav-link menu-link" to="/company/edit/1">
+            <span data-key="t-widgets">Chỉnh sửa công ty</span>
+          </router-link>
+        </li>
+        <li v-if="this.role === 'ADMIN'" class="nav-item">
+          <router-link class="nav-link menu-link" to="/employees/table">
+            <span data-key="t-widgets">Nhân sự</span>
+          </router-link>
+        </li>
+        <li v-if="this.role === 'ADMIN'" class="nav-item">
+          <router-link class="nav-link menu-link" to="/tims/table">
+            <span data-key="t-widgets">Danh sách team</span>
+          </router-link>
+        </li>
+        <li v-if="this.role === 'ADMIN'" class="nav-item">
+          <router-link class="nav-link menu-link" to="/library/table">
+            <span data-key="t-widgets">Danh sách Tri thức</span>
+          </router-link>
+        </li>
+        <li v-if="this.role === 'ADMIN'" class="nav-item">
+          <router-link class="nav-link menu-link" to="/milestone/table">
+            <span data-key="t-widgets">Danh sách bài văn hóa</span>
           </router-link>
         </li>
       </ul>
