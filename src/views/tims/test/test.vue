@@ -1,25 +1,25 @@
 <script setup>
 import Layout from "../../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { computed, onMounted, ref } from "vue";
 import moment from "moment";
-import { testplanData } from "./mockdata";
-import { copyObj } from "../../../helpers/utils";
+import { useStore } from "vuex";
+import MethodService from "../../../service/MethodService";
+import { ElMessageBox, ElMessage } from 'element-plus';
 
 const focusButton = ref("test");
-const route = useRoute();
 
 const changeFocusButton = (text) => {
     focusButton.value = text;
 };
 
+const store = useStore();
 const showDetail = ref(false);
 const showForm = ref(false);
 
 const mode = ref('create');
 const formRef = ref();
-const testplans = ref(testplanData);
+const testplans = computed(() => store.state.testplan.testplans);
 const detail = ref({});
 const input = ref({});
 const rules = ref({
@@ -37,7 +37,7 @@ const rules = ref({
 const openDetail = (e, i) => {
     e.preventDefault();
     showDetail.value = true;
-    detail.value = copyObj(testplans.value[i]);
+    detail.value = MethodService.copyObject(testplans.value[i]);
 }
 const addTestplan = () => {
     input.value = {};
@@ -52,17 +52,46 @@ const editTestplan = () => {
     input.value = detail.value;
     mode.value = 'edit';
 }
+const deleteTestplan = () => {
+    ElMessageBox.confirm('Bạn có muốn xóa kế hoạch test này?')
+        .then(() => {
+            store.dispatch('project/deleteProject', detail.value.id);
+            ElMessage({
+                message: 'Xóa kế hoạch test thành công',
+                type: 'success',
+            });
+        });
+}
 
 const onSubmit = () => {
-    formRef.value.validate((formValidated, fields) => {
-        console.log('form validated', input.value);
-        console.log('form validated', formValidated);
-        console.log('form validated', fields);
+    formRef.value.validate((formValidated) => {
+        if (formValidated) {
+            if (mode.value === 'create') {
+                store.dispatch('testplan/addTestplan', input.value);
+
+                ElMessage({
+                    message: 'Tạo kế hoạch test thành công',
+                    type: 'success',
+                });
+            } else {
+                store.dispatch('testplan/editTestplan', {
+                    ...input.value,
+                    id: detail.value.id
+                });
+
+                ElMessage({
+                    message: 'Cập nhật kế hoạch test thành công',
+                    type: 'success',
+                });
+            }
+
+            showForm.value = false;
+        }
     })
 };
 
 onMounted(() => {
-    console.log("route", route.query);
+    store.dispatch('testplan/fetchTestplans');
 });
 </script>
 
@@ -96,6 +125,7 @@ onMounted(() => {
             </template>
             <div class="d-flex justify-content-end">
                 <button class="btn btn-primary" @click="editTestplan">Cập nhật</button>
+                <button class="btn btn-danger ms-2" @click="deleteTestplan">Xóa</button>
             </div>
             <div class="d-flex mb-2">
                 <span class="label" style="width:120px;">Người phụ trách:</span>
@@ -108,7 +138,7 @@ onMounted(() => {
                 </div>
                 <div class="d-flex mb-2 w-50">
                     <span class="label" style="width:120px;">Passed:</span>
-                    <b class="value">{{ detail.tasks.filter(x => x.statusId.type === 'done').length }}</b>
+                    <b class="value">{{ detail.tasks.filter(x => x?.statusId?.type === 'done').length }}</b>
                 </div>
             </div>
             <div class="d-flex">

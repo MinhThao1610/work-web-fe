@@ -1,14 +1,13 @@
 <script setup>
 import Layout from "../../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { computed, onMounted, ref } from "vue";
 import moment from "moment";
-import { sprintData } from "./mockdata";
-import { copyObj } from "../../../helpers/utils";
+import { useStore } from "vuex";
+import MethodService from "../../../service/MethodService";
+import { ElMessageBox, ElMessage } from 'element-plus';
 
 const focusButton = ref("project");
-const route = useRoute();
 
 const changeFocusButton = (text) => {
     focusButton.value = text;
@@ -17,9 +16,10 @@ const changeFocusButton = (text) => {
 const showDetail = ref(false);
 const showForm = ref(false);
 
+const store = useStore();
 const mode = ref('create');
 const formRef = ref();
-const projects = ref(sprintData);
+const projects = computed(() => store.state.project.projects);
 const detail = ref({});
 const input = ref({});
 const rules = ref({
@@ -37,7 +37,7 @@ const rules = ref({
 const openDetail = (e, i) => {
     e.preventDefault();
     showDetail.value = true;
-    detail.value = copyObj(projects.value[i]);
+    detail.value = MethodService.copyObject(projects.value[i]);
 }
 const addSprint = () => {
     input.value = {};
@@ -52,17 +52,46 @@ const editSprint = () => {
     input.value = detail.value;
     mode.value = 'edit';
 }
+const deleteSprint = () => {
+    ElMessageBox.confirm('Bạn có muốn xóa sprint này?')
+        .then(() => {
+            store.dispatch('project/deleteProject', detail.value.id);
+            ElMessage({
+                message: 'Xóa sprint thành công',
+                type: 'success',
+            });
+        });
+}
 
 const onSubmit = () => {
-    formRef.value.validate((formValidated, fields) => {
-        console.log('form validated', input.value);
-        console.log('form validated', formValidated);
-        console.log('form validated', fields);
+    formRef.value.validate((formValidated) => {
+        if (formValidated) {
+            if (mode.value === 'create') {
+                store.dispatch('project/addProject', input.value);
+
+                ElMessage({
+                    message: 'Tạo sprint thành công',
+                    type: 'success',
+                });
+            } else {
+                store.dispatch('project/editProject', {
+                    ...input.value,
+                    id: detail.value.id
+                });
+
+                ElMessage({
+                    message: 'Cập nhật sprint thành công',
+                    type: 'success',
+                });
+            }
+
+            showForm.value = false;
+        }
     })
 };
 
 onMounted(() => {
-    console.log("route", route.query);
+    store.dispatch('project/fetchProjects');
 });
 </script>
 
@@ -96,7 +125,9 @@ onMounted(() => {
                             </div>
                         </div>
 
-                        <div class="progressbar" :style="`width: ${project.progress}%`"></div>
+                        <div class="progressbar" :style="`--width: ${project.progress}%`">
+                            <span>{{ project.progress }}%</span>
+                        </div>
                     </router-link>
                 </div>
             </div>
@@ -110,6 +141,7 @@ onMounted(() => {
             </template>
             <div class="d-flex justify-content-end">
                 <button class="btn btn-primary" @click="editSprint">Cập nhật</button>
+                <button class="btn btn-danger ms-2" @click="deleteSprint">Xóa</button>
             </div>
             <div class="d-flex">
                 <div class="d-flex mb-2 w-50">
@@ -152,10 +184,12 @@ onMounted(() => {
                     <el-input v-model="input.title" placeholder="Sprint" />
                 </el-form-item>
                 <el-form-item class="mb-4" label="Ngày bắt đầu" prop="startDate">
-                    <el-date-picker class="w-100" v-model="input.startDate" type="date" placeholder="Ngày bắt đầu" size="large" format="DD/MM/YYYY" />
+                    <el-date-picker class="w-100" v-model="input.startDate" type="date" placeholder="Ngày bắt đầu"
+                        size="large" format="DD/MM/YYYY" />
                 </el-form-item>
                 <el-form-item class="mb-4" label="Ngày kết thúc" prop="endDate">
-                    <el-date-picker class="w-100" v-model="input.endDate" type="date" placeholder="Ngày kết thúc" size="large" format="DD/MM/YYYY" />
+                    <el-date-picker class="w-100" v-model="input.endDate" type="date" placeholder="Ngày kết thúc"
+                        size="large" format="DD/MM/YYYY" />
                 </el-form-item>
                 <el-form-item class="mb-4" label="Mô tả" prop="description">
                     <el-input type="textarea" v-model="input.description" placeholder="Mô tả" />

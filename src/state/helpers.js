@@ -44,3 +44,19 @@ export const authenticationComputed = {
     auth: (state) => state.auth,
   })
 }
+
+// Projects store
+export const projectMethods = mapActions('project', ['setProjects'])
+export const projectComputed = {
+  ...mapState('project', {
+    projects: (state) => state.projects,
+  })
+}
+
+// Testplans store
+export const testplanMethods = mapActions('testplan', ['setTestplans'])
+export const testplanComputed = {
+  ...mapState('testplan', {
+    testplans: (state) => state.testplans,
+  })
+}
