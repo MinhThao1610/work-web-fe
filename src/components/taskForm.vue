@@ -1,6 +1,7 @@
 <script setup>
 import { defineProps, ref, computed, defineEmits, watch } from 'vue';
 import { useStore } from "vuex";
+import { ElMessage } from 'element-plus';
 
 const store = useStore();
 
@@ -10,6 +11,7 @@ const props = defineProps({
 });
 const emit = defineEmits(['close'])
 
+const task = computed(() => store.state.task.detail);
 const openDrawer = computed(() => props.open);
 const input = ref({});
 const formRef = ref();
@@ -45,14 +47,33 @@ const employees = ref([
 ]);
 
 const onSubmit = () => {
-    formRef.value.validate((formValidated, fields) => {
-        console.log('form validated', input.value);
-        console.log('form validated', formValidated);
-        console.log('form validated', fields);
+    formRef.value.validate((formValidated) => {
+        if (formValidated) {
+            if (props.mode.value === 'create') {
+                store.dispatch('task/addTask', input.value);
+
+                ElMessage({
+                    message: 'Tạo công việc thành công',
+                    type: 'success',
+                });
+            } else {
+                store.dispatch('task/editTask', {
+                    ...input.value,
+                    id: task.value.id
+                });
+
+                ElMessage({
+                    message: 'Cập nhật công việc thành công',
+                    type: 'success',
+                });
+            }
+
+            emit('close');
+        }
     })
 };
 
-watch(() => store.state.task.detail, (task) => { 
+watch(() => store.state.task.detail, (task) => {
     if (props.mode.value !== 'create') input.value = task;
 })
 
@@ -62,7 +83,7 @@ watch(() => store.state.task.detail, (task) => {
     <el-drawer v-model="openDrawer" direction="rtl" size="40%" class="task-info-drawer" @closed="emit('close')">
         <template #header="{ titleId, titleClass }">
             <div :id="titleId" :class="titleClass">
-                Tạo công việc mới
+                {{ mode === 'create' ? 'Tạo công việc mới' : 'Cập nhật công việc' }}
             </div>
         </template>
         <el-form label-position="top" require-asterisk-position="right" :model="input" :rules="rules" ref="formRef">

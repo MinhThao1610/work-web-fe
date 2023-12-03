@@ -1,15 +1,16 @@
 <script setup>
 import { onMounted, defineProps, ref, computed } from 'vue';
 import moment from 'moment';
-import { tasks, sprintData } from "./mockdata";
+import { useStore } from "vuex";
 
 const props = defineProps({
     check: Boolean,
     user: {}
 });
 
-const listTasks = computed(() => tasks.filter(x => x.owner_id === props.user.id));
-const listSprint = computed(() => sprintData.filter(x => listTasks.value.map(y => y.sprint_id).includes(x.id)));
+const store = useStore();
+const listTasks = computed(() => store.state.task.tasks.filter(x => x.owner_id === props.user.id));
+const listSprint = computed(() => store.state.project.projects.filter(x => listTasks.value.map(y => y.sprint_id).includes(x.id)));
 const openReportDrawer = ref(false);
 
 const input = ref({});
@@ -41,6 +42,8 @@ const employees = ref([
 ]);
 
 onMounted(() => {
+    store.dispatch('project/fetchProjects');
+    store.dispatch('task/fetchTasks');
 })
 
 const report = () => {

@@ -1,25 +1,14 @@
 <script setup>
 import Layout from "../../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { computed, onMounted, ref } from "vue";
 import { VueDraggableNext } from 'vue-draggable-next';
-import {
-    newTasksData,
-    processTasksData,
-    doingTasksData,
-    doneTasksData,
-    blockingTasksData,
-    verifyingTasksData,
-    cancelTasksData
-} from "./mockdata";
 import TaskDetail from "../../../components/taskDetail.vue";
 import { useStore } from "vuex";
 import TaskForm from "../../../components/taskForm.vue";
 
 const store = useStore();
 const focusButton = ref("tasks");
-const route = useRoute();
 
 const mode = ref('create');
 const showForm = ref(false);
@@ -27,54 +16,46 @@ const showDetail = ref(false);
 const formRef = ref();
 const input = ref({});
 
-const newTasks = ref(newTasksData);
-const processTasks = ref(processTasksData);
-const doingTasks = ref(doingTasksData);
-const doneTasks = ref(doneTasksData);
-const blockingTasks = ref(blockingTasksData);
-const verifyingTasks = ref(verifyingTasksData);
-const cancelTasks = ref(cancelTasksData);
-
-const kanbanColumn = ref([
+const kanbanColumn = computed(() => [
     {
         title: 'Planned',
-        data: newTasks,
+        data: store.state.task.tasks.filter(x => x.status === 'new') ?? [],
         color: '#ff8000',
         type: 'new'
     },
     {
         title: 'In Process',
-        data: processTasks,
+        data: store.state.task.tasks.filter(x => x.status === 'process') ?? [],
         color: '#33cccc',
         type: 'process'
     },
     {
         title: 'Doing',
-        data: doingTasks,
+        data: store.state.task.tasks.filter(x => x.status === 'doing') ?? [],
         color: '#006cd9',
         type: 'doing'
     },
     {
         title: 'Done',
-        data: doneTasks,
+        data: store.state.task.tasks.filter(x => x.status === 'done') ?? [],
         color: '#0bb251',
         type: 'done'
     },
     {
         title: 'Blocking',
-        data: blockingTasks,
+        data: store.state.task.tasks.filter(x => x.status === 'block') ?? [],
         color: '#ed2438',
         type: 'block'
     },
     {
         title: 'Verifying',
-        data: verifyingTasks,
+        data: store.state.task.tasks.filter(x => x.status === 'verifying') ?? [],
         color: '#ff4081',
         type: 'verifying'
     },
     {
         title: 'Cancelled',
-        data: cancelTasks,
+        data: store.state.task.tasks.filter(x => x.status === 'cancel') ?? [],
         color: '#dedede',
         type: 'cancel'
     }
@@ -83,9 +64,6 @@ const kanbanColumn = ref([
 const changeFocusButton = (text) => {
     focusButton.value = text;
 };
-const log = (event) => {
-    console.log(event)
-}
 const addTask = () => {
     input.value = {};
     if (formRef.value) formRef.value.resetFields();
@@ -97,7 +75,7 @@ const openDetail = (data) => {
 }
 
 onMounted(() => {
-    console.log("route", route.query);
+    store.dispatch('task/fetchTasks');
 });
 </script>
 
@@ -139,7 +117,7 @@ onMounted(() => {
                     </div>
                     <div data-simplebar class="tasks-wrapper px-3 mx-n3">
                         <div :id="`${column.type}-task`" class="tasks">
-                            <VueDraggableNext :list="newTasks" class="dragArea" :group="{ name: 'tasks' }" @change="log">
+                            <VueDraggableNext :list="newTasks" class="dragArea" :group="{ name: 'tasks' }">
                                 <div class="card tasks-box" v-for="(data, i) of column.data" :key="i" @click="openDetail(data)">
                                     <div class="card-body">
                                         <div class="d-flex mb-2">

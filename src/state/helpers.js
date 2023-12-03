@@ -60,3 +60,19 @@ export const testplanComputed = {
     testplans: (state) => state.testplans,
   })
 }
+
+// Tasks store
+export const taskMethods = mapActions('task', ['setTasks', 'setTaskDetail'])
+export const taskComputed = {
+  ...mapState('task', {
+    tasks: (state) => state.tasks,
+  })
+}
+
+// Users store
+export const userMethods = mapActions('user', ['setUsers'])
+export const userComputed = {
+  ...mapState('user', {
+    users: (state) => state.users,
+  })
+}

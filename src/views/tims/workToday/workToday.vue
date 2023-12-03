@@ -1,48 +1,36 @@
 <script setup>
 import Layout from "../../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
-import { onMounted, ref } from 'vue';
-import { useRoute } from "vue-router";
+import { computed, onMounted, ref } from 'vue';
 import WorkMember from "./workMember.vue";
-import { users } from "./mockdata";
 import Masonry from 'masonry-layout';
+import { useStore } from "vuex";
 
-const title = ref("Widgets");
-const items = ref([{
-  text: "Velzon",
-  href: "/",
-},
-{
-  text: "Widgets",
-  active: true,
-}]);
+const store = useStore();
 const focusButton = ref('today');
-const route = useRoute();
+const users = computed(() => store.state.user.users);
 
 const changeFocusButton = (text) => {
-  console.log(text);
   focusButton.value = text;
 }
 
 onMounted(() => {
-  console.log('route', route.query)
-
+    store.dispatch('user/fetchUsers');
   setTimeout(() => {
-    const msry = new Masonry('.grid', {
+    // eslint-disable-next-line no-unused-vars
+    const _ = new Masonry('.grid', {
       columnWidth: 450,
       itemSelector: '.grid-item',
       horizontalOrder: true,
       gutter: 10
     });
-    console.log(msry)
   }, 0)
 })
 </script>
 
 <template>
   <Layout>
-    <PageHeader :title="title" :items="items" type="tim" :focusButton="focusButton"
-      @changeFocusButton="changeFocusButton" />
+    <PageHeader type="tim" :focusButton="focusButton" @changeFocusButton="changeFocusButton" />
     <div class="row">
       <div class="col-9">
         <div id="tim-work">

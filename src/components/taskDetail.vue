@@ -9,6 +9,7 @@ import TaskInfo from './task-info.vue';
 import TaskExchange from './task-exchange.vue';
 import { useStore } from "vuex";
 import TaskForm from './taskForm.vue';
+import { ElMessageBox, ElMessage } from 'element-plus';
 
 const store = useStore();
 const task = computed(() => store.state.task.detail)
@@ -24,8 +25,21 @@ const openDrawer = computed(() => props.open);
 
 const newChecklist = ref('');
 
-const handleClick = (tab, event) => {
-    console.log(tab, event)
+const doneTask = () => {
+    store.dispatch('task/editTask', {
+        id: task.value.id,
+        status: 'done'
+    });
+}
+const deleteTask = () => {
+    ElMessageBox.confirm('Bạn có muốn xóa công việc này?')
+        .then(() => {
+            store.dispatch('task/deleteTask', task.value.id);
+            ElMessage({
+                message: 'Xóa công việc thành công',
+                type: 'success',
+            });
+        });
 }
 
 onMounted(() => {
@@ -40,15 +54,15 @@ onMounted(() => {
                     <el-button type="primary" :icon="Edit" circle @click="showForm = true" />
                 </el-tooltip>
                 <el-tooltip class="box-item" effect="dark" content="Hoàn thành" placement="bottom" hide-after="100">
-                    <el-button type="success" :icon="Check" circle />
+                    <el-button type="success" :icon="Check" circle @click="doneTask" />
                 </el-tooltip>
                 <el-tooltip class="box-item" effect="dark" content="Xóa" placement="bottom" hide-after="100">
-                    <el-button type="danger" :icon="Delete" circle />
+                    <el-button type="danger" :icon="Delete" circle @click="deleteTask" />
                 </el-tooltip>
             </div>
         </template>
         <div>
-            <el-tabs v-model="activeName" class="task-info-tabs" @tab-click="handleClick">
+            <el-tabs v-model="activeName" class="task-info-tabs">
                 <el-tab-pane label="THÔNG TIN" name="info">
                     <TaskInfo />
                 </el-tab-pane>
