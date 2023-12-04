@@ -15,8 +15,12 @@ export const mutations = {
 };
 
 export const actions = {
-    fetchUsers({ commit }) {
-        const dataUser = mockUsers.sort((a, b) => (a.check === b.check) ? 0 : a.check ? -1 : 1);
+    fetchUsers({ commit, rootState }) {
+        const dataUser = mockUsers.map(x => ({
+            ...x,
+            check: (rootState.task.tasks.filter(y => y.owner_id === x.id) ?? []).length > 0
+        }))
+        .sort((a, b) => (a.check === b.check) ? 0 : a.check ? -1 : 1);
 
         commit('setUsers', dataUser);
 

@@ -15,7 +15,7 @@ const changeFocusButton = (text) => {
 }
 
 onMounted(() => {
-    store.dispatch('user/fetchUsers');
+  store.dispatch('user/fetchUsers');
   setTimeout(() => {
     // eslint-disable-next-line no-unused-vars
     const _ = new Masonry('.grid', {
@@ -24,7 +24,7 @@ onMounted(() => {
       horizontalOrder: true,
       gutter: 10
     });
-  }, 0)
+  }, 10)
 })
 </script>
 

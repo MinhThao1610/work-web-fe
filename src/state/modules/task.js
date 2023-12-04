@@ -1,4 +1,4 @@
-import { mockTasksData } from '../mockdata/tasks';
+import { mockTasksData, mockTaskData } from '../mockdata/tasks';
 import MethodService from "../../service/MethodService";
 
 export const state = {
@@ -32,9 +32,14 @@ export const actions = {
     addTask({ commit, state }, data) {
         const tasks = MethodService.copyObject(state.tasks);
         tasks.unshift({
-            ...mockTasksData,
+            ...mockTaskData,
             ...data
         });
+
+        console.log({
+            ...mockTaskData,
+            ...data
+        })
 
         commit('setTasks', tasks);
 

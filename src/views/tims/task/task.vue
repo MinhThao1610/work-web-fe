@@ -68,6 +68,7 @@ const addTask = () => {
     input.value = {};
     if (formRef.value) formRef.value.resetFields();
     showForm.value = true;
+    mode.value = 'create';
 }
 const openDetail = (data) => {
     store.dispatch('task/setTaskDetail', data);
@@ -75,6 +76,7 @@ const openDetail = (data) => {
 }
 
 onMounted(() => {
+    store.dispatch('user/fetchUsers');
     store.dispatch('task/fetchTasks');
 });
 </script>

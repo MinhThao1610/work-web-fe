@@ -2,6 +2,8 @@
 import { onMounted, defineProps, ref, computed } from 'vue';
 import moment from 'moment';
 import { useStore } from "vuex";
+import TaskForm from '../../../components/taskForm.vue';
+import TaskDetail from '../../../components/taskDetail.vue';
 
 const props = defineProps({
     check: Boolean,
@@ -12,6 +14,8 @@ const store = useStore();
 const listTasks = computed(() => store.state.task.tasks.filter(x => x.owner_id === props.user.id));
 const listSprint = computed(() => store.state.project.projects.filter(x => listTasks.value.map(y => y.sprint_id).includes(x.id)));
 const openReportDrawer = ref(false);
+const showForm = ref(false);
+const showDetail = ref(false);
 
 const input = ref({});
 const formRef = ref();
@@ -57,6 +61,14 @@ const onSubmit = () => {
         console.log('form validated', fields);
     })
 };
+const openDetail = (data) => {
+    store.dispatch('task/setTaskDetail', data);
+    showDetail.value = true;
+}
+
+const assignTask = () => {
+    showForm.value = true;
+}
 
 </script>
 
@@ -87,7 +99,7 @@ const onSubmit = () => {
                             :key="task.id" 
                             class="task-item"
                         >
-                            <div class="task-lable">
+                            <div class="task-lable"  @click="openDetail(task)">
                                 <span class="task-priority"></span>
                                 <span class="task-title">
                                     <strong>#{{ task.code }}</strong>
@@ -139,7 +151,7 @@ const onSubmit = () => {
                 </div>
                 <div class="footer-right">
                     <button class="btn m-r-10">Hỏi</button>
-                    <button class="btn">Giao việc</button>
+                    <button class="btn" @click="assignTask">Giao việc</button>
                 </div>
             </div>
         </div>
@@ -151,8 +163,8 @@ const onSubmit = () => {
                     <span>{{ props.user.name }}</span>
                 </div>
                 <div class="header-right button">
-                    <span class="m-r-10">Hỏi</span>
-                    <span>Giao việc</span>
+                    <button class="btn m-r-10">Hỏi</button>
+                    <button class="btn" @click="assignTask">Giao việc</button>
                 </div>
             </div>
         </div>
@@ -200,4 +212,16 @@ const onSubmit = () => {
             </div>
         </el-form>
     </el-drawer>
+
+    <TaskForm
+        mode="create"
+        :open="showForm"
+        @close="showForm = false"
+        :owner_id="props.user.id"
+    />
+
+    <TaskDetail
+        :open="showDetail"
+        @close="showDetail = false"
+    />
 </template>

@@ -3,13 +3,11 @@ const data = [
         id: 1,
         name: "Nguyễn Hòa",
         avatar: "avatar-3.jpg",
-        check: true,
     },
     {
         id: 2,
         name: "Lê Quang Minh",
         avatar: "avatar-8.jpg",
-        check: true,
     },
     {
         id: 3,
@@ -20,7 +18,6 @@ const data = [
         id: 4,
         name: "Nguyễn Duy Thịnh",
         avatar: "avatar-7.jpg",
-        check: true,
     },
     {
         id: 5,

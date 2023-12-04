@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, ref, computed, defineEmits, watch } from 'vue';
+import { defineProps, ref, computed, defineEmits, watch, onMounted } from 'vue';
 import { useStore } from "vuex";
 import { ElMessage } from 'element-plus';
 
@@ -7,13 +7,18 @@ const store = useStore();
 
 const props = defineProps({
     open: Boolean,
-    mode: String
+    mode: String,
+    owner_id: Number
 });
 const emit = defineEmits(['close'])
 
 const task = computed(() => store.state.task.detail);
+const users = computed(() => store.state.user.users);
+const sprints = computed(() => store.state.project.projects);
 const openDrawer = computed(() => props.open);
-const input = ref({});
+const input = ref({
+    owner_id: props.owner_id
+});
 const formRef = ref();
 const rules = ref({
     title: [
@@ -41,16 +46,16 @@ const options = ref([
     { id: 3, name: 'Trung bình' },
     { id: 4, name: 'Thấp' },
 ]);
-const employees = ref([
-    { id: 1, name: 'thuntm' },
-    { id: 2, name: 'minhlq' },
-]);
 
 const onSubmit = () => {
     formRef.value.validate((formValidated) => {
         if (formValidated) {
-            if (props.mode.value === 'create') {
-                store.dispatch('task/addTask', input.value);
+            if (props.mode === 'create') {
+                store.dispatch('task/addTask', {
+                    ...input.value,
+                    ownerId: users.value.filter(x => x.id === input.value.owner_id),
+                    sprintId: input.value.sprint_id ? sprints.value.filter(x => x.id === input.value.sprint_id) : {},
+                });
 
                 ElMessage({
                     message: 'Tạo công việc thành công',
@@ -59,6 +64,8 @@ const onSubmit = () => {
             } else {
                 store.dispatch('task/editTask', {
                     ...input.value,
+                    ownerId: users.value.filter(x => x.id === input.value.owner_id),
+                    sprintId: input.value.sprint_id ? sprints.value.filter(x => x.id === input.value.sprint_id) : {},
                     id: task.value.id
                 });
 
@@ -68,14 +75,23 @@ const onSubmit = () => {
                 });
             }
 
+            if (formRef.value) formRef.value.resetFields();
             emit('close');
         }
     })
 };
 
 watch(() => store.state.task.detail, (task) => {
-    if (props.mode.value !== 'create') input.value = task;
+    if (props.mode !== 'create') input.value = {
+        ...input.value,
+        ...task
+    };
 })
+
+onMounted(() => {
+    store.dispatch('user/fetchUsers');
+    store.dispatch('project/fetchProjects');
+});
 
 </script>
 
@@ -89,6 +105,17 @@ watch(() => store.state.task.detail, (task) => {
         <el-form label-position="top" require-asterisk-position="right" :model="input" :rules="rules" ref="formRef">
             <el-form-item class="mb-4" label="Tên việc" prop="title">
                 <el-input v-model="input.title" placeholder="Tên việc" />
+            </el-form-item>
+            <el-form-item class="mb-4" label="Sprint" prop="sprint_id">
+                <el-select v-model="input.sprint_id" placeholder="Sprint" class="w-100">
+                    <el-option 
+                        v-for="item in sprints" 
+                        :key="item.id" 
+                        :label="item.title"
+                        :value="item.id"
+                    >
+                    </el-option>
+                </el-select>
             </el-form-item>
             <el-form-item class="mb-4" label="Mức độ ưu tiên" prop="priority">
                 <el-select v-model="input.priority" placeholder="Mức độ ưu tiên" class="w-100">
@@ -110,9 +137,9 @@ watch(() => store.state.task.detail, (task) => {
                     size="large" format="DD/MM/YYYY" />
             </el-form-item>
             <el-form-item class="mb-4" label="Người làm" prop="owner_id">
-                <el-select v-model="input.owner_id" placeholder="Người làm" class="w-100">
+                <el-select v-model="input.owner_id" placeholder="Người làm" class="w-100" :disabled="props.owner_id">
                     <el-option 
-                        v-for="item in employees" 
+                        v-for="item in users" 
                         :key="item.id" 
                         :label="item.name"
                         :value="item.id"
@@ -123,7 +150,7 @@ watch(() => store.state.task.detail, (task) => {
             <el-form-item class="mb-4" label="Người duyệt" prop="verifier_id">
                 <el-select v-model="input.verifier_id" placeholder="Người duyệt" class="w-100">
                     <el-option 
-                        v-for="item in employees" 
+                        v-for="item in users" 
                         :key="item.id" 
                         :label="item.name"
                         :value="item.id"

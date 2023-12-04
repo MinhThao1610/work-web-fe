@@ -1,4 +1,4 @@
-export const data = [
+const data = [
     {
         "id": 13,
         "title": "[CP]/[Đơn hàng] Thêm chức năng gia hạn/nâng cấp cho các đơn hàng",
@@ -174,6 +174,13 @@ export const data = [
         "status": "cancel"
     }
 ];
+export const mockTaskData = {
+    "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
+    "type": "task",
+    "status": "new",
+    "exchanges": [],
+    "checklistes": []
+};
 
 export const mockTasksData = (() => {
     if (localStorage.getItem('tasks')) return JSON.parse(localStorage.getItem('tasks'));
