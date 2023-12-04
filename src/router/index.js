@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
-import axios from 'axios';
+// import axios from 'axios';
 import routes from './routes'
 import appConfig from "../../app.config";
 
@@ -25,18 +25,20 @@ const router = createRouter({
 // Before each route evaluates...
 router.beforeEach(async (routeTo, routeFrom, next) => {
 
-  const authRequired = routeTo.matched.some((route) => route.meta.authRequired)
+  return next();
 
-  if (!authRequired) return next()
+  // const authRequired = routeTo.matched.some((route) => route.meta.authRequired)
 
-  axios.defaults.headers.common['authorization'] = 'Bearer ' + localStorage.getItem('jwt') // for all requests
-  await axios.get('https://api-node.themesbrand.website/profile').then((data) => {
-    localStorage.setItem('userdata', JSON.stringify(data.data.user))
-    localStorage.setItem('userid', data.data.user._id)
-    next()
-  }).catch(() => {
-    next({ name: 'login', query: { redirectFrom: routeTo.fullPath } })
-  });
+  // if (!authRequired) return next()
+
+  // axios.defaults.headers.common['authorization'] = 'Bearer ' + localStorage.getItem('jwt') // for all requests
+  // await axios.get('https://api-node.themesbrand.website/profile').then((data) => {
+  //   localStorage.setItem('userdata', JSON.stringify(data.data.user))
+  //   localStorage.setItem('userid', data.data.user._id)
+  //   next()
+  // }).catch(() => {
+  //   next({ name: 'login', query: { redirectFrom: routeTo.fullPath } })
+  // });
 })
 
 router.beforeResolve(async (routeTo, routeFrom, next) => {

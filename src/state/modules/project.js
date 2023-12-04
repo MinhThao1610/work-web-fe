@@ -18,6 +18,8 @@ export const mutations = {
 export const actions = {
     fetchProjects({ commit }) {
         commit('setProjects', mockProjects);
+
+        localStorage.setItem('projects', JSON.stringify(mockProjects));
     },
     addProject({ commit, state }, data) {
         const projects = MethodService.copyObject(state.projects);
@@ -27,6 +29,8 @@ export const actions = {
         });
 
         commit('setProjects', projects);
+
+        localStorage.setItem('projects', JSON.stringify(projects));
     },
     editProject({ commit, state }, data) {
         const projects = MethodService.copyObject(state.projects);
@@ -38,6 +42,8 @@ export const actions = {
         }
 
         commit('setProjects', projects);
+
+        localStorage.setItem('projects', JSON.stringify(projects));
     },
     deleteProject({ commit, state }, id) {
         const projects = MethodService.copyObject(state.projects);
@@ -46,5 +52,7 @@ export const actions = {
         projects.splice(objIdx, 1);
 
         commit('setProjects', projects);
+
+        localStorage.setItem('projects', JSON.stringify(projects));
     }
 };

@@ -1,4 +1,4 @@
-export const mockProjects = [
+const data = [
     {
         "id": 5,
         "status": "planned",
@@ -113,3 +113,9 @@ export const mockProject = {
     "type": "SPRINT",
     "progress": 0,
 };
+
+export const mockProjects = (() => {
+    if (localStorage.getItem('projects')) return JSON.parse(localStorage.getItem('projects'));
+
+    return data;
+})();

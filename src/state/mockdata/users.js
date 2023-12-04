@@ -1,4 +1,4 @@
-export const mockUsers = [
+const data = [
     {
         id: 1,
         name: "Nguyễn Hòa",
@@ -12,15 +12,15 @@ export const mockUsers = [
         check: true,
     },
     {
+        id: 3,
+        name: "Ngô Thị Linh",
+        avatar: "avatar-10.jpg",
+    },
+    {
         id: 4,
         name: "Nguyễn Duy Thịnh",
         avatar: "avatar-7.jpg",
         check: true,
-    },
-    {
-        id: 3,
-        name: "Ngô Thị Linh",
-        avatar: "avatar-10.jpg",
     },
     {
         id: 5,
@@ -38,3 +38,9 @@ export const mockUsers = [
         avatar: "avatar-4.jpg",
     }
 ]
+
+export const mockUsers = (() => {
+    if (localStorage.getItem('users')) return JSON.parse(localStorage.getItem('users'));
+
+    return data;
+})();

@@ -16,6 +16,10 @@ export const mutations = {
 
 export const actions = {
     fetchUsers({ commit }) {
-        commit('setUsers', mockUsers);
+        const dataUser = mockUsers.sort((a, b) => (a.check === b.check) ? 0 : a.check ? -1 : 1);
+
+        commit('setUsers', dataUser);
+
+        localStorage.setItem('users', JSON.stringify(dataUser));
     }
 };
