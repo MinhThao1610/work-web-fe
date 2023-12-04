@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, defineProps, ref } from 'vue';
 import moment from "moment";
+import { useStore } from "vuex";
 import TaskDetail from './taskDetail.vue';
 
 const props = defineProps({
@@ -9,8 +10,10 @@ const props = defineProps({
     date: Date,
     status: String,
     color: String,
+    task: {}
 });
 
+const store = useStore();
 const showTaskDetail = ref(false);
 const status = ref('');
 
@@ -23,6 +26,11 @@ const changeStatus = (text) => {
     status.value = text;
 };
 
+const openDetail = () => {
+    store.dispatch('task/setTaskDetail', props.task);
+    showTaskDetail.value = true;
+}
+
 onMounted(() => {
     status.value = props.status;
 })
@@ -30,7 +38,7 @@ onMounted(() => {
 
 <template>
     <div class="task-info">
-        <div class="task-title" @click="showTaskDetail = true">
+        <div class="task-title" @click="openDetail">
             <span>{{ props.code + ' ' }}</span>
             {{ props.title }}
         </div>

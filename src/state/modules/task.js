@@ -22,9 +22,11 @@ export const mutations = {
 
 export const actions = {
     fetchTasks({ commit }) {
-        commit('setTasks', mockTasksData);
+        const dataTask = mockTasksData.sort((a, b) => a.code - b.code);
 
-        localStorage.setItem('tasks', JSON.stringify(mockTasksData));
+        commit('setTasks', dataTask);
+
+        localStorage.setItem('tasks', JSON.stringify(dataTask));
     },
     setTaskDetail({ commit }, data) {
         commit('setTaskDetail', data)

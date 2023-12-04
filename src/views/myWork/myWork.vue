@@ -1,9 +1,11 @@
 <script setup>
 import Layout from "../../layouts/main.vue";
 import PageHeader from "@/components/page-header";
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import taskComponent from "../../components/taskComponent.vue";
+import { useStore } from "vuex";
 
+const store = useStore();
 const title = ref("Widgets");
 const items = ref([{
     text: "Velzon",
@@ -14,36 +16,9 @@ const items = ref([{
     active: true,
 }]);
 
-const fakeData = [
-  {
-    code: "#5",
-    title: "[Node gia phả]/[Cập nhật thông tin]/[Giấy tờ] MM Mặc định bật camera sau khi chọn chức năng chụp ảnh",
-    date: new Date(),
-    status: 'planned',
-    color: '#ff8000',
-  },
-  {
-    code: "#8",
-    title: "[APP][Cây gia phả] Vẽ cây gia phả với cấu hình con vẽ từ người ngoài họ",
-    status: 'planned',
-    color: '#ff8000',
-  },
-  {
-    code: "#11",
-    title: "[Chung]/[Android] Lỗi bị che btn khi bật nút điều hướng ảo",
-    status: 'doing',
-    color: '#006cd9',
-  },
-  {
-    code: "#20",
-    title: "[App][VHV] Code các màn danh sách, xem chi tiết, sửa của Vĩnh hằng viên",
-    status: 'verifying',
-    color: '#ff4081',
-  },
-]
-
 const activeName = ref('second');
 const focusButton = ref('mywork');
+const tasks = computed(() => store.state.task.tasks);
 
 const handleClick = (tab, event) => {
   console.log(tab, event);
@@ -56,7 +31,7 @@ const changeFocusButton = (text) => {
 }
 
 onMounted(() => {
-
+  store.dispatch('task/fetchTasks');
 })
 </script>
 
@@ -96,23 +71,28 @@ onMounted(() => {
             </div>
             <div class="box">
                 <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
-                    <el-tab-pane label="Hoàn thành (1)" name="first">
+                    <el-tab-pane :label="`Hoàn thành (${tasks.filter(x => x.status === 'done').length})`" name="first">
                       <taskComponent 
-                        code="#2"
-                        title="[Cây gia phả - PC] Báo lỗi validate ngày tháng năm mất"
+                        v-for="item in tasks.filter(x => x.status === 'done')"
+                        :key="item.code"
+                        :code="item.code"
+                        :title="item.title"
+                        :date="item.date"
                         status="done"
-                        color="#0bb251"
+                        :color="item.color"
+                        :task="item"
                       />
                     </el-tab-pane>
-                    <el-tab-pane label="Hôm nay (9)" name="second">
+                    <el-tab-pane :label="`Hôm nay (${tasks.filter(x => x.status !== 'done').length})`" name="second">
                       <taskComponent 
-                        v-for="item in fakeData"
+                        v-for="item in tasks.filter(x => x.status !== 'done')"
                         :key="item.code"
                         :code="item.code"
                         :title="item.title"
                         :date="item.date"
                         :status="item.status"
                         :color="item.color"
+                        :task="item"
                       />
                     </el-tab-pane>
                     <el-tab-pane label="Sắp tới" name="third">

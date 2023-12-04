@@ -28,7 +28,8 @@ const newChecklist = ref('');
 const doneTask = () => {
     store.dispatch('task/editTask', {
         id: task.value.id,
-        status: 'done'
+        status: 'done',
+        color: "#0bb251"
     });
 }
 const deleteTask = () => {

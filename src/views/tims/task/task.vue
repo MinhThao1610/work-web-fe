@@ -76,7 +76,6 @@ const openDetail = (data) => {
 }
 
 onMounted(() => {
-    store.dispatch('user/fetchUsers');
     store.dispatch('task/fetchTasks');
 });
 </script>

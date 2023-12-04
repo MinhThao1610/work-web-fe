@@ -10,6 +10,7 @@ const data = [
         "sprintId": { "title": "2309", },
         "type": "task",
         "status": "new",
+        "color": "#ff8000",
         "exchanges": [
             {
                 "id": 1,
@@ -51,7 +52,8 @@ const data = [
         "sprint_id": 2,
         "sprintId": { "title": "2309", },
         "type": "task",
-        "status": "process"
+        "status": "process",
+        "color": "#33cccc"
     },
     {
         "id": 10,
@@ -63,7 +65,8 @@ const data = [
         "sprint_id": 4,
         "sprintId": { "title": "2311", },
         "type": "task",
-        "status": "process"
+        "status": "process",
+        "color": "#33cccc"
     },
     {
         "id": 9,
@@ -75,7 +78,8 @@ const data = [
         "sprint_id": 2,
         "sprintId": { "title": "2309", },
         "type": "task",
-        "status": "doing"
+        "status": "doing",
+        "color": "#006cd9"
     },
     {
         "id": 1,
@@ -87,7 +91,8 @@ const data = [
         "sprint_id": 4,
         "sprintId": { "title": "2311", },
         "type": "task",
-        "status": "doing"
+        "status": "doing",
+        "color": "#006cd9"
     },
     {
         "id": 8,
@@ -99,7 +104,8 @@ const data = [
         "sprint_id": 2,
         "sprintId": { "title": "2309", },
         "type": "task",
-        "status": "done"
+        "status": "done",
+        "color": "#0bb251"
     },
     {
         "id": 6,
@@ -111,7 +117,8 @@ const data = [
         "sprint_id": 1,
         "sprintId": { "title": "2308", },
         "type": "task",
-        "status": "done"
+        "status": "done",
+        "color": "#0bb251"
     },
     {
         "id": 5,
@@ -123,7 +130,8 @@ const data = [
         "sprint_id": 1,
         "sprintId": { "title": "2308", },
         "type": "task",
-        "status": "done"
+        "status": "done",
+        "color": "#0bb251"
     },
     {
         "id": 2,
@@ -135,7 +143,8 @@ const data = [
         "sprint_id": 2,
         "sprintId": { "title": "2309", },
         "type": "task",
-        "status": "done"
+        "status": "done",
+        "color": "#0bb251"
     },
     {
         "id": 3,
@@ -147,7 +156,8 @@ const data = [
         "sprint_id": 3,
         "sprintId": { "title": "2311", },
         "type": "task",
-        "status": "block"
+        "status": "block",
+        "color": "#ed2438"
     },
     {
         "id": 7,
@@ -159,7 +169,8 @@ const data = [
         "sprint_id": 2,
         "sprintId": { "title": "2309", },
         "type": "task",
-        "status": "verifying"
+        "status": "verifying",
+        "color": "#ff4081"
     },
     {
         "id": 4,
@@ -171,13 +182,15 @@ const data = [
         "sprint_id": 2,
         "sprintId": { "title": "2309", },
         "type": "task",
-        "status": "cancel"
+        "status": "cancel",
+        "color": "#dedede"
     }
 ];
 export const mockTaskData = {
     "priorityId": { "name": "Nghiêm trọng", "color": "#ff4081" },
     "type": "task",
     "status": "new",
+    "color": "#ff8000",
     "exchanges": [],
     "checklistes": []
 };
