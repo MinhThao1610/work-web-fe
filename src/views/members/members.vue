@@ -38,13 +38,13 @@ onMounted(() => {
       @changeFocusButton="changeFocusButton"
     />
     <div class="row">
-      <div class="col-9">
+      <div class="col-12">
         <div class="members">
           <MemberNew />
           <div class="info-members-company">
             <div class="count-members">
               <i class="ri-spam-2-fill"></i>
-              <span>Đang làm việc tại công ty (40)</span>
+              <span>Đang làm việc tại công ty (11)</span>
             </div>
             <div class="search-member">
               <el-input

@@ -16,6 +16,12 @@
     .el-tabs__content {
         width: 60vw;
     }
+    .el-tabs {
+        display: flex;
+        .workfeed-item {
+            width: 100%;
+        }
+    }
     .workfeed-item.statistic {
         max-width: unset;
         margin-right: 0;

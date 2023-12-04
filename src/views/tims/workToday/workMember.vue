@@ -138,7 +138,7 @@ const onSubmit = () => {
                     <button class="btn" @click="report">Báo cáo</button>
                 </div>
                 <div class="footer-right">
-                    <button class="btn m-r-10">Hỏi</button>
+                    <!-- <button class="btn m-r-10">Hỏi</button> -->
                     <button class="btn">Giao việc</button>
                 </div>
             </div>
@@ -151,7 +151,7 @@ const onSubmit = () => {
                     <span>{{ props.user.name }}</span>
                 </div>
                 <div class="header-right button">
-                    <span class="m-r-10">Hỏi</span>
+                    <!-- <span class="m-r-10">Hỏi</span> -->
                     <span>Giao việc</span>
                 </div>
             </div>

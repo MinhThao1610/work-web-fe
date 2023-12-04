@@ -8,6 +8,7 @@ const props = defineProps({
   focusButton: String,
 });
 const emit = defineEmits([""]);
+const role = localStorage.getItem('role');
 
 const changeFocusButton = (text) => {
   emit("changeFocusButton", text);
@@ -26,10 +27,18 @@ const changeFocusButton = (text) => {
         <div class="page-my-work" v-if="props.type === 'mywork'">
           <div class="page-left">
             <div class="page-button">
-              <el-button color="#4f62a1" class="button-header" type="primary" plain>CÔNG VIỆC</el-button>
-            </div>
-            <div class="page-button">
-              <el-button color="#4f62a1" type="primary" plain>HỒM THƯ</el-button>
+              <el-button 
+                color="#4f62a1" 
+                class="button-header" 
+                type="primary" 
+                plain
+                :class="{
+                  active: props.focusButton === 'mywork'
+                }"
+                @click="changeFocusButton('mywork')"
+              >
+                CÔNG VIỆC
+              </el-button>
             </div>
             <div class="page-button">
               <el-button color="#4f62a1" type="primary" plain>THỐNG KÊ</el-button>
@@ -45,7 +54,7 @@ const changeFocusButton = (text) => {
             </div>
             <div class="page-button">
               <span>Hoàn thành: </span>
-              <span>10 </span>
+              <span>1 </span>
             </div>
           </div>
         </div>
@@ -236,6 +245,22 @@ const changeFocusButton = (text) => {
               >
                 <router-link to="/tim/statistic?tim=1234567">
                   BÁO CÁO  
+                </router-link>
+              </el-button>
+            </div>
+            <div class="page-button">
+              <el-button 
+                v-if="role === 'ADMIN'"
+                :class="{
+                  active: props.focusButton === 'config'
+                }"
+                color="#4f62a1" 
+                type="primary" 
+                plain
+                @click="changeFocusButton('config')"
+              >
+                <router-link to="/tim/config?tim=1234567">
+                  CẤU HÌNH
                 </router-link>
               </el-button>
             </div>

@@ -41,109 +41,121 @@ onMounted(() => {
       @changeFocusButton="changeFocusButton"
     />
     <div class="row">
-      <div class="col-9">
-        <div class="library">
-            <div class="library-box">
-                <div class="library-header">
-                    <div class="header-title">
-                        <i class="ri-sun-fill"></i>
-                        <span>Nổi bật</span>
+        <div class="col-12">
+            <div class="library">
+                <div class="library-box">
+                    <div class="library-header">
+                        <div class="header-title">
+                            <i class="ri-sun-fill"></i>
+                            <span>Nổi bật</span>
+                        </div>
+                        <div class="search-library">
+                            <el-input
+                                v-model="input"
+                                placeholder="Gõ tựa đề"
+                                :suffix-icon="Search"
+                            />
+                        </div>
                     </div>
-                    <div class="search-library">
-                        <el-input
-                            v-model="input"
-                            placeholder="Gõ tựa đề"
-                            :suffix-icon="Search"
-                        />
+                    <div class="library-content">
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Phân nhóm vai trò</span>
+                            <span class="library-group">Nhân viên mới</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Hướng dẫn checkin giờ làm việc</span>
+                            <span class="library-group">Nhân viên mới</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Quy định về việc nghỉ phép / WFH</span>
+                            <span class="library-group">Quy định</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Con đường sự nghiệp tại Siten</span>
+                            <span class="library-group">Quy định</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Tinh thần lãnh đạo</span>
+                            <span class="library-group">Tri thức</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Quy định về thời gian làm việc</span>
+                            <span class="library-group">Nhân viên mới</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Việc gì? Hỏi ai?</span>
+                            <span class="library-group">Nhân viên mới</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Nghỉ việc</span>
+                            <span class="library-group">Quy định</span>
+                        </div>
                     </div>
                 </div>
-                <div class="library-content">
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Phân nhóm vai trò</span>
-                        <span class="library-group">Nhân viên mới</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Hướng dẫn checkin giờ làm việc</span>
-                        <span class="library-group">Nhân viên mới</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Quy định về việc nghỉ phép / WFH</span>
-                        <span class="library-group">Quy định</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Con đường sự nghiệp tại Siten</span>
-                        <span class="library-group">Quy định</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Tinh thần lãnh đạo</span>
-                        <span class="library-group">Tri thức</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="library-box">
-                <div class="library-header">
-                    <div class="header-title">
-                        <i class="ri-spam-2-fill"></i>
-                        <span>5 bài mới</span>
+                <div class="library-box">
+                    <div class="library-header">
+                        <div class="header-title">
+                            <i class="ri-spam-2-fill"></i>
+                            <span>5 bài mới</span>
+                        </div>
+                    </div>
+                    <div class="library-content">
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Đếm số lượng và tính tổng dung lượng file trong thư mục</span>
+                            <span class="library-group">SC</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Hướng dẫn điền lịch làm việc</span>
+                            <span class="library-group">Nhân viên mới</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Quy định về việc nghỉ phép / WFH</span>
+                            <span class="library-group">Quy định</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Con đường sự nghiệp tại Siten</span>
+                            <span class="library-group">Quy định</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Tinh thần lãnh đạo</span>
+                            <span class="library-group">Tri thức</span>
+                        </div>
                     </div>
                 </div>
-                <div class="library-content">
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Phân nhóm vai trò</span>
-                        <span class="library-group">Nhân viên mới</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Hướng dẫn checkin giờ làm việc</span>
-                        <span class="library-group">Nhân viên mới</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Quy định về việc nghỉ phép / WFH</span>
-                        <span class="library-group">Quy định</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Con đường sự nghiệp tại Siten</span>
-                        <span class="library-group">Quy định</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Tinh thần lãnh đạo</span>
-                        <span class="library-group">Tri thức</span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="library-box">
-                <div class="library-header">
-                    <div class="header-title">
-                        <i class="ri-information-fill"></i>
-                        <span>Cần thiết</span>
+                <div class="library-box">
+                    <div class="library-header">
+                        <div class="header-title">
+                            <i class="ri-information-fill"></i>
+                            <span>Cần thiết</span>
+                        </div>
                     </div>
-                </div>
-                <div class="library-content">
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Phân nhóm vai trò</span>
-                        <span class="library-group">Nhân viên mới</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Hướng dẫn checkin giờ làm việc</span>
-                        <span class="library-group">Nhân viên mới</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Quy định về việc nghỉ phép / WFH</span>
-                        <span class="library-group">Quy định</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Con đường sự nghiệp tại Siten</span>
-                        <span class="library-group">Quy định</span>
-                    </div>
-                    <div class="library-item" @click="showLibraryDetail = true">
-                        <span class="library-label">Tinh thần lãnh đạo</span>
-                        <span class="library-group">Tri thức</span>
+                    <div class="library-content">
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Phân nhóm vai trò</span>
+                            <span class="library-group">Nhân viên mới</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Hướng dẫn checkin giờ làm việc</span>
+                            <span class="library-group">Nhân viên mới</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Quy định về việc nghỉ phép / WFH</span>
+                            <span class="library-group">Quy định</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Con đường sự nghiệp tại Siten</span>
+                            <span class="library-group">Quy định</span>
+                        </div>
+                        <div class="library-item" @click="showLibraryDetail = true">
+                            <span class="library-label">Tinh thần lãnh đạo</span>
+                            <span class="library-group">Tri thức</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-      </div>
     </div>
     <el-drawer
         v-model="showLibraryDetail"

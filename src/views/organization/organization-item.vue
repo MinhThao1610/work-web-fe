@@ -8,6 +8,8 @@ const props = defineProps({
     timLead: String,
     email: String,
     phone: String,
+    avatar: String,
+    listAvatar: Array,
 });
 const showTimDetail = ref(false);
 
@@ -17,7 +19,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="organization-item">
+    <div class="organization-item grid-item">
         <div class="organization-item-header">
             <el-button
                 text
@@ -28,7 +30,7 @@ onMounted(() => {
         </div>
         <div class="organization-item-content">
             <div class="item-left">
-                <img :src="account" alt="avt">
+                <img :src="props.avatar" alt="avt">
             </div>
             <div class="item-right">
                 <p class="item-intro">
@@ -53,11 +55,12 @@ onMounted(() => {
         <div class="organization-item-footer">
             <div class="count-member">5+</div>
             <div class="avatar-merber">
-                <img :src="account" alt="avt">
-                <img :src="account" alt="avt">
-                <img :src="account" alt="avt">
-                <img :src="account" alt="avt">
-                <img :src="account" alt="avt">
+                <img 
+                    v-for="item in props.listAvatar"
+                    :key="item.value" 
+                    :src="item.value ?? account" 
+                    alt="avt"
+                >
             </div>
         </div>
         <el-drawer

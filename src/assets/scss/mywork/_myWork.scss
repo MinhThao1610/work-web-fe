@@ -5,7 +5,6 @@
         padding-top: 16px;
     }
     .mywork-status {
-        background-color: #e72229;
         height: 36px;
         border-radius: 5px;
         box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
@@ -21,6 +20,12 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+    }
+    .success {
+        background-color: #2196f3;
+    }
+    .warning {
+        background-color: #e72229;
     }
     .mywork-warning {
         position: relative;
@@ -41,6 +46,16 @@
     }
     .el-tabs__item {
         padding: 0 20px !important;
+    }
+    .not-work {
+        font-size: 14px;
+        font-weight: 400;
+        display: flex;
+        align-items: center;
+        i {
+            font-size: 17px;
+            margin-right: 5px;
+        }
     }
 }
 

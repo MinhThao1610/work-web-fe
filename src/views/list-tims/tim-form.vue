@@ -209,7 +209,8 @@ onMounted(async () => {
                                         </el-form-item>
                                         <el-form-item label="Mô tả" prop="description">
                                             <el-input
-                                                type="text"
+                                                type="textarea"
+                                                :autosize="true"
                                                 autocomplete="off"
                                                 v-model="dataForm.value.description"
                                                 placeholder="Nhập mô tả"
@@ -220,7 +221,8 @@ onMounted(async () => {
                                             prop="slogan"
                                         >
                                             <el-input
-                                                type="text"
+                                                type="textarea"
+                                                :autosize="true"
                                                 autocomplete="off"
                                                 v-model="dataForm.value.slogan"
                                                 placeholder="Nhập khẩu hiệu"

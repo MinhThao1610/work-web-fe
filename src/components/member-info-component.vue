@@ -1,9 +1,14 @@
 <script setup>
 import { onMounted, defineProps } from 'vue';
+import account from "@/assets/images/account.jpg";
 
 const props = defineProps({
-    header: String,
+    name: String,
     address: String,
+    url: String,
+    postion: String,
+    email: String,
+    phone: String,
 });
 
 onMounted(() => {
@@ -13,12 +18,12 @@ onMounted(() => {
 
 <template>
     <div class="member-info-component grid-item">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8dAnxssXwRztTJRaP7KAyiyB0COfDnnglzq96-zhVmZO079vcU-y-OqooATU-vwTcKXU&usqp=CAU" alt="avatar">
+        <img :src="props.url ?? account" alt="avatar">
         <div class="member-info">
-            <span class="name">Nguyễn Văn A</span>
-            <span class="text-italic">intern | Production</span>
-            <span class="text">nnguyendinhlamm@gmail.com</span>
-            <span class="text">0942034838</span>
+            <span class="name">{{ props.name }}</span>
+            <span class="text-italic">{{ props.postion }}</span>
+            <span class="text">{{ props.email }}</span>
+            <span class="text">{{ props.phone }}</span>
             <span class="text">{{ props.address }}</span>
         </div>
     </div>

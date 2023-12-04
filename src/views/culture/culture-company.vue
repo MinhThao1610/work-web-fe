@@ -21,7 +21,7 @@ onMounted(() => {
                 <img src="https://timwook.com/api/v2/file/thumb?id=5b6419e171c39b0a9456d818" alt="">
             </div>
             <div class="logo-company">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8dAnxssXwRztTJRaP7KAyiyB0COfDnnglzq96-zhVmZO079vcU-y-OqooATU-vwTcKXU&usqp=CAU" alt="logo">
+                <img src="	https://timwook.com/api/v2/file/thumb?id=5f519e4a6e3850145899f3e0&w=100" alt="logo">
                 <span>Công ty A</span>
             </div>
         </div>

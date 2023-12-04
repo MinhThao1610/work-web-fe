@@ -19,12 +19,12 @@ onMounted(() => {
         </div>
         <div class="post-container">
             <div class="post-content">
-                <div>Họ và tên: Nguyễn Trị Trang</div>
-                <div>Ngày gia nhập Siten: 15/10/2019 </div>
-                <div>Chúc mừng Trang tròn 4 tuổi Siten ️🎉️🎉️🎉 Mới ngày nào còn là cô bé “người nhỏ nhỏ, nhìn hiền hiền” thế mà giờ đây cũng đã là chị gái “thét ra lửa” của tim QA rồi 🤗 Chúc Trang tuổi Siten năm nay sẽ thật vui cùng hành trình mới, có nhiều trải nghiệm ý nghĩa, cả trong công việc và cuộc sống nhé </div>
+                <div>Họ và tên: Nguyễn Thị Minh Thảo</div>
+                <div>Ngày gia nhập Siten: 27/11/2019 </div>
+                <div>Chúc mừng Thảo tròn 4 tuổi Siten ️🎉️🎉️🎉 Mới ngày nào còn là cô bé “người nhỏ nhỏ, nhìn hiền hiền” thế mà giờ đây cũng đã là chị gái “thét ra lửa” của tim QA rồi 🤗 Chúc Thảo tuổi Siten năm nay sẽ thật vui cùng hành trình mới, có nhiều trải nghiệm ý nghĩa, cả trong công việc và cuộc sống nhé </div>
             </div>
             <div class="post-image">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8dAnxssXwRztTJRaP7KAyiyB0COfDnnglzq96-zhVmZO079vcU-y-OqooATU-vwTcKXU&usqp=CAU" alt="img">
+                <img src="https://timwook.com/api/v2/file/thumb?id=646738c971c39b2b4cacd65d" alt="img">
             </div>
         </div>
         <div class="post-interact">
