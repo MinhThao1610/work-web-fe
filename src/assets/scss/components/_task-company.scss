@@ -5,11 +5,12 @@
     margin: 10px;
     .task-company-item-avatar {
         img {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
         }
     }
     .task-company-item-text {
+        width: 100%;
         padding: 0 10px;
     }
     .task-company-item-status {

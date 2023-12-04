@@ -8,22 +8,23 @@ const props = defineProps({
     title: String,
     date: Date,
     status: String,
+    color: String,
 });
 
 const showTaskDetail = ref(false);
+const status = ref('');
 
 const getDate = () => {
     const text = moment(props.date).format("YYYY-MM-DD");
     return text;
 };
 
-// const changePopup = () => {
-//     showTaskDetail.value = true;
-//     console.log('aaaaaaaa')
-// }
+const changeStatus = (text) => {
+    status.value = text;
+};
 
 onMounted(() => {
-
+    status.value = props.status;
 })
 </script>
 
@@ -37,6 +38,7 @@ onMounted(() => {
             <div class="task-date">
                 <span class="text-group">group</span>
                 <span 
+                    v-if="props.date"
                     class="date-deadline"
                     :class="{
                         overtime: true,
@@ -56,22 +58,23 @@ onMounted(() => {
                             :class="{
                                 statusNew: true
                             }"
+                            :style="`background-color: ${props.color}`"
                             @click="onClickOutside"
                         >
-                            {{ props.status }}
+                            {{ status }}
                         </span>
                     </template>
                     <div class="list-status">
-                        <div class="item-status">
-                            <span class="color-status"></span>
+                        <div class="item-status" @click="changeStatus('Doing')">
+                            <span class="color-status" style="background-color: #006cd9"></span>
                             <span class="text-status">Doing</span>
                         </div>
-                        <div class="item-status">
-                            <span class="color-status"></span>
+                        <div class="item-status" @click="changeStatus('Verifying')">
+                            <span class="color-status" style="background-color: #ff4081"></span>
                             <span class="text-status">Verifying</span>
                         </div>
-                        <div class="item-status">
-                            <span class="color-status"></span>
+                        <div class="item-status" @click="changeStatus('Blocked')">
+                            <span class="color-status" style="background-color: #ed2438"></span>
                             <span class="text-status">Blocked</span>
                         </div>
                     </div>

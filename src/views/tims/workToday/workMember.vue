@@ -150,7 +150,7 @@ const assignTask = () => {
                     <button class="btn" @click="report">Báo cáo</button>
                 </div>
                 <div class="footer-right">
-                    <button class="btn m-r-10">Hỏi</button>
+                    <!-- <button class="btn m-r-10">Hỏi</button> -->
                     <button class="btn" @click="assignTask">Giao việc</button>
                 </div>
             </div>
@@ -163,7 +163,7 @@ const assignTask = () => {
                     <span>{{ props.user.name }}</span>
                 </div>
                 <div class="header-right button">
-                    <button class="btn m-r-10">Hỏi</button>
+                    <!-- <button class="btn m-r-10">Hỏi</button> -->
                     <button class="btn" @click="assignTask">Giao việc</button>
                 </div>
             </div>

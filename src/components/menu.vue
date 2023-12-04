@@ -1165,6 +1165,7 @@
       <ul class="navbar-nav h-100" id="navbar-nav">
         <li v-if="this.role !== 'SYSTEMADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/mywork">
+            <i class="ri-contacts-line"></i>
             <span data-key="t-widgets">Việc của tôi</span>
           </router-link>
         </li>
@@ -1173,21 +1174,21 @@
         </li>
         <li v-if="this.role !== 'SYSTEMADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/company/workfeed">
-            <i class="ri-pages-line"></i>
+            <i class="ri-building-line"></i>
             <span data-key="t-widgets">Công ty A</span>
           </router-link>
         </li>
         <li v-if="this.role !== 'SYSTEMADMIN'" class="nav-item">
           <a class="nav-link menu-link" href="#tims" data-bs-toggle="collapse" role="button"
             aria-expanded="false" aria-controls="tims">
-            <i class="ri-pages-line"></i>
+            <i class="ri-team-line"></i>
             <span data-key="t-tims"> Teams</span>
           </a>
           <div class="collapse menu-dropdown" id="tims">
             <ul class="nav nav-sm flex-column">
               <li class="nav-item">
                 <router-link to="/tim/today?tim=1234567" class="nav-link custom-abc" data-key="t-analytics">
-                  <i class="ri-pages-line"></i>
+                  <i class="ri-group-2-line"></i>
                   <span data-key="t-widgets">Dự án 1</span>
                 </router-link>
               </li>
@@ -1195,6 +1196,9 @@
           </div>
         </li>
 
+        <li v-if="this.role !== 'SYSTEMADMIN'" class="menu-title">
+          <span data-key="t-menu">Quản lý</span>
+        </li>
         <li v-if="this.role === 'SYSTEMADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/company-manage/table">
             <span data-key="t-widgets">Danh sách công ty</span>
@@ -1202,26 +1206,31 @@
         </li>
         <li v-if="this.role === 'ADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/company/edit/1">
+            <i class="ri-file-edit-line"></i>
             <span data-key="t-widgets">Chỉnh sửa công ty</span>
           </router-link>
         </li>
         <li v-if="this.role === 'ADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/employees/table">
+            <i class="ri-account-circle-line"></i>
             <span data-key="t-widgets">Nhân sự</span>
           </router-link>
         </li>
         <li v-if="this.role === 'ADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/tims/table">
+            <i class="ri-pages-line"></i>
             <span data-key="t-widgets">Danh sách team</span>
           </router-link>
         </li>
         <li v-if="this.role === 'ADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/library/table">
+            <i class="ri-pages-line"></i>
             <span data-key="t-widgets">Danh sách Tri thức</span>
           </router-link>
         </li>
         <li v-if="this.role === 'ADMIN'" class="nav-item">
           <router-link class="nav-link menu-link" to="/milestone/table">
+            <i class="ri-pages-line"></i>
             <span data-key="t-widgets">Danh sách bài văn hóa</span>
           </router-link>
         </li>

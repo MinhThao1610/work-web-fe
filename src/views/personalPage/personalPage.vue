@@ -62,17 +62,17 @@ onMounted(() => {
       <div class="col-9">
         <div class="personal-page">
             <div class="member-info-component">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8dAnxssXwRztTJRaP7KAyiyB0COfDnnglzq96-zhVmZO079vcU-y-OqooATU-vwTcKXU&usqp=CAU" alt="avatar">
+                <img src="https://timwook.com/api/v2/file/thumb?id=6459fc9771c39b1850c3817c&r=square&w=256" alt="avatar">
                 <div class="member-info">
-                    <span class="name">Nguyễn Văn A</span>
-                    <span class="text-italic">intern | Production</span>
+                    <span class="name">Nguyễn Thị Minh Thảo</span>
+                    <span class="text-italic">timer | Production</span>
                     <div class="info-me">
                         <span class="title">B: </span>
                         <span>16/10/2000</span>
                     </div>
                     <div class="info-me">
                         <span class="title">E: </span>
-                        <span>nnguyendinhlamm@gmail.com</span>
+                        <span>minhthaoo@gmail.com</span>
                     </div>
                     <div class="info-me">
                         <span class="title">P: </span>
@@ -111,8 +111,8 @@ onMounted(() => {
 
                 <div class="create-post" v-if="page === 'create'">
                     <div class="create-header">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT8dAnxssXwRztTJRaP7KAyiyB0COfDnnglzq96-zhVmZO079vcU-y-OqooATU-vwTcKXU&usqp=CAU" alt="avatar">
-                        <span class="name">Nguyễn Văn A</span>
+                        <img src="https://timwook.com/api/v2/file/thumb?id=6459fc9771c39b1850c3817c&r=square&w=256" alt="avatar">
+                        <span class="name">Nguyễn Thị Minh Thảo</span>
                     </div>
                     <div class="create-body">
                         <el-input

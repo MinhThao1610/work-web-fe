@@ -1,0 +1,79 @@
+.tim-config {
+    .menu-config {
+        background-color: #fff;
+        .title-config {
+            padding: 16px;
+            border-bottom: 1px solid #efeff0;
+            font-size: 15px;
+        }
+        .content-config {
+            padding: 16px;
+            .content {
+                margin-bottom: 12px;
+                display: flex;
+                align-items: center;
+                color: rgba(0,0,0,.54);
+                cursor: pointer;
+                i {
+                    font-size: 20px;
+                    margin-right: 5px;
+                }
+                span {
+                    font-size: 14px;
+                }
+                &:hover {
+                    color: #0ab39c;
+                }
+            }
+            .active {
+                color: #405189;
+            }
+        }
+    }
+    .list-member {
+        .member {
+            border: 1px solid #efeff0;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            .member-left {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                .avatar {
+                    img {
+                        width: 45px;
+                        height: 45px;
+                    }
+                }
+                .member-info {
+                    display: flex;
+                    flex-direction: column;
+                    padding: 5px;
+                    .name {
+                        font-size: 14px;
+                        font-weight: 500;
+                    }
+                    .email {
+                        font-style: italic;
+                    }
+                }
+            }
+            .member-right {
+                display: flex;
+                justify-content: flex-end;
+                align-items: center;
+                .button-remove, .member-position {
+                    margin: 0 10px;
+                }
+            }
+        }
+    }
+    .button-add-mamber {
+        padding: 0;
+        i {
+            font-size: 24px;
+            color: #405189;
+        }
+    }
+}

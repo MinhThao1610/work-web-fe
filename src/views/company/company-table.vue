@@ -42,27 +42,57 @@ const getListCompany = async () => {
     tableData.value = [
         {
             id: '1111',
-            name: "cong ty 1",
+            name: "Công ty A",
             phone: "0928388472",
-            email: "jahjksd@gmail.com",
-            address: "số 1, khu A, thành phố A",
-            status: "hoat-dong"
+            email: "admin@gmail.com",
+            address: "số 1, Trung Hòa, Cầu Giấy, Hà Nội",
+            status: "hoat-dong",
+            isShow: true,
         },
         {
             id: '2222',
-            name: "cong ty 2",
-            phone: "0928388472",
-            email: "jahjksd@gmail.com",
-            address: "số 2, khu A, thành phố A",
-            status: "hoat-dong"
+            name: "Công ty B",
+            phone: "0374688472",
+            email: "vanphongb@gmail.com",
+            address: "Trần Cung, Cổ Nhuế 1, Bắc Từ Liêm, Hà Nội",
+            status: "hoat-dong",
+            isShow: true,
         },
         {
             id: '33333',
-            name: "cong ty 3",
+            name: "Công ty C",
+            phone: "0364388472",
+            email: "nguyenc@gmail.com",
+            address: "số 1, Đường Lê Đức Thọ, Nam Từ Liêm, Hà Nội",
+            status: "hoat-dong",
+            isShow: true,
+        },
+        {
+            id: '4444',
+            name: "Công ty D",
+            phone: "0928388211",
+            email: "nguyend@gmail.com",
+            address: "94 Đường Láng",
+            status: "hoat-dong",
+            isShow: true,
+        },
+        {
+            id: '5555',
+            name: "Công ty E",
+            phone: "0928384772",
+            email: "congtye@gmail.com",
+            address: "Yên Từ, Yên Mô, Ninh Bình",
+            status: "dung-hoat-dong",
+            isShow: false,
+        },
+        {
+            id: '666666',
+            name: "Công ty F",
             phone: "0928388472",
-            email: "jahjksd@gmail.com",
-            address: "số 1, khu A, thành phố A",
-            status: "hoat-dong"
+            email: "congtyf@gmail.com",
+            address: "Minh Tân, Kinh Môn, Hải Dương",
+            status: "hoat-dong",
+            isShow: true,
         }
     ];
     loading.value = false;
@@ -158,7 +188,7 @@ const login = (data) => {
     // dispatch: {{ Tên state }} / {{ Tên action }}
     console.log('data', data)
     // store.dispatch('authentication/fetchAuthen', data)
-}
+};
 
 </script>
 
@@ -300,16 +330,20 @@ const login = (data) => {
                                         >
                                             <el-table-column label="STT" min-width="80" align="center" fixed class-name="column-numerical">
                                                 <template #default="scope">
-                                                <div>
-                                                    {{ scope.$index + 1 }}
-                                                </div>
+                                                    <div>
+                                                        {{ scope.$index + 1 }}
+                                                    </div>
                                                 </template>
                                             </el-table-column>
                                             <el-table-column prop="name" label="Tên công ty" min-width="140" />
                                             <el-table-column prop="phone" label="Số điện thoại" min-width="140" />
                                             <el-table-column prop="email" label="Email" min-width="180" />
                                             <el-table-column prop="address" label="Địa chỉ" min-width="300" />
-                                            <el-table-column prop="status" label="Trạng thái" min-width="120" />
+                                            <el-table-column prop="status" label="Hoạt động" min-width="120" align="center">
+                                                <template #default="scope">
+                                                    <el-switch v-model="scope.row.isShow" />
+                                                </template>
+                                            </el-table-column>
                                             <el-table-column  label="Thao tác" min-width="180" >
                                                 <template #default="scope">
                                                     <div class="btn-group-thao-tac">

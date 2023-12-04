@@ -158,6 +158,12 @@ export default [
     component: () => import("../views/tims/statistic/statistic"),
   },
   {
+    path: "/tim/config",
+    name: "timConfig",
+    meta: { title: "Cấu hình", authRequired: true },
+    component: () => import("../views/tims/config/tim-config"),
+  },
+  {
     path: "/company-manage/table",
     name: "companyTable",
     meta: { title: "Danh sách công ty", authRequired: true },

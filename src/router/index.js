@@ -25,12 +25,10 @@ const router = createRouter({
 // Before each route evaluates...
 router.beforeEach(async (routeTo, routeFrom, next) => {
 
-  return next();
+  const authRequired = routeTo.matched.some((route) => route.meta.authRequired)
 
-  // const authRequired = routeTo.matched.some((route) => route.meta.authRequired)
-
-  // if (!authRequired) return next()
-
+  if (!authRequired) return next()
+  next();
   // axios.defaults.headers.common['authorization'] = 'Bearer ' + localStorage.getItem('jwt') // for all requests
   // await axios.get('https://api-node.themesbrand.website/profile').then((data) => {
   //   localStorage.setItem('userdata', JSON.stringify(data.data.user))
